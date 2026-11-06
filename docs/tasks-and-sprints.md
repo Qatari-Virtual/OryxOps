@@ -81,9 +81,9 @@ flowchart TD
 - **Dependencies:** None.
 - **Files Affected:**
   - `frontend/package.json`
-  - `frontend/pnpm-lock.yaml`
+  - `frontend/package-lock.json`
 - **Acceptance Criteria (AC):**
-  - [ ] `pnpm install` completes with zero package peer conflicts.
+  - [ ] `npm install` completes with zero package peer conflicts.
   - [ ] `framer-motion`, `@radix-ui` primitives, and `@remixicon/react` icons import cleanly in TypeScript files.
 
 #### `TASK-1.2`: Utility Helpers & Vitest Test Configuration
@@ -95,7 +95,7 @@ flowchart TD
   - `frontend/vite.config.ts`
   - `frontend/tsconfig.json`
 - **Acceptance Criteria (AC):**
-  - [ ] `pnpm test` command executes Vitest successfully.
+  - [ ] `npm test` command executes Vitest successfully.
   - [ ] `cn("px-2", condition && "px-4", "text-white")` resolves tailwind classes without duplicate conflicts.
 
 #### `TASK-1.3`: Semantic CSS Variables & Theme Configuration
@@ -118,7 +118,7 @@ flowchart TD
 - **Files Affected:**
   - `frontend/src/lib/__tests__/utils.test.ts`
 - **Acceptance Criteria (AC):**
-  - [ ] Automated tests pass with 100% assertions green via `pnpm test`.
+  - [ ] Automated tests pass with 100% assertions green via `npm test`.
 
 ---
 
@@ -216,7 +216,7 @@ flowchart TD
 - **Files Affected:**
   - `frontend/src/components/ui/__tests__/*`
 - **Acceptance Criteria (AC):**
-  - [ ] All primitive tests pass cleanly (`pnpm test`).
+  - [ ] All primitive tests pass cleanly (`npm test`).
 
 ---
 
@@ -294,7 +294,7 @@ flowchart TD
 - **Files Affected:**
   - `frontend/src/components/kokonut/__tests__/*`
 - **Acceptance Criteria (AC):**
-  - [ ] All tests pass cleanly (`pnpm test`).
+  - [ ] All tests pass cleanly (`npm test`).
 
 ---
 
@@ -392,7 +392,7 @@ flowchart TD
   - [ ] Theme switch transitions smoothly without color flash.
 
 #### `TASK-5.4`: Final E2E Test Suite & Documentation Sync
-- **Description:** Run full test suite (`pnpm test`), run type checking (`pnpm tsc --noEmit`), and confirm documentation is in complete sync.
+- **Description:** Run full test suite (`npm test`), run type checking (`npx tsc --noEmit`), and confirm documentation is in complete sync.
 - **Dependencies:** `TASK-5.3`.
 - **Files Affected:**
   - `docs/*`

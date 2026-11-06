@@ -71,5 +71,5 @@ flowchart LR
 - [ ] Implement `frontend/src/pages/ComponentShowcase.tsx` assembling all primitives, Kokonut UI components, and mock widgets with live interactive controls.
 - [ ] Add `/design-system` route to `frontend/src/App.tsx` and a quick-navigation link in the top bar or development drawer.
 - [ ] Author E2E/integration render test asserting all showcase sections mount cleanly without console warnings.
-- [ ] Run full test suite (`pnpm test`), type check (`pnpm tsc --noEmit`), and linter.
+- [ ] Run full test suite (`npm test`), type check (`npx tsc --noEmit`), and linter.
 - [ ] Verify visual fidelity against `qatarivirtual.com` design principles on mobile, tablet, and widescreen viewports.

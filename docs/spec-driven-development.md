@@ -64,7 +64,7 @@ Write the code to make the tests pass:
 - Compose primitives from `@radix-ui` / shadcn and Kokonut UI animations.
 - Rely on semantic CSS variables defined in `style.css` (or `globals.css`).
 - Add the component to the **Component Showcase Page** (`frontend/src/pages/ComponentShowcase.tsx`) with an interactive demonstration block.
-- Verify that `pnpm test` passes and `tsc --noEmit` produces zero type errors.
+- Verify that `npm test` passes and `npx tsc --noEmit` produces zero type errors.
 
 ---
 
@@ -114,6 +114,6 @@ Every PR or task submitted to OryxOps must satisfy:
 - [ ] Automated tests written in `frontend/src/**/__tests__/` covering variants and interactions.
 - [ ] Implementation code written cleanly adhering to TypeScript standards.
 - [ ] Component rendered and showcased in `/design-system` page.
-- [ ] Full test suite green (`pnpm test`).
-- [ ] Static type checks green (`pnpm tsc --noEmit`).
+- [ ] Full test suite green (`npm test`).
+- [ ] Static type checks green (`npx tsc --noEmit`).
 - [ ] Both light mode (`#FDF8F9`) and dark mode (`#0D0E12`) verified visually.

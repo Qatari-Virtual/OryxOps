@@ -32,7 +32,7 @@ flowchart LR
    - Ensure full compatibility with Tailwind CSS v4, shadcn/ui primitives, and Kokonut UI micro-interactions.
 4. **Phase 4: Verification & Component Showcase Sync**:
    - Verify the component on the interactive Component Showcase page (`/design-system`).
-   - Run linters, TypeScript type checks (`tsc --noEmit`), and test suites (`pnpm test`).
+   - Run linters, TypeScript type checks (`npx tsc --noEmit`), and test suites (`npm test`).
 
 ---
 
