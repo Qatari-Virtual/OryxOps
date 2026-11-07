@@ -118,7 +118,7 @@ flowchart TD
 - **Files Affected:**
   - `frontend/src/lib/__tests__/utils.test.ts`
 - **Acceptance Criteria (AC):**
-  - [ ] Automated tests pass with 100% assertions green via `npm test`.
+  - [x] Automated tests pass with 100% assertions green via `npm test`.
 
 ---
 
