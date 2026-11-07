@@ -120,6 +120,19 @@ flowchart TD
 - **Acceptance Criteria (AC):**
   - [x] Automated tests pass with 100% assertions green via `npm test`.
 
+#### `TASK-1.5`: GitHub Action Reviewer Fetches Linked Issue Description
+- **Description:** Enhance the OpenCode agentic PR reviewer GitHub Actions workflow (`.github/workflows/opencode.yml`) to dynamically detect and fetch linked issue details (title and description) using the GitHub CLI (`gh`). Prioritizes branch prefix numbers (`<issue-number>-...`) generated when branches are created directly from GitHub issues, with a fallback to `(#<issue-number>)` tags in the PR title, passing the retrieved issue context directly into OpenCode for issue-informed code reviews.
+- **Dependencies:** `TASK-1.1`.
+- **Files Affected:**
+  - `.github/workflows/opencode.yml`
+  - `docs/tasks-and-sprints.md`
+- **Acceptance Criteria (AC):**
+  - [x] Workflow extracts leading numeric prefix from branch names (e.g. `21-task-12...` -> `21`).
+  - [x] Fallback correctly parses `(#XX)` issue numbers from PR title.
+  - [x] Fetches issue title and body via `gh issue view` and sets multiline `context` output.
+  - [x] Passes retrieved issue context to `dceoy/opencode-action` prompt input for contextual code review.
+  - [x] Step summary annotates the resolved issue number.
+
 ---
 
 ### 🏃 Sprint 2: Core shadcn/ui Primitives Suite
