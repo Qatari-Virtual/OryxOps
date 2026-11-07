@@ -16,8 +16,11 @@ permissions:
 
 jobs:
   opencode-review:
-    # Trigger automatically on PR open/update OR via comment "/oc" / "/opencode"
-    if: github.event_name == 'pull_request' || contains(github.event.comment.body, '/oc') || contains(github.event.comment.body, '/opencode')
+    # Trigger automatically on PR open/update OR via comment "/oc" / "/opencode" on PRs
+    if: >-
+      github.event_name == 'pull_request' ||
+      ((github.event.issue.pull_request || github.event_name == 'pull_request_review_comment') &&
+        (contains(github.event.comment.body, '/oc') || contains(github.event.comment.body, '/opencode')))
     runs-on: ubuntu-latest
 
     steps:
