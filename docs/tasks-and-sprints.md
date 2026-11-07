@@ -109,8 +109,8 @@ flowchart TD
 - **Files Affected:**
   - `frontend/src/style.css`
 - **Acceptance Criteria (AC):**
-  - [ ] `:root` and `.dark` variables provide full contrast compliance across both themes.
-  - [ ] Tailwind `@theme` directives expose `--color-brand`, `--color-brand-dark`, `--color-brand-gold`.
+  - [x] `:root` and `.dark` variables provide full contrast compliance across both themes.
+  - [x] Tailwind `@theme` directives expose `--color-brand`, `--color-brand-dark`, `--color-brand-gold`.
 
 #### `TASK-1.4`: Theme & Token Unit Verification Test
 - **Description:** Author unit tests asserting the `cn` utility and ensuring CSS variable classes evaluate without errors.
