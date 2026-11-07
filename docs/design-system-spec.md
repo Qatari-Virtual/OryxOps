@@ -257,6 +257,18 @@ flowchart TD
     Layer2 --> Layer3
 ```
 
+### 4.0 Core Utilities & Test Foundation
+
+#### Class Name Merger (`frontend/src/lib/utils.ts`)
+- **API:** `cn(...inputs: ClassValue[]): string`
+- **Purpose:** Combines `clsx` and `tailwind-merge` (`twMerge`) to allow conditional styling without duplicate or conflicting Tailwind CSS classes (e.g. `cn("px-2", condition && "px-4", "text-white")` resolves cleanly to `"px-4 text-white"`).
+- **Types:** `ClassValue` from `clsx`.
+
+#### Test Environment Setup (`frontend/src/test/setup.ts` & `frontend/vite.config.ts`)
+- **Framework:** Vitest with `jsdom` testing environment.
+- **DOM Matchers:** `@testing-library/jest-dom/vitest` registered globally in `setup.ts`.
+- **Path Aliasing:** `@/*` mapped to `frontend/src/*` in Vite and TypeScript configs.
+
 ### 4.1 shadcn/ui Core Primitives (`frontend/src/components/ui/`)
 
 1. **Button (`button.tsx`):**
