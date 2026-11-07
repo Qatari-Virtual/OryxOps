@@ -46,20 +46,60 @@
   --radius-field: 1rem;
   --radius-box: 1rem;
 
-  --border: 1px;
   --animation-btn: 0.2s;
   --btn-text-case: normal-case;
   --size-selector: 0.25rem;
   --size-field: 0.25rem;
 }
 
-@theme {
+@theme static {
+  /* Qatar Al-Annabi Brand Tokens */
   --color-brand: var(--brand);
   --color-brand-dark: var(--brand-dark);
   --color-brand-light: var(--brand-light);
   --color-brand-pale: var(--brand-pale);
   --color-brand-border: var(--brand-border);
   --color-brand-hover-bg: var(--brand-hover-bg);
+  --color-brand-gold: var(--brand-gold);
+  --color-brand-gold-glow: var(--brand-gold-glow);
+
+  /* shadcn/ui Semantic Color Tokens */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Flight Status Colors */
+  --color-status-airborne: var(--status-airborne);
+  --color-status-radar: var(--status-radar);
+  --color-status-tod: var(--status-tod);
+  --color-status-stopped: var(--status-stopped);
+  --color-status-parked: var(--status-parked);
+
+  /* Operational Table Header */
+  --color-table-header-bg: var(--table-header-bg);
+  --color-table-header-fg: var(--table-header-fg);
+
+  /* Radius Tokens */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 }
 
 @layer base {
@@ -74,14 +114,50 @@
     --text-sub: #4b5563;
     --text-muted: #9ca3af;
 
+    /* ── Qatar Al-Annabi Brand Tokens ───────────────────────── */
     --brand: #6A0C2C;
     --brand-dark: #4A0820;
     --brand-light: #8A1840;
     --brand-pale: #fdf8f9;
     --brand-border: #ead9df;
     --brand-hover-bg: #f8f1f4;
+    --brand-gold: #C5A059;
+    --brand-gold-glow: rgba(197, 160, 89, 0.15);
     --scrollbar-thumb: #ead9df;
     --y-axis-width: 100px;
+
+    /* ── shadcn/ui Core Primitives Tokens ────────────────────── */
+    --background: #fdf8f9;
+    --foreground: #1f2937;
+    --card: #ffffff;
+    --card-foreground: #1f2937;
+    --popover: #ffffff;
+    --popover-foreground: #1f2937;
+    --primary: #6A0C2C;
+    --primary-foreground: #ffffff;
+    --secondary: #f8fafc;
+    --secondary-foreground: #334155;
+    --muted: #f1f5f9;
+    --muted-foreground: #64748b;
+    --accent: #f8f1f4;
+    --accent-foreground: #6A0C2C;
+    --destructive: #be123c;
+    --destructive-foreground: #ffffff;
+    --border: #ead9df;
+    --input: #ead9df;
+    --ring: #6A0C2C;
+    --radius: 0.75rem;
+
+    /* ── Flight Status Colors ────────────────────────────────── */
+    --status-airborne: #10b981;
+    --status-radar: #0284c7;
+    --status-tod: #f59e0b;
+    --status-stopped: #e11d48;
+    --status-parked: #6366f1;
+
+    /* ── Operational Table Header ───────────────────────────── */
+    --table-header-bg: #6A0C2C;
+    --table-header-fg: #ffffff;
 
     --status-approved-bg:      #f0fdf4;
     --status-approved-text:    #15803d;
@@ -138,14 +214,50 @@
     --text-sub: #cbd5e1;
     --text-muted: #94a3b8;
 
+    /* ── Qatar Al-Annabi Brand Tokens ───────────────────────── */
     --brand: #a8244e;
     --brand-dark: #6A0C2C;
     --brand-light: #c23867;
     --brand-pale: #1a0e12;
     --brand-border: #3f1e29;
     --brand-hover-bg: #2b141c;
+    --brand-gold: #E5C378;
+    --brand-gold-glow: rgba(229, 195, 120, 0.25);
     --scrollbar-thumb: #3f1e29;
     --y-axis-width: 100px;
+
+    /* ── shadcn/ui Core Primitives Tokens ────────────────────── */
+    --background: #0d0e12;
+    --foreground: #f3f4f6;
+    --card: #161920;
+    --card-foreground: #f3f4f6;
+    --popover: #161920;
+    --popover-foreground: #f3f4f6;
+    --primary: #a8244e;
+    --primary-foreground: #ffffff;
+    --secondary: #1e2028;
+    --secondary-foreground: #cbd5e1;
+    --muted: #1e2028;
+    --muted-foreground: #94a3b8;
+    --accent: #2b141c;
+    --accent-foreground: #f3f4f6;
+    --destructive: #e11d48;
+    --destructive-foreground: #ffffff;
+    --border: #272a35;
+    --input: #272a35;
+    --ring: #a8244e;
+    --radius: 0.75rem;
+
+    /* ── Flight Status Colors ────────────────────────────────── */
+    --status-airborne: #34d399;
+    --status-radar: #38bdf8;
+    --status-tod: #fbbf24;
+    --status-stopped: #fb7185;
+    --status-parked: #818cf8;
+
+    /* ── Operational Table Header ───────────────────────────── */
+    --table-header-bg: #4A0820;
+    --table-header-fg: #ffffff;
 
     --status-approved-bg:      rgba(16, 185, 129, 0.13);
     --status-approved-text:    #86efac;

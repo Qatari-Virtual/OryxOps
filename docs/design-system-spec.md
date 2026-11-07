@@ -131,6 +131,64 @@ To ensure seamless integration with the standard **shadcn/ui** component suite, 
 
 ---
 
+### 2.3 Tailwind CSS v4 `@theme` Configuration
+
+The semantic tokens are bound to Tailwind utility classes via `@theme static` in `frontend/src/style.css`:
+
+```css
+@theme static {
+  /* Qatar Al-Annabi Brand Tokens */
+  --color-brand: var(--brand);
+  --color-brand-dark: var(--brand-dark);
+  --color-brand-light: var(--brand-light);
+  --color-brand-pale: var(--brand-pale);
+  --color-brand-border: var(--brand-border);
+  --color-brand-hover-bg: var(--brand-hover-bg);
+  --color-brand-gold: var(--brand-gold);
+  --color-brand-gold-glow: var(--brand-gold-glow);
+
+  /* shadcn/ui Semantic Color Tokens */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Flight Status Colors */
+  --color-status-airborne: var(--status-airborne);
+  --color-status-radar: var(--status-radar);
+  --color-status-tod: var(--status-tod);
+  --color-status-stopped: var(--status-stopped);
+  --color-status-parked: var(--status-parked);
+
+  /* Table Header */
+  --color-table-header-bg: var(--table-header-bg);
+  --color-table-header-fg: var(--table-header-fg);
+
+  /* Radius Tokens */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+```
+
+---
+
 ## 3. Typography & Monospace Rules
 
 Aviation operations demand instant legibility and zero number jitter when values update in real time.
