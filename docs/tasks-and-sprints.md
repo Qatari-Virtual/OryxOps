@@ -163,9 +163,9 @@ flowchart TD
   - `frontend/src/components/ui/card.tsx`
   - `frontend/src/components/ui/__tests__/card.test.tsx`
 - **Acceptance Criteria (AC):**
-  - [ ] Cards render cleanly on light (`#FDF8F9`) and dark (`#0D0E12`) canvases with correct hairline border (`--border`).
-  - [ ] `variant="accent-stripe"` renders the 4px left burgundy accent bar without layout shift.
-  - [ ] `variant="fleet"` renders deep burgundy surface with contrast-compliant text.
+  - [x] Cards render cleanly on light (`#FDF8F9`) and dark (`#0D0E12`) canvases with correct hairline border (`--border`).
+  - [x] `variant="accent-stripe"` renders the 4px left burgundy accent bar without layout shift.
+  - [x] `variant="fleet"` renders deep burgundy surface with contrast-compliant text.
 
 #### `TASK-2.3`: Input, Textarea & Form Controls
 - **Description:** Implement `Input` and `Textarea` primitives with tabular monospace font option for callsigns, ICAO codes, and flight levels.

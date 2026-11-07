@@ -59,25 +59,25 @@ To ensure seamless integration with the standard **shadcn/ui** component suite, 
 @layer base {
   :root {
     /* ── Light Mode (Clean Executive Portal) ──────────────── */
-    --background: #fdf8f9;
-    --foreground: #1f2937;
+    --background: oklch(99.5% 0.002 240);
+    --foreground: oklch(25% 0.02 250);
     --card: #ffffff;
-    --card-foreground: #1f2937;
+    --card-foreground: oklch(25% 0.02 250);
     --popover: #ffffff;
-    --popover-foreground: #1f2937;
-    --primary: #6A0C2C;               /* Al-Annabi Burgundy */
+    --popover-foreground: oklch(25% 0.02 250);
+    --primary: #5C0632;               /* Al-Annabi Burgundy */
     --primary-foreground: #ffffff;
-    --secondary: #f8fafc;
-    --secondary-foreground: #334155;
-    --muted: #f1f5f9;
-    --muted-foreground: #64748b;
-    --accent: #f8f1f4;
-    --accent-foreground: #6A0C2C;
-    --destructive: #be123c;
+    --secondary: oklch(96% 0.005 240);
+    --secondary-foreground: oklch(25% 0.02 250);
+    --muted: oklch(96% 0.005 240);
+    --muted-foreground: oklch(50% 0.01 250);
+    --accent: oklch(75% 0.09 90);
+    --accent-foreground: oklch(25% 0.05 80);
+    --destructive: oklch(65% 0.22 25);
     --destructive-foreground: #ffffff;
-    --border: #ead9df;
-    --input: #ead9df;
-    --ring: #6A0C2C;
+    --border: oklch(92% 0.01 240);     /* Clean hairline border */
+    --input: oklch(92% 0.01 240);
+    --ring: #5C0632;
     --radius: 0.75rem;
 
     /* Operational Table Header (qatarivirtual.com style) */
@@ -278,8 +278,20 @@ flowchart TD
 2. **Badge (`badge.tsx`):**
    - Variants: `default`, `burgundy`, `gold`, `airborne` (emerald), `radar` (sky), `tod` (amber), `stopped` (rose), `parked` (indigo).
 3. **Card (`card.tsx`):**
-   - Standard container for telemetry panels and schedule cards. Hairline border, `rounded-xl`, subtle hover lift.
-   - Variants: `default`, `accent-stripe` (signature 4px Al-Annabi vertical stripe for NOTAMs, dispatch advisories, and pilot quotes), and `fleet` (deep burgundy canvas with faded ICAO watermark).
+   - Standard container for telemetry panels, schedule cards, and operational advisories. Hairline border, `rounded-xl`, subtle backdrop blur, and dark-mode elevation.
+   - **Subcomponents:** `CardHeader`, `CardTitle`, `CardDescription`, `CardContent`, `CardFooter`.
+   - **Variants:**
+     - `default`: Clean hairline border (`--border`), subtle backdrop blur (`backdrop-blur-md`), dark mode elevation, and standard card surface (`bg-card text-card-foreground`).
+     - `accent-stripe`: Signature 4px vertical Al-Annabi burgundy stripe (`border-l-4 border-l-brand`) along the left edge for NOTAMs, dispatch advisories, and pilot quotes (as seen in `qatarivirtual.com`). Renders with hairline borders on top, right, and bottom to eliminate layout shift.
+     - `fleet`: Deep burgundy canvas (`#4A0820` / `var(--brand-dark)`) with high-contrast text (`text-white`) and faded ICAO code watermark typography in the background.
+   - **Props:**
+     - `variant?: "default" | "accent-stripe" | "fleet"` (defaults to `"default"`).
+     - `watermark?: string` (optional background watermark text, defaults to `"OTHH"` when `variant="fleet"`).
+     - Standard HTML div attributes (`className`, `children`, `onClick`, ARIA attributes, etc.).
+   - **Accessibility & Contrast:**
+     - Meets WCAG AA contrast ratio (> 4.5:1) in both Light (`#FDF8F9`) and Dark (`#0D0E12`) canvases.
+     - `variant="fleet"` ensures `CardTitle` and `CardDescription` maintain contrast against deep burgundy via group contextual tokens.
+     - Background watermark is `aria-hidden="true"` and `pointer-events-none`.
 4. **Vertical Timeline (`timeline.tsx`):**
    - Vertical operational timeline with continuous burgundy spine and circular state nodes for ACARS events and flight phase logs.
 5. **Dialog & Sheet (`dialog.tsx`, `sheet.tsx`):**

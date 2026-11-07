@@ -104,15 +104,15 @@
 
 @layer base {
   :root {
-    /* ── Semantic Light Theme ────────────────────────────────── */
+    /* ── Semantic Light Theme (Clean Luxury Landing Aesthetic) ── */
     --bg-layout: #fdf8f9;
     --bg-card: #ffffff;
-    --bg-slate: #f8fafc;
-    --bg-muted: #f1f5f9;
-    --border-main: #ead9df;
-    --text-main: #1f2937;
-    --text-sub: #4b5563;
-    --text-muted: #9ca3af;
+    --bg-slate: oklch(96% 0.005 240);
+    --bg-muted: oklch(96% 0.005 240);
+    --border-main: oklch(92% 0.01 240);
+    --text-main: oklch(25% 0.02 250);
+    --text-sub: oklch(50% 0.01 250);
+    --text-muted: oklch(60% 0.01 250);
 
     /* ── Qatar Al-Annabi Brand Tokens ───────────────────────── */
     --brand: #6A0C2C;
@@ -123,28 +123,28 @@
     --brand-hover-bg: #f8f1f4;
     --brand-gold: #C5A059;
     --brand-gold-glow: rgba(197, 160, 89, 0.15);
-    --scrollbar-thumb: #ead9df;
+    --scrollbar-thumb: oklch(90% 0.01 240);
     --y-axis-width: 100px;
 
     /* ── shadcn/ui Core Primitives Tokens ────────────────────── */
     --background: #fdf8f9;
-    --foreground: #1f2937;
+    --foreground: oklch(25% 0.02 250);
     --card: #ffffff;
-    --card-foreground: #1f2937;
+    --card-foreground: oklch(25% 0.02 250);
     --popover: #ffffff;
-    --popover-foreground: #1f2937;
+    --popover-foreground: oklch(25% 0.02 250);
     --primary: #6A0C2C;
     --primary-foreground: #ffffff;
-    --secondary: #f8fafc;
-    --secondary-foreground: #334155;
-    --muted: #f1f5f9;
-    --muted-foreground: #64748b;
+    --secondary: oklch(96% 0.005 240);
+    --secondary-foreground: oklch(25% 0.02 250);
+    --muted: oklch(96% 0.005 240);
+    --muted-foreground: oklch(50% 0.01 250);
     --accent: #f8f1f4;
     --accent-foreground: #6A0C2C;
     --destructive: #be123c;
     --destructive-foreground: #ffffff;
-    --border: #ead9df;
-    --input: #ead9df;
+    --border: oklch(92% 0.01 240);
+    --input: oklch(92% 0.01 240);
     --ring: #6A0C2C;
     --radius: 0.75rem;
 
@@ -204,12 +204,12 @@
   }
 
   .dark {
-    /* ── Semantic Dark Theme ─────────────────────────────────── */
+    /* ── Semantic Dark Theme (Executive Night Cockpit) ───────── */
     --bg-layout: #0d0e12;
     --bg-card: #161920;
     --bg-slate: #0f1115;
     --bg-muted: #1e2028;
-    --border-main: #272a35;
+    --border-main: oklch(26% 0.01 250);
     --text-main: #f3f4f6;
     --text-sub: #cbd5e1;
     --text-muted: #94a3b8;
@@ -243,8 +243,8 @@
     --accent-foreground: #f3f4f6;
     --destructive: #e11d48;
     --destructive-foreground: #ffffff;
-    --border: #272a35;
-    --input: #272a35;
+    --border: oklch(26% 0.01 250);
+    --input: oklch(26% 0.01 250);
     --ring: #a8244e;
     --radius: 0.75rem;
 
@@ -406,4 +406,41 @@ textarea {
 .no-scrollbar {
   -ms-overflow-style: none !important;  /* IE and Edge */
   scrollbar-width: none !important;  /* Firefox */
+}
+
+/* ── Bulletproof shadcn & DaisyUI border color harmonization ─── */
+:root {
+  --border: oklch(92% 0.01 240) !important;
+  --border-main: oklch(92% 0.01 240) !important;
+  --color-border: oklch(92% 0.01 240) !important;
+}
+
+.dark {
+  --border: oklch(26% 0.01 250) !important;
+  --border-main: oklch(26% 0.01 250) !important;
+  --color-border: oklch(26% 0.01 250) !important;
+}
+
+/* Ensure any .border and .border-border class uses hairline border token */
+.border,
+.border-border,
+.border-b,
+.border-t,
+.border-r,
+.border-l {
+  border-color: var(--color-border) !important;
+}
+
+/* Preserve custom semantic border overrides */
+.border-l-brand {
+  border-left-color: var(--brand) !important;
+}
+.border-brand {
+  border-color: var(--brand) !important;
+}
+.border-white\/10 {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+.border-transparent {
+  border-color: transparent !important;
 }
