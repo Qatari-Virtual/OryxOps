@@ -95,8 +95,8 @@ flowchart TD
   - `frontend/vite.config.ts`
   - `frontend/tsconfig.json`
 - **Acceptance Criteria (AC):**
-  - [ ] `npm test` command executes Vitest successfully.
-  - [ ] `cn("px-2", condition && "px-4", "text-white")` resolves tailwind classes without duplicate conflicts.
+  - [x] `npm test` command executes Vitest successfully.
+  - [x] `cn("px-2", condition && "px-4", "text-white")` resolves tailwind classes without duplicate conflicts.
 
 #### `TASK-1.3`: Semantic CSS Variables & Theme Configuration
 - **Description:** Update `frontend/src/style.css` with semantic CSS variables mapped to Qatar Airways Virtual brand identity (`qatarivirtual.com`):

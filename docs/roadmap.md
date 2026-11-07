@@ -20,10 +20,10 @@ flowchart LR
 **Objective:** Establish the foundational CSS variables (Al-Annabi burgundy `#6A0C2C` & `#A8244E`, champagne gold `#C5A059`, dark slate `#161920`), configure Tailwind CSS v4, install shadcn/Kokonut dependencies, and set up Vitest component testing.
 
 - [ ] Install required component packages (`clsx`, `tailwind-merge`, `@radix-ui/react-*`, `framer-motion` for Kokonut UI; standardize on existing `@remixicon/react`).
-- [ ] Configure Vitest and React Testing Library (`vitest`, `@testing-library/react`, `@testing-library/jest-dom`, `jsdom`).
-- [ ] Create `frontend/src/lib/utils.ts` with `cn()` utility function.
+- [x] Configure Vitest and React Testing Library (`vitest`, `@testing-library/react`, `@testing-library/jest-dom`, `jsdom`).
+- [x] Create `frontend/src/lib/utils.ts` with `cn()` utility function.
 - [ ] Implement complete CSS semantic token definitions in `frontend/src/style.css` (or `globals.css`) supporting both Light Mode (`#FDF8F9`) and Dark Mode (`#0D0E12`).
-- [ ] Author base token verification test (`frontend/src/lib/__tests__/utils.test.ts`).
+- [x] Author base token verification test (`frontend/src/lib/__tests__/utils.test.ts`).
 
 ---
 
