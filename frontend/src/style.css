@@ -1,7 +1,6 @@
 @import "tailwindcss";
 @plugin "daisyui" {
-  themes:
-    light --default;
+  themes: light --default;
   root: ":root";
   prefersdark: false;
   logs: false;
@@ -104,48 +103,48 @@
 
 @layer base {
   :root {
-    /* ── Semantic Light Theme ────────────────────────────────── */
+    /* ── Semantic Light Theme (Clean Luxury Landing Aesthetic) ── */
     --bg-layout: #fdf8f9;
     --bg-card: #ffffff;
-    --bg-slate: #f8fafc;
-    --bg-muted: #f1f5f9;
-    --border-main: #ead9df;
-    --text-main: #1f2937;
-    --text-sub: #4b5563;
-    --text-muted: #9ca3af;
+    --bg-slate: oklch(96% 0.005 240);
+    --bg-muted: oklch(96% 0.005 240);
+    --border-main: oklch(92% 0.01 240);
+    --text-main: oklch(25% 0.02 250);
+    --text-sub: oklch(50% 0.01 250);
+    --text-muted: oklch(60% 0.01 250);
 
     /* ── Qatar Al-Annabi Brand Tokens ───────────────────────── */
-    --brand: #6A0C2C;
-    --brand-dark: #4A0820;
-    --brand-light: #8A1840;
+    --brand: #6a0c2c;
+    --brand-dark: #4a0820;
+    --brand-light: #8a1840;
     --brand-pale: #fdf8f9;
     --brand-border: #ead9df;
     --brand-hover-bg: #f8f1f4;
-    --brand-gold: #C5A059;
+    --brand-gold: #c5a059;
     --brand-gold-glow: rgba(197, 160, 89, 0.15);
-    --scrollbar-thumb: #ead9df;
+    --scrollbar-thumb: oklch(90% 0.01 240);
     --y-axis-width: 100px;
 
     /* ── shadcn/ui Core Primitives Tokens ────────────────────── */
     --background: #fdf8f9;
-    --foreground: #1f2937;
+    --foreground: oklch(25% 0.02 250);
     --card: #ffffff;
-    --card-foreground: #1f2937;
+    --card-foreground: oklch(25% 0.02 250);
     --popover: #ffffff;
-    --popover-foreground: #1f2937;
-    --primary: #6A0C2C;
+    --popover-foreground: oklch(25% 0.02 250);
+    --primary: #6a0c2c;
     --primary-foreground: #ffffff;
-    --secondary: #f8fafc;
-    --secondary-foreground: #334155;
-    --muted: #f1f5f9;
-    --muted-foreground: #64748b;
+    --secondary: oklch(96% 0.005 240);
+    --secondary-foreground: oklch(25% 0.02 250);
+    --muted: oklch(96% 0.005 240);
+    --muted-foreground: oklch(50% 0.01 250);
     --accent: #f8f1f4;
-    --accent-foreground: #6A0C2C;
+    --accent-foreground: #6a0c2c;
     --destructive: #be123c;
     --destructive-foreground: #ffffff;
-    --border: #ead9df;
-    --input: #ead9df;
-    --ring: #6A0C2C;
+    --border: oklch(92% 0.01 240);
+    --input: oklch(92% 0.01 240);
+    --ring: #6a0c2c;
     --radius: 0.75rem;
 
     /* ── Flight Status Colors ────────────────────────────────── */
@@ -156,72 +155,72 @@
     --status-parked: #6366f1;
 
     /* ── Operational Table Header ───────────────────────────── */
-    --table-header-bg: #6A0C2C;
+    --table-header-bg: #6a0c2c;
     --table-header-fg: #ffffff;
 
-    --status-approved-bg:      #f0fdf4;
-    --status-approved-text:    #15803d;
-    --status-approved-border:  #86efac;
+    --status-approved-bg: #f0fdf4;
+    --status-approved-text: #15803d;
+    --status-approved-border: #86efac;
 
-    --status-booked-bg:        #f0fdf4;
-    --status-booked-text:      #065f46;
-    --status-booked-border:    #86efac;
+    --status-booked-bg: #f0fdf4;
+    --status-booked-text: #065f46;
+    --status-booked-border: #86efac;
 
-    --status-completed-bg:     #eef2ff;
-    --status-completed-text:   #2563eb;
+    --status-completed-bg: #eef2ff;
+    --status-completed-text: #2563eb;
     --status-completed-border: #c7d2fe;
 
-    --status-proposed-bg:      #fefce8;
-    --status-proposed-text:    #a16207;
-    --status-proposed-border:  #fde047;
+    --status-proposed-bg: #fefce8;
+    --status-proposed-text: #a16207;
+    --status-proposed-border: #fde047;
 
-    --status-draft-bg:         #f0f9ff;
-    --status-draft-text:       #0284c7;
-    --status-draft-border:     #bae6fd;
+    --status-draft-bg: #f0f9ff;
+    --status-draft-text: #0284c7;
+    --status-draft-border: #bae6fd;
 
-    --status-error-bg:         #ffe4e6;
-    --status-error-text:       #881337;
-    --status-error-border:     #fda4af;
+    --status-error-bg: #ffe4e6;
+    --status-error-text: #881337;
+    --status-error-border: #fda4af;
 
-    --status-warn-bg:          #fffbeb;
-    --status-warn-text:        #92400e;
-    --status-warn-border:      #fde68a;
+    --status-warn-bg: #fffbeb;
+    --status-warn-text: #92400e;
+    --status-warn-border: #fde68a;
 
-    --status-cancelled-bg:     #f3f4f6;
-    --status-cancelled-text:   #6b7280;
+    --status-cancelled-bg: #f3f4f6;
+    --status-cancelled-text: #6b7280;
     --status-cancelled-border: #d1d5db;
 
-    --status-ground-ok-bg:     #ecfeff;
-    --status-ground-ok-text:   #164e63;
+    --status-ground-ok-bg: #ecfeff;
+    --status-ground-ok-text: #164e63;
     --status-ground-ok-border: #67e8f9;
 
-    --status-ground-err-bg:    #fff7ed;
-    --status-ground-err-text:  #7c2d12;
-    --status-ground-err-border:#fdba74;
+    --status-ground-err-bg: #fff7ed;
+    --status-ground-err-text: #7c2d12;
+    --status-ground-err-border: #fdba74;
 
-    --code-bg:   #f8fafc;
+    --code-bg: #f8fafc;
     --code-text: #334155;
   }
 
   .dark {
-    /* ── Semantic Dark Theme ─────────────────────────────────── */
+    /* ── Semantic Dark Theme (Executive Night Cockpit) ───────── */
     --bg-layout: #0d0e12;
     --bg-card: #161920;
     --bg-slate: #0f1115;
     --bg-muted: #1e2028;
-    --border-main: #272a35;
+    --border-main: oklch(26% 0.01 250);
     --text-main: #f3f4f6;
     --text-sub: #cbd5e1;
     --text-muted: #94a3b8;
 
     /* ── Qatar Al-Annabi Brand Tokens ───────────────────────── */
     --brand: #a8244e;
-    --brand-dark: #6A0C2C;
+    --brand-dark: #6a0c2c;
     --brand-light: #c23867;
     --brand-pale: #1a0e12;
     --brand-border: #3f1e29;
     --brand-hover-bg: #2b141c;
-    --brand-gold: #E5C378;
+    --brand-gold: #e5c378;
     --brand-gold-glow: rgba(229, 195, 120, 0.25);
     --scrollbar-thumb: #3f1e29;
     --y-axis-width: 100px;
@@ -243,8 +242,8 @@
     --accent-foreground: #f3f4f6;
     --destructive: #e11d48;
     --destructive-foreground: #ffffff;
-    --border: #272a35;
-    --input: #272a35;
+    --border: oklch(26% 0.01 250);
+    --input: oklch(26% 0.01 250);
     --ring: #a8244e;
     --radius: 0.75rem;
 
@@ -256,51 +255,52 @@
     --status-parked: #818cf8;
 
     /* ── Operational Table Header ───────────────────────────── */
-    --table-header-bg: #4A0820;
+    --table-header-bg: #4a0820;
     --table-header-fg: #ffffff;
 
-    --status-approved-bg:      rgba(16, 185, 129, 0.13);
-    --status-approved-text:    #86efac;
-    --status-approved-border:  #166534;
+    --status-approved-bg: rgba(16, 185, 129, 0.13);
+    --status-approved-text: #86efac;
+    --status-approved-border: #166534;
 
-    --status-completed-bg:     rgba(99, 102, 241, 0.13);
-    --status-completed-text:   #c7d2fe;
+    --status-completed-bg: rgba(99, 102, 241, 0.13);
+    --status-completed-text: #c7d2fe;
     --status-completed-border: #4f46e5;
 
-    --status-proposed-bg:      rgba(245, 158, 11, 0.13);
-    --status-proposed-text:    #fcd34d;
-    --status-proposed-border:  #92400e;
+    --status-proposed-bg: rgba(245, 158, 11, 0.13);
+    --status-proposed-text: #fcd34d;
+    --status-proposed-border: #92400e;
 
-    --status-draft-bg:         rgba(14, 165, 233, 0.13);
-    --status-draft-text:       #7dd3fc;
-    --status-draft-border:     #075985;
+    --status-draft-bg: rgba(14, 165, 233, 0.13);
+    --status-draft-text: #7dd3fc;
+    --status-draft-border: #075985;
 
-    --status-error-bg:         rgba(244, 63, 94, 0.13);
-    --status-error-text:       #fca5a5;
-    --status-error-border:     #7f1d1d;
+    --status-error-bg: rgba(244, 63, 94, 0.13);
+    --status-error-text: #fca5a5;
+    --status-error-border: #7f1d1d;
 
-    --status-warn-bg:          rgba(245, 158, 11, 0.08);
-    --status-warn-text:        #fcd34d;
-    --status-warn-border:      #78350f;
+    --status-warn-bg: rgba(245, 158, 11, 0.08);
+    --status-warn-text: #fcd34d;
+    --status-warn-border: #78350f;
 
-    --status-cancelled-bg:     #18191f;
-    --status-cancelled-text:   #64748b;
+    --status-cancelled-bg: #18191f;
+    --status-cancelled-text: #64748b;
     --status-cancelled-border: #272a35;
 
-    --status-ground-ok-bg:     rgba(6, 182, 212, 0.12);
-    --status-ground-ok-text:   #67e8f9;
+    --status-ground-ok-bg: rgba(6, 182, 212, 0.12);
+    --status-ground-ok-text: #67e8f9;
     --status-ground-ok-border: #164e63;
 
-    --status-ground-err-bg:    rgba(249, 115, 22, 0.13);
-    --status-ground-err-text:  #fdba74;
-    --status-ground-err-border:#7c2d12;
+    --status-ground-err-bg: rgba(249, 115, 22, 0.13);
+    --status-ground-err-text: #fdba74;
+    --status-ground-err-border: #7c2d12;
 
-    --code-bg:   #0f1115;
+    --code-bg: #0f1115;
     --code-text: #94a3b8;
   }
 
   @media (min-width: 768px) {
-    :root, .dark {
+    :root,
+    .dark {
       --y-axis-width: 220px;
     }
   }
@@ -330,12 +330,16 @@ body {
   background-color: var(--bg-card) !important;
 }
 
-.bg-gray-50, .bg-gray-50\/50, .bg-slate-50 {
+.bg-gray-50,
+.bg-gray-50\/50,
+.bg-slate-50 {
   background-color: var(--bg-slate) !important;
 }
 
 /* gray-100 / gray-200 — previously not overridden, now theme-aware */
-.bg-gray-100, .bg-gray-100\/50, .bg-gray-100\/40 {
+.bg-gray-100,
+.bg-gray-100\/50,
+.bg-gray-100\/40 {
   background-color: var(--bg-muted) !important;
 }
 .bg-gray-200 {
@@ -343,46 +347,61 @@ body {
 }
 
 /* white opacity variants — bypass .bg-white, must be explicitly overridden */
-.bg-white\/80, .bg-white\/70, .bg-white\/60, .bg-white\/50 {
+.bg-white\/80,
+.bg-white\/70,
+.bg-white\/60,
+.bg-white\/50 {
   background-color: var(--bg-card) !important;
 }
 
-aside, header {
+aside,
+header {
   background-color: var(--bg-card) !important;
   border-color: var(--border-main) !important;
 }
 
 /* ── Borders ───────────────────────────────────────────────────── */
-.border-brand-border, .border-brand-border\/60, .border-brand-border\/40, .border-brand-border\/80 {
+.border-brand-border,
+.border-brand-border\/60,
+.border-brand-border\/40,
+.border-brand-border\/80 {
   border-color: var(--brand-border) !important;
 }
-.border-gray-100, .border-gray-200 {
+.border-gray-100,
+.border-gray-200 {
   border-color: var(--border-main) !important;
 }
 
 /* ── Text ──────────────────────────────────────────────────────── */
-.text-gray-900, .text-gray-800, .text-gray-700, .text-brand-dark {
+.text-gray-900,
+.text-gray-800,
+.text-gray-700,
+.text-brand-dark {
   color: var(--text-main) !important;
 }
-.text-gray-600, .text-gray-500 {
+.text-gray-600,
+.text-gray-500 {
   color: var(--text-sub) !important;
 }
-.text-gray-400, .text-gray-300 {
+.text-gray-400,
+.text-gray-300 {
   color: var(--text-muted) !important;
 }
 
 /* ── Global inputs dark support ────────────────────────────────── */
-input:not([type="button"]):not([type="submit"]):not([type="checkbox"]):not([type="radio"]), 
-select, 
+input:not([type="button"]):not([type="submit"]):not([type="checkbox"]):not(
+    [type="radio"]
+  ),
+select,
 textarea {
   background-color: var(--bg-slate) !important;
   color: var(--text-main) !important;
   border-color: var(--border-main) !important;
 }
 
-
 /* Specific calendar style fixes */
-.fc-theme-standard td, .fc-theme-standard th {
+.fc-theme-standard td,
+.fc-theme-standard th {
   border-color: var(--border-main) !important;
 }
 .fc-event {
@@ -404,8 +423,45 @@ textarea {
   display: none !important;
 }
 .no-scrollbar {
-  -ms-overflow-style: none !important;  /* IE and Edge */
-  scrollbar-width: none !important;  /* Firefox */
+  -ms-overflow-style: none !important; /* IE and Edge */
+  scrollbar-width: none !important; /* Firefox */
+}
+
+/* ── Bulletproof shadcn & DaisyUI border color harmonization ─── */
+:root {
+  --border: oklch(92% 0.01 240) !important;
+  --border-main: oklch(92% 0.01 240) !important;
+  --color-border: oklch(92% 0.01 240) !important;
+}
+
+.dark {
+  --border: oklch(26% 0.01 250) !important;
+  --border-main: oklch(26% 0.01 250) !important;
+  --color-border: oklch(26% 0.01 250) !important;
+}
+
+/* Ensure any .border and .border-border class uses hairline border token */
+.border,
+.border-border,
+.border-b,
+.border-t,
+.border-r,
+.border-l {
+  border-color: var(--color-border) !important;
+}
+
+/* Preserve custom semantic border overrides */
+.border-l-brand {
+  border-left-color: var(--brand) !important;
+}
+.border-brand {
+  border-color: var(--brand) !important;
+}
+.border-white\/10 {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+.border-transparent {
+  border-color: transparent !important;
 }
 
 /* ── Dialog & Sheet Overlays Keyframe Animations (60fps GPU-Accelerated) ── */
