@@ -268,23 +268,23 @@ describe("CSS theme variables verification in style.css", () => {
 
   it("declares :root light theme variables matching Qatar Airways Virtual brand specs", () => {
     const lightTokens = [
-      "--brand: #6A0C2C;",
-      "--brand-dark: #4A0820;",
-      "--brand-light: #8A1840;",
+      "--brand: #6a0c2c;",
+      "--brand-dark: #4a0820;",
+      "--brand-light: #8a1840;",
       "--brand-pale: #fdf8f9;",
       "--brand-border: #ead9df;",
       "--brand-hover-bg: #f8f1f4;",
-      "--brand-gold: #C5A059;",
+      "--brand-gold: #c5a059;",
       "--background: #fdf8f9;",
       "--card: #ffffff;",
-      "--primary: #6A0C2C;",
-      "--ring: #6A0C2C;",
+      "--primary: #6a0c2c;",
+      "--ring: #6a0c2c;",
       "--status-airborne: #10b981;",
       "--status-radar: #0284c7;",
       "--status-tod: #f59e0b;",
       "--status-stopped: #e11d48;",
       "--status-parked: #6366f1;",
-      "--table-header-bg: #6A0C2C;",
+      "--table-header-bg: #6a0c2c;",
     ];
 
     lightTokens.forEach((token) => {
@@ -295,12 +295,12 @@ describe("CSS theme variables verification in style.css", () => {
   it("declares .dark dark theme variables matching Qatar Airways Virtual night cockpit specs", () => {
     const darkTokens = [
       "--brand: #a8244e;",
-      "--brand-dark: #6A0C2C;",
+      "--brand-dark: #6a0c2c;",
       "--brand-light: #c23867;",
       "--brand-pale: #1a0e12;",
       "--brand-border: #3f1e29;",
       "--brand-hover-bg: #2b141c;",
-      "--brand-gold: #E5C378;",
+      "--brand-gold: #e5c378;",
       "--background: #0d0e12;",
       "--card: #161920;",
       "--primary: #a8244e;",
@@ -310,7 +310,7 @@ describe("CSS theme variables verification in style.css", () => {
       "--status-tod: #fbbf24;",
       "--status-stopped: #fb7185;",
       "--status-parked: #818cf8;",
-      "--table-header-bg: #4A0820;",
+      "--table-header-bg: #4a0820;",
     ];
 
     darkTokens.forEach((token) => {
@@ -325,3 +325,4 @@ describe("CSS theme variables verification in style.css", () => {
     expect(cssContent).toContain("--radius-xl: calc(var(--radius) + 4px);");
   });
 });
+

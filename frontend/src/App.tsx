@@ -18,7 +18,7 @@ import LiveTracker from "./pages/LiveTracker";
 import Transfers from "./pages/Transfers";
 import Admin from "./pages/Admin";
 import Login from "./pages/Login";
-import Showcase from "./pages/Showcase";
+import ComponentShowcase from "./pages/ComponentShowcase";
 import EFB from "./pages/EFB";
 import Shop from "./pages/Shop";
 import Handbook from "./pages/Handbook";
@@ -40,7 +40,7 @@ function AuthInitializer({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const checkAuth = async () => {
-      if (location.pathname === "/showcase") {
+      if (location.pathname === "/showcase" || location.pathname === "/design-system") {
   setInitializing(false);
   return;
 }
@@ -125,7 +125,8 @@ export default function App() {
   return (
     <AuthInitializer>
       <Routes>
-        <Route path="/showcase" element={<Showcase />} />
+        <Route path="/showcase" element={<ComponentShowcase />} />
+        <Route path="/design-system" element={<ComponentShowcase />} />
         <Route path="/login" element={<Login />} />
         <Route path="/oauth/if-callback" element={<IFCallback />} />
         <Route
@@ -172,3 +173,4 @@ export default function App() {
     </AuthInitializer>
   );
 }
+

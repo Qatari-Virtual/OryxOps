@@ -622,6 +622,15 @@ export default function Layout() {
           </button>
 
           <div className="flex-1" />
+          {(user?.is_executive || user?.is_admin) && (
+            <Link
+              to="/design-system"
+              className="text-xs font-bold text-gray-500 hover:text-brand transition-colors px-3 py-2 rounded-lg hover:bg-brand-hover-bg border border-brand-border"
+              title="Open Component Design System"
+            >
+              Design System
+            </Link>
+          )}
           <div className="flex items-center gap-3">
             {pendingProposals > 0 && (
               <button
@@ -683,3 +692,4 @@ export default function Layout() {
     </div>
   );
 }
+
