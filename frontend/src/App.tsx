@@ -40,7 +40,7 @@ function AuthInitializer({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const checkAuth = async () => {
-      if (location.pathname === "/showcase") {
+      if (location.pathname === "/showcase" || location.pathname === "/design-system") {
   setInitializing(false);
   return;
 }
@@ -126,6 +126,7 @@ export default function App() {
     <AuthInitializer>
       <Routes>
         <Route path="/showcase" element={<Showcase />} />
+        <Route path="/design-system" element={<Showcase />} />
         <Route path="/login" element={<Login />} />
         <Route path="/oauth/if-callback" element={<IFCallback />} />
         <Route
