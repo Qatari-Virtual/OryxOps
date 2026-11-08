@@ -358,9 +358,10 @@ export default function Showcase() {
   });
 
   const handleColumnResize = useCallback((col: string, newWidth: number) => {
+    const minWidth = col === "flt" ? 170 : col === "aircraft" ? 220 : 80;
     setColWidths((prev) => ({
       ...prev,
-      [col]: Math.max(70, Math.min(600, newWidth)),
+      [col]: Math.max(minWidth, Math.min(600, newWidth)),
     }));
   }, []);
 
@@ -494,7 +495,15 @@ export default function Showcase() {
   };
 
   const toggleSelectRow = (id: string) => {
-    setSelectedRowIds((prev) => ({ ...prev, [id]: !prev[id] }));
+    setSelectedRowIds((prev) => {
+      const next = { ...prev };
+      if (next[id]) {
+        delete next[id];
+      } else {
+        next[id] = true;
+      }
+      return next;
+    });
   };
 
   const toggleSelectAll = () => {
