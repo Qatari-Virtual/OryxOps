@@ -1,4 +1,4 @@
-# Design System Specification 🎨✈️
+# Design System Specification
 
 > The Official Visual and Component Architecture for OryxOps, harmonized with the Qatar Airways Virtual (`qatarivirtual.com`) brand identity.
 
@@ -83,6 +83,8 @@ To ensure seamless integration with the standard **shadcn/ui** component suite, 
     /* Operational Table Header (qatarivirtual.com style) */
     --table-header-bg: #6A0C2C;
     --table-header-fg: #ffffff;
+    --table-header-burgundy: #6A0C2C;
+    --table-header-burgundy-fg: #ffffff;
 
     /* Semantic Flight Status */
     --status-airborne: #10b981;
@@ -178,6 +180,8 @@ The semantic tokens are bound to Tailwind utility classes via `@theme static` in
   /* Table Header */
   --color-table-header-bg: var(--table-header-bg);
   --color-table-header-fg: var(--table-header-fg);
+  --color-table-header-burgundy: var(--table-header-burgundy);
+  --color-table-header-burgundy-fg: var(--table-header-burgundy-fg);
 
   /* Radius Tokens */
   --radius-sm: calc(var(--radius) - 4px);
@@ -207,15 +211,40 @@ Aviation operations demand instant legibility and zero number jitter when values
 
 ---
 
-## 3.1 Iconography Standard: Remix Icon (`@remixicon/react`)
+## 3.1 Strict Iconography Standard: Zero Emojis, Remix Icons Only
 
-To maintain complete visual harmony with the existing navigation, Electronic Flight Bag (EFB), and operational panels, OryxOps standardizes **exclusively on Remix Icon (`@remixicon/react`)**. Lucide is excluded to prevent mismatched stroke weights and duplicate bundles.
+> [!IMPORTANT]
+> **Strict Repository Rule:** Never use raw Unicode emojis (`📌`, `⚡`, `✈️`, `⚠️`, `✅`, `❌`, `🔥`, `🗺️`, etc.) anywhere in UI components, buttons, badges, table headers, alerts, modals, status labels, or tooltips.
 
-### Common Aviation Icon Mapping
-- **Flight & Navigation:** `RiPlaneLine`, `RiPlaneFill`, `RiFlightTakeoffLine`, `RiFlightLandLine`, `RiCompass3Line`, `RiRadarLine`
-- **Actions & Controls:** `RiSearchLine`, `RiArrowRightLine`, `RiCheckLine`, `RiCloseLine`, `RiTimeLine`, `RiAlertLine`
-- **Aircraft & Fleet:** `RiLuggageCartLine`, `RiDashboardFill`, `RiSettings3Fill`, `RiUser3Fill`
-- **Standard Sizing:** `size={16}` for dense table rows and badges, `size={20}` for buttons and navigation items, `size={24}` for modal/card headers.
+To maintain visual harmony, high-contrast readability, and alignment with Qatar Airways Virtual brand identity, OryxOps standardizes **exclusively on Remix Icon (`@remixicon/react`)**. Both Lucide icons (`lucide-react`) and raw emojis are strictly prohibited across the entire repository.
+
+### Why Emojis Are Strictly Prohibited:
+1. **Operating System Inconsistency:** Unicode emojis render with wildly different glyph geometries, colors, and line-heights across Windows (Segoe UI Emoji), macOS / iOS (Apple Color Emoji), Android (Noto Color Emoji), and Linux.
+2. **Stroke Weight Disruption:** Colorful rasterized/bitmap emoji glyphs clash with the precise 2px / 1.5px optical stroke weight of OryxOps typography and vector icons.
+3. **Inability to Inherit Theme Colors:** Emojis cannot inherit CSS variables (`currentColor`, `--brand`, `--primary`, `--muted-foreground`), resulting in harsh color mismatches in dark mode.
+4. **Brand Tone Violation:** OryxOps is an executive-tier aviation operations system. Emojis degrade the premium, distinguished character of Qatar Airways Virtual (`qatarivirtual.com`).
+
+### Standard Concept-to-Icon Mapping:
+| Intended Meaning | Forbidden Emoji | Mandatory Remix Icon (`@remixicon/react`) |
+| :--- | :--- | :--- |
+| Pinned / Sticky Header | `📌` | `<RiPushpinLine className="h-4 w-4" />` |
+| Speed / Virtualization / Performance | `⚡` | `<RiFlashlightLine className="h-4 w-4" />` / `<RiSpeedUpLine />` |
+| Flight / Aircraft | `✈️` | `<RiPlaneLine className="h-4 w-4" />` |
+| Departure / Takeoff | `🛫` | `<RiFlightTakeoffLine className="h-4 w-4" />` |
+| Arrival / Landing | `🛬` | `<RiFlightLandLine className="h-4 w-4" />` |
+| Route Map / Navigation | `🗺️` | `<RiRouteLine className="h-4 w-4" />` / `<RiMap2Line />` |
+| Alert / Warning | `⚠️` | `<RiAlertLine className="h-4 w-4" />` |
+| Confirmed / Success | `✅` | `<RiCheckLine className="h-4 w-4" />` |
+| Error / Reject | `❌` | `<RiCloseLine className="h-4 w-4" />` |
+| Search / Inspection | `🔍` | `<RiSearchLine className="h-4 w-4" />` |
+| Configuration / Settings | `⚙️` | `<RiSettings3Line className="h-4 w-4" />` |
+| Telemetry / Dashboard | `📊` | `<RiDashboardLine className="h-4 w-4" />` |
+
+### Sizing Standard:
+- **`size={14}` / `h-3.5 w-3.5`:** Compact table badges, inline status chips, dense monospace metrics.
+- **`size={16}` / `h-4 w-4`:** Standard buttons, form triggers, table headers, tabs.
+- **`size={20}` / `h-5 w-5`:** Primary navigation rails, drawer handles, action pickers.
+- **`size={24}` / `h-6 w-6`:** Modal dialog headers, bento card title indicators.
 
 ---
 
@@ -325,10 +354,39 @@ flowchart TD
    - **Motion & Performance (60fps):**
      - GPU-accelerated transforms (`translate3d`, `scale3d`) and opacity transitions with cubic-bezier easing (`cubic-bezier(0.16, 1, 0.3, 1)`), guaranteeing buttery smooth 60fps performance on all viewports without layout thrashing.
 5. **Table (`table.tsx`):**
-   - High-density table support with monospace cell alignment for aviation data.
-6. **Tabs (`tabs.tsx`):**
-   - Horizontal phase switchers with smooth sliding indicator in Al-Annabi burgundy.
-7. **Tooltip (`tooltip.tsx`):**
+   - High-density table support with monospace cell alignment for aviation operational data and Route Database views.
+   - **Subcomponents:** `Table`, `TableHeader`, `TableBody`, `TableFooter`, `TableRow`, `TableHead`, `TableCell`, `TableCaption`.
+   - **Header Variants:**
+     - `variant="burgundy"`: Solid Qatar Al-Annabi burgundy header background (`--table-header-bg: #6A0C2C` with bold white text `--table-header-fg: #ffffff`), matching the `qatarivirtual.com` Route Database.
+        > [!NOTE]
+        > **Brand Consistency Rule:** The burgundy header intentionally preserves the signature Qatar Al-Annabi primary maroon (`#6A0C2C`) across both light and dark operational modes rather than shifting to muted tones, ensuring immediate brand recognition and high contrast identical to `qatarivirtual.com`.
+     - `variant="default"`: Clean transparent/muted header background with subtle hairline border.
+   - **Density & Monospace Rules:**
+     - `density="compact"`: Compact vertical padding (`py-2 px-3`) optimized for multi-row operational telemetry, flight catalogs, and ACARS feeds.
+     - `mono={true}` on `TableCell` / `TableHead`: Applies `font-mono tabular-nums` for UTC timestamps, ICAO codes, and flight numbers.
+     - Right-aligned monospace duration cells (`align="right"`).
+   - **Aviation Features:**
+     - Callsign outline badge helpers (`QR1 Classic`, `QR1`, `QR3`, `+6`).
+     - Route map modal/drawer trigger icon (`RiMapPin2Line` / `RiRouteLine`).
+     - Sortable headers with visual direction indicator (`RiArrowUpSLine`, `RiArrowDownSLine`, `RiArrowUpDownLine`) and ARIA sort attributes.
+     - Resizable column widths with accessible drag handles and column width presets (`fixedLayout` mode).
+     - Configurable sticky header support (`stickyHeader` on `Table` or `sticky` on `TableHeader`) pinning the header at the top during scroll.
+     - Full virtualization support via `@tanstack/react-virtual` enabling 60fps rendering across 5,000+ operational flight records.
+6. **Select (`select.tsx`):**
+   - Accessible dropdown select primitive powered by `@radix-ui/react-select`.
+   - **Subcomponents:** `Select`, `SelectGroup`, `SelectValue`, `SelectTrigger`, `SelectContent`, `SelectLabel`, `SelectItem`, `SelectSeparator`.
+   - Styled with `--ring: #6A0C2C`, rounded-xl popover elevations, and Remix Icon checkmarks (`RiCheckLine`) and chevrons (`RiArrowDownSLine`).
+7. **Tabs (`tabs.tsx`):**
+   - Horizontal phase and operational section switchers powered by `@radix-ui/react-tabs`.
+   - **Subcomponents:** `Tabs`, `TabsList`, `TabsTrigger`, `TabsContent`.
+   - **Variants:**
+     - `variant="pill"` (default): Rounded container with solid Al-Annabi burgundy active pill (`data-[state=active]:bg-brand data-[state=active]:text-white data-[state=active]:shadow-sm`).
+     - `variant="underline"`: Clean minimal border-bottom tab rail with burgundy active line.
+   - **Accessibility & Focus:**
+     - Complete keyboard navigation via `ArrowRight`, `ArrowLeft`, `Home`, and `End` keys.
+     - Focus ring styled with `--ring` (`#6A0C2C`).
+     - Proper WAI-ARIA roles (`tablist`, `tab`, `tabpanel`, `aria-selected`, `aria-controls`).
+8. **Tooltip (`tooltip.tsx`):**
    - Micro-guidance for aviation acronyms (TOD, STEP, VNAV, ETE, ETA).
 
 ### 4.2 Kokonut UI Animated Components (`frontend/src/components/kokonut/`)

@@ -40,10 +40,13 @@ function AuthInitializer({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const checkAuth = async () => {
-      if (location.pathname === "/showcase" || location.pathname === "/design-system") {
-  setInitializing(false);
-  return;
-}
+      if (
+        location.pathname === "/showcase" ||
+        location.pathname === "/design-system"
+      ) {
+        setInitializing(false);
+        return;
+      }
       if (!token) {
         setInitializing(false);
         return;
@@ -63,7 +66,7 @@ function AuthInitializer({ children }: { children: React.ReactNode }) {
       }
     };
     checkAuth();
-}, [token, dispatch, location.pathname]);
+  }, [token, dispatch, location.pathname]);
 
   if (initializing) {
     return (
@@ -101,7 +104,8 @@ function PilotAccessRoute({ children }: { children: React.ReactNode }) {
   const location = useLocation();
 
   const isEfbRoute = location.pathname.startsWith("/efb");
-  const isAllowed = user?.is_executive || user?.is_admin || user?.has_pilot_access;
+  const isAllowed =
+    user?.is_executive || user?.is_admin || user?.has_pilot_access;
 
   if (!isAllowed && !isEfbRoute) {
     return <Navigate to="/efb" replace />;
@@ -120,13 +124,14 @@ function AdminRoute({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
-
 export default function App() {
   return (
     <AuthInitializer>
       <Routes>
         <Route path="/showcase" element={<ComponentShowcase />} />
         <Route path="/design-system" element={<ComponentShowcase />} />
+        <Route path="/showcase" element={<Showcase />} />
+        <Route path="/design-system" element={<Showcase />} />
         <Route path="/login" element={<Login />} />
         <Route path="/oauth/if-callback" element={<IFCallback />} />
         <Route
@@ -145,32 +150,149 @@ export default function App() {
           <Route path="/efb/settings" element={<EFB />} />
 
           {/* Full Pilot Routes - Requires Award ID 9 or Admin */}
-          <Route path="/" element={<PilotAccessRoute><Dashboard /></PilotAccessRoute>} />
+          <Route
+            path="/"
+            element={
+              <PilotAccessRoute>
+                <Dashboard />
+              </PilotAccessRoute>
+            }
+          />
           <Route path="/groups" element={<Navigate to="/calendar" replace />} />
-          <Route path="/groups/:id" element={<Navigate to="/calendar" replace />} />
-          <Route path="/calendar" element={<PilotAccessRoute><Calendar /></PilotAccessRoute>} />
-          <Route path="/bookings" element={<PilotAccessRoute><Bookings /></PilotAccessRoute>} />
-          <Route path="/operations" element={<PilotAccessRoute><Operations /></PilotAccessRoute>} />
-          <Route path="/transfers" element={<PilotAccessRoute><Transfers /></PilotAccessRoute>} />
-          <Route path="/shop" element={<PilotAccessRoute><Shop /></PilotAccessRoute>} />
+          <Route
+            path="/groups/:id"
+            element={<Navigate to="/calendar" replace />}
+          />
+          <Route
+            path="/calendar"
+            element={
+              <PilotAccessRoute>
+                <Calendar />
+              </PilotAccessRoute>
+            }
+          />
+          <Route
+            path="/bookings"
+            element={
+              <PilotAccessRoute>
+                <Bookings />
+              </PilotAccessRoute>
+            }
+          />
+          <Route
+            path="/operations"
+            element={
+              <PilotAccessRoute>
+                <Operations />
+              </PilotAccessRoute>
+            }
+          />
+          <Route
+            path="/transfers"
+            element={
+              <PilotAccessRoute>
+                <Transfers />
+              </PilotAccessRoute>
+            }
+          />
+          <Route
+            path="/shop"
+            element={
+              <PilotAccessRoute>
+                <Shop />
+              </PilotAccessRoute>
+            }
+          />
           <Route path="/handbook" element={<Handbook />} />
           <Route path="/handbook/:sectionId" element={<Handbook />} />
 
           {/* Admin Routes - Requires Admin Permission or Executive Callsign */}
-          <Route path="/admin" element={<AdminRoute><Admin /></AdminRoute>} />
-          <Route path="/admin/track" element={<AdminRoute><LiveTracker /></AdminRoute>} />
-          <Route path="/admin/pilots" element={<AdminRoute><AdminPilots /></AdminRoute>} />
-          <Route path="/admin/crew-roster" element={<Navigate to="/admin/pilots" replace />} />
-          <Route path="/admin/aircraft" element={<AdminRoute><AdminAircraft /></AdminRoute>} />
-          <Route path="/admin/transfers" element={<AdminRoute><AdminTransfers /></AdminRoute>} />
-          <Route path="/admin/waves" element={<AdminRoute><AdminWaves /></AdminRoute>} />
-          <Route path="/admin/settings" element={<AdminRoute><AdminSettings /></AdminRoute>} />
-          <Route path="/admin/fleet" element={<AdminRoute><Fleet /></AdminRoute>} />
-          <Route path="/fleet" element={<AdminRoute><Fleet /></AdminRoute>} />
-          <Route path="/fleet/:id" element={<AdminRoute><AircraftDetail /></AdminRoute>} />
+          <Route
+            path="/admin"
+            element={
+              <AdminRoute>
+                <Admin />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/track"
+            element={
+              <AdminRoute>
+                <LiveTracker />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/pilots"
+            element={
+              <AdminRoute>
+                <AdminPilots />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/crew-roster"
+            element={<Navigate to="/admin/pilots" replace />}
+          />
+          <Route
+            path="/admin/aircraft"
+            element={
+              <AdminRoute>
+                <AdminAircraft />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/transfers"
+            element={
+              <AdminRoute>
+                <AdminTransfers />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/waves"
+            element={
+              <AdminRoute>
+                <AdminWaves />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/settings"
+            element={
+              <AdminRoute>
+                <AdminSettings />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/fleet"
+            element={
+              <AdminRoute>
+                <Fleet />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/fleet"
+            element={
+              <AdminRoute>
+                <Fleet />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/fleet/:id"
+            element={
+              <AdminRoute>
+                <AircraftDetail />
+              </AdminRoute>
+            }
+          />
         </Route>
       </Routes>
     </AuthInitializer>
   );
 }
-
