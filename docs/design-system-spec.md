@@ -354,6 +354,8 @@ flowchart TD
    - **Subcomponents:** `Table`, `TableHeader`, `TableBody`, `TableFooter`, `TableRow`, `TableHead`, `TableCell`, `TableCaption`.
    - **Header Variants:**
      - `variant="burgundy"`: Solid Qatar Al-Annabi burgundy header background (`--table-header-bg: #6A0C2C` with bold white text `--table-header-fg: #ffffff`), matching the `qatarivirtual.com` Route Database.
+        > [!NOTE]
+        > **Brand Consistency Rule:** The burgundy header intentionally preserves the signature Qatar Al-Annabi primary maroon (`#6A0C2C`) across both light and dark operational modes rather than shifting to muted tones, ensuring immediate brand recognition and high contrast identical to `qatarivirtual.com`.
      - `variant="default"`: Clean transparent/muted header background with subtle hairline border.
    - **Density & Monospace Rules:**
      - `density="compact"`: Compact vertical padding (`py-2 px-3`) optimized for multi-row operational telemetry, flight catalogs, and ACARS feeds.

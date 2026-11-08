@@ -181,3 +181,25 @@ To prove the design system is completely ready to build the new OryxOps webapp M
    - Modals trap focus and close on `Escape`.
 3. **Automated Component Unit Tests:**
    - Each primitive showcased has corresponding tests in `frontend/src/components/ui/__tests__/` and `frontend/src/components/kokonut/__tests__/`.
+
+---
+
+## 5. Architectural & Implementation Guidelines for Downstream MVP Features
+
+The Component Showcase serves as an interactive playground and stress-test. When extracting and implementing full operational modules (e.g. Flight Dispatcher, Route Network Database, Pilot Roster), follow these engineering best practices:
+
+1. **Table Multi-Row Selection State Management:**
+   - In production dispatch cockpits (unlike the showcase demo which uses a simple boolean map), manage selected IDs using a `Set<string>` or filter by truthy values:
+     ```ts
+     const selectedCount = Object.values(selectedRowIds).filter(Boolean).length;
+     ```
+   - This ensures counts and batch actions remain strictly accurate across row toggles.
+
+2. **Virtualized Tables with Variable Column Wrapping:**
+   - In the Route Database showcase, row height is estimated at `44px` / `54px`, which operates cleanly under standard column widths (210px+).
+   - If downstream tables allow extreme manual column squeezing (e.g. below 100px) where multi-badge stacks wrap onto multiple lines:
+     - Either enforce column minimum widths (`min-w-[160px]`),
+     - Or attach TanStack Virtual's dynamic measurement ref: `ref={rowVirtualizer.measureElement}` to each virtual `<tr>` to prevent row overlap.
+
+3. **Showcase Scope & Developer Focus:**
+   - The `/design-system` showcase page is an internal developer workbench. Operational logic in the showcase is intentionally simplified to focus on component visual stress-testing and accessibility rather than complex backend telemetry sync.
