@@ -18,6 +18,7 @@ import LiveTracker from "./pages/LiveTracker";
 import Transfers from "./pages/Transfers";
 import Admin from "./pages/Admin";
 import Login from "./pages/Login";
+import Showcase from "./pages/Showcase";
 import EFB from "./pages/EFB";
 import Shop from "./pages/Shop";
 import Handbook from "./pages/Handbook";
@@ -32,12 +33,17 @@ import IFCallback from "./pages/IFCallback";
 
 function AuthInitializer({ children }: { children: React.ReactNode }) {
   const dispatch = useAppDispatch();
+  const location = useLocation();
   const token = useAppSelector((state) => state.auth.token);
   const user = useAppSelector((state) => state.auth.user);
   const [initializing, setInitializing] = useState(true);
 
   useEffect(() => {
     const checkAuth = async () => {
+      if (location.pathname === "/showcase") {
+  setInitializing(false);
+  return;
+}
       if (!token) {
         setInitializing(false);
         return;
@@ -57,7 +63,7 @@ function AuthInitializer({ children }: { children: React.ReactNode }) {
       }
     };
     checkAuth();
-  }, [token, dispatch]);
+}, [token, dispatch, location.pathname]);
 
   if (initializing) {
     return (
@@ -119,6 +125,7 @@ export default function App() {
   return (
     <AuthInitializer>
       <Routes>
+        <Route path="/showcase" element={<Showcase />} />
         <Route path="/login" element={<Login />} />
         <Route path="/oauth/if-callback" element={<IFCallback />} />
         <Route
