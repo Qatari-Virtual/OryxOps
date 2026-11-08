@@ -27,8 +27,8 @@ flowchart LR
 
 ---
 
-## Phase 2: Core shadcn/ui Primitives Suite
-**Objective:** Author unit-tested, accessible primitives customized with Qatari Virtual Al-Annabi branding and aviation monospace typography.
+## Phase 2: Core shadcn/ui Primitives Suite & Showcase Initialization
+**Objective:** Author unit-tested, accessible primitives customized with Qatari Virtual Al-Annabi branding and aviation monospace typography, wire `/design-system` routing, and showcase all primitives in an interactive styleguide.
 
 - [ ] Author tests and implement `Button` (`frontend/src/components/ui/button.tsx`) with variants: `default` (Burgundy), `secondary`, `outline`, `gold`, `destructive`, and `ghost`.
 - [ ] Author tests and implement `Badge` (`frontend/src/components/ui/badge.tsx`) with aviation status variants (`airborne`, `radar`, `tod`, `stopped`, `parked`, `gold`).
@@ -38,11 +38,13 @@ flowchart LR
 - [ ] Author tests and implement `Table` optimized for dense, monospace flight telemetry rows.
 - [ ] Author tests and implement `Tabs` with animated burgundy sliding indicator.
 - [ ] Author tests and implement `Tooltip` for quick guidance on aviation abbreviations.
+- [ ] Wire `/design-system` route and developer top-bar navigation trigger (`TASK-2.7`).
+- [ ] Integrate all Sprint 2 primitives into the interactive Component Showcase (`frontend/src/pages/ComponentShowcase.tsx`).
 
 ---
 
 ## Phase 3: Kokonut UI Micro-Interactions & Animated Components
-**Objective:** Implement sleek, high-impact interactive components using Kokonut UI patterns adapted for luxury airline operations.
+**Objective:** Implement sleek, high-impact interactive components using Kokonut UI patterns adapted for luxury airline operations, adding interactive previews to `/design-system`.
 
 - [ ] Author tests and implement `ActionList` (`frontend/src/components/kokonut/action-list.tsx`) for keyboard-navigable airframe and schedule selection.
 - [ ] Author tests and implement `GlowCard` (`frontend/src/components/kokonut/glow-card.tsx`) featuring animated Al-Annabi and champagne gold ambient glow for TOD/escalation alerts.
@@ -51,25 +53,27 @@ flowchart LR
 - [ ] Author tests and implement `BentoGrid` (`frontend/src/components/kokonut/bento-grid.tsx`) for responsive operational dashboard metrics.
 - [ ] Author tests and implement `HoldToConfirmButton` (`frontend/src/components/kokonut/hold-to-confirm.tsx`) for high-stakes operational actions (e.g. airframe release, force unassignment).
 - [ ] Author tests and implement `StatusPill` & `StatusDot` (`frontend/src/components/ui/status-pill.tsx`) for quiet, static, zero-animation status indication.
+- [ ] Mount all Kokonut UI interactive micro-interactions into the Component Showcase page.
 
 ---
 
 ## Phase 4: Aviation Domain Mock Widgets (MVP Proof-of-Concept)
-**Objective:** Assemble the primitives into five realistic, domain-specific mock widgets that prove the design system fulfills the upcoming MVP operations requirements.
+**Objective:** Assemble the primitives into five realistic, domain-specific mock widgets that prove the design system fulfills the upcoming MVP operations requirements, mounting them into the Showcase.
 
 - [ ] Implement **Pilot Self-Assignment Card** (pilot profile, claimed airframe, booked schedule, book/release triggers).
 - [ ] Implement **Categorized Unassigned Aircraft Roster** (categorized by Widebody, Narrowbody, Cargo with instant claim action).
 - [ ] Implement **Live Flight & TOD Tracker HUD** (route progress, altitude, step-climb alert, distance/time to TOD).
 - [ ] Implement **Automated Guard & Reminder Alert Banner** (stopped flight timer, escalation warnings, reminder buttons).
 - [ ] Implement **Live ACARS Feed Console** (dark monospace console with timestamped flight milestones).
+- [ ] Mount all 5 operational widgets into the MVP Proof-of-Concept section on the Component Showcase page.
 
 ---
 
 ## Phase 5: Component Showcase Cutover & Verification
-**Objective:** Mount the interactive Component Showcase page, wire routing, verify responsive behaviors, and validate zero regressions across light/dark themes.
+**Objective:** Perform final review and navigation hardening on `/design-system`, verify responsive behaviors, and validate zero regressions across light/dark themes.
 
-- [ ] Implement `frontend/src/pages/ComponentShowcase.tsx` assembling all primitives, Kokonut UI components, and mock widgets with live interactive controls.
-- [ ] Add `/design-system` route to `frontend/src/App.tsx` and a quick-navigation link in the top bar or development drawer.
+- [ ] Consolidate `frontend/src/pages/ComponentShowcase.tsx` assembling all primitives, Kokonut UI components, and mock widgets with live interactive controls.
+- [ ] Audit `/design-system` route, anchor deep linking, and desktop/mobile navigation triggers.
 - [ ] Author E2E/integration render test asserting all showcase sections mount cleanly without console warnings.
 - [ ] Run full test suite (`npm test`), type check (`npx tsc --noEmit`), and linter.
 - [ ] Verify visual fidelity against `qatarivirtual.com` design principles on mobile, tablet, and widescreen viewports.
