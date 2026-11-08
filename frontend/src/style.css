@@ -114,13 +114,13 @@
     --text-muted: oklch(60% 0.01 250);
 
     /* ── Qatar Al-Annabi Brand Tokens ───────────────────────── */
-    --brand: #6a0c2c;
-    --brand-dark: #4a0820;
-    --brand-light: #8a1840;
+    --brand: #6A0C2C;
+    --brand-dark: #4A0820;
+    --brand-light: #8A1840;
     --brand-pale: #fdf8f9;
     --brand-border: #ead9df;
     --brand-hover-bg: #f8f1f4;
-    --brand-gold: #c5a059;
+    --brand-gold: #C5A059;
     --brand-gold-glow: rgba(197, 160, 89, 0.15);
     --scrollbar-thumb: oklch(90% 0.01 240);
     --y-axis-width: 100px;
@@ -132,7 +132,7 @@
     --card-foreground: oklch(25% 0.02 250);
     --popover: #ffffff;
     --popover-foreground: oklch(25% 0.02 250);
-    --primary: #6a0c2c;
+    --primary: #6A0C2C;
     --primary-foreground: #ffffff;
     --secondary: oklch(96% 0.005 240);
     --secondary-foreground: oklch(25% 0.02 250);
@@ -144,7 +144,7 @@
     --destructive-foreground: #ffffff;
     --border: oklch(92% 0.01 240);
     --input: oklch(92% 0.01 240);
-    --ring: #6a0c2c;
+    --ring: #6A0C2C;
     --radius: 0.75rem;
 
     /* ── Flight Status Colors ────────────────────────────────── */
@@ -155,7 +155,7 @@
     --status-parked: #6366f1;
 
     /* ── Operational Table Header ───────────────────────────── */
-    --table-header-bg: #6a0c2c;
+    --table-header-bg: #6A0C2C;
     --table-header-fg: #ffffff;
 
     --status-approved-bg: #f0fdf4;
@@ -215,12 +215,12 @@
 
     /* ── Qatar Al-Annabi Brand Tokens ───────────────────────── */
     --brand: #a8244e;
-    --brand-dark: #6a0c2c;
+    --brand-dark: #6A0C2C;
     --brand-light: #c23867;
     --brand-pale: #1a0e12;
     --brand-border: #3f1e29;
     --brand-hover-bg: #2b141c;
-    --brand-gold: #e5c378;
+    --brand-gold: #E5C378;
     --brand-gold-glow: rgba(229, 195, 120, 0.25);
     --scrollbar-thumb: #3f1e29;
     --y-axis-width: 100px;
@@ -255,7 +255,7 @@
     --status-parked: #818cf8;
 
     /* ── Operational Table Header ───────────────────────────── */
-    --table-header-bg: #4a0820;
+    --table-header-bg: #4A0820;
     --table-header-fg: #ffffff;
 
     --status-approved-bg: rgba(16, 185, 129, 0.13);

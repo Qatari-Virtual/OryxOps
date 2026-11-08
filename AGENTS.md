@@ -59,6 +59,11 @@ OryxOps reflects the luxury, precision, and distinction of **Qatar Airways Virtu
 - **Secondary Accents:** Warm champagne gold (`#C5A059` / `#D4AF37`) for executive alerts, pilot rankings, and flight highlights.
 - **Surface Contrast:** High-contrast, clean cards with soft border lines (`#EAD9DF` light, `#272A35` dark) and subtle backdrop blurs (`backdrop-blur-md`). Heavy generic box shadows are discouraged.
 - **Aviation Typography:** Tabular monospace (`font-mono`) for UTC timestamps, ICAO/IATA airport codes, flight callsigns, and altitudes.
+- **Strict Iconography Standard (Never Use Emojis):**
+  - **Never use raw Unicode emojis (`📌`, `⚡`, `✈️`, `⚠️`, `✅`, `❌`, `🔥`, etc.)** anywhere in UI components, buttons, badges, table headers, alerts, or status text.
+  - Emojis render inconsistently across client operating systems (Windows, macOS, iOS, Android, Linux), disrupt typography stroke weights, lack theme color inheritance, and violate OryxOps luxury brand identity.
+  - **Always use Remix Icons (`@remixicon/react`) exclusively** (e.g. `<RiPushpinLine />`, `<RiFlashlightLine />`, `<RiPlaneLine />`, `<RiAlertLine />`, `<RiCheckLine />`).
+  - Lucide icons (`lucide-react`) are also strictly prohibited.
 
 ---
 
@@ -79,6 +84,10 @@ OryxOps reflects the luxury, precision, and distinction of **Qatar Airways Virtu
 - Styles must route through CSS variables in `globals.css` / `style.css` rather than arbitrary one-off Tailwind hex values.
 - Shared components reside in `frontend/src/components/ui/` or `frontend/src/components/kokonut/`.
 
+### D. Strict Iconography Standard: Zero Emojis, Remix Icons Only
+- Under no circumstances may code introduce raw Unicode emojis into user-facing markup, button labels, badges, or string templates.
+- Any status indicators, action buttons, table pills, and operational badges must pair vector SVG Remix Icons (`@remixicon/react`) with accessible ARIA labels or semantic text.
+
 ---
 
 ## 5. Agent Instructions for Common Tasks
@@ -89,7 +98,7 @@ OryxOps reflects the luxury, precision, and distinction of **Qatar Airways Virtu
 3. **Implement via Official shadcn Scaffolding (Do NOT create from 0):**
    - **Download/Scaffold:** Pull the primitive directly from the official shadcn registry via `npx shadcn@latest add <component>` (inside `frontend/`) or retrieve the official component template from `ui.shadcn.com`.
    - **Apply the 3 Mandatory OryxOps Adaptations:**
-     - **a. Iconography Standard:** Replace any `lucide-react` icons with `@remixicon/react` (e.g. `RiCloseLine`, `RiCheckLine`, `RiArrowRightLine`). Lucide is strictly prohibited to prevent mismatched stroke weights and duplicate bundles.
+     - **a. Iconography Standard:** Replace any `lucide-react` icons and Unicode emojis with `@remixicon/react` (e.g. `RiCloseLine`, `RiCheckLine`, `RiArrowRightLine`, `RiPushpinLine`). Both Lucide and raw Unicode emojis are strictly prohibited across the entire repository.
      - **b. Tailwind CSS v4 & 60fps Animations:** Replace legacy `tailwindcss-animate` classes (`animate-in`, `fade-in-0`, `zoom-in-95`, `slide-in-from-*`) with GPU-accelerated keyframe animations in `frontend/src/style.css` using `cubic-bezier(0.16, 1, 0.3, 1)` and `transform3d`.
      - **c. Brand Tokens & Radii:** Map classes to Qatar Al-Annabi CSS tokens (`--border`, `--ring`, `--primary: #6A0C2C`, `--card`), `rounded-xl` / `rounded-2xl` radii, and high-contrast dark mode surface elevations.
 4. **Showcase:** Add a dedicated interactive sample block in the Component Showcase page (`frontend/src/pages/ComponentShowcase.tsx`).
@@ -109,4 +118,5 @@ A pull request or task is complete only when:
 - [ ] Component is showcased with interactive controls on `/design-system`.
 - [ ] TypeScript compiles cleanly (`tsc --noEmit`).
 - [ ] Both light mode and dark mode render flawlessly with Qatar Al-Annabi branding.
+- [ ] Strictly zero Unicode emojis used; all iconography utilizes `@remixicon/react`.
 - [ ] No regression across existing application routes.

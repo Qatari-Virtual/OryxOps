@@ -209,10 +209,10 @@ flowchart TD
   - `frontend/src/components/ui/__tests__/table.test.tsx`
   - `frontend/src/pages/ComponentShowcase.tsx`
 - **Acceptance Criteria (AC):**
-  - [ ] Table headers support solid burgundy background variant and standard transparent variant.
-  - [ ] Table cells support compact vertical padding and tabular monospace alignment.
-  - [ ] Tabs switch active content smoothly via keyboard arrow keys.
-  - [ ] Interactive Table and Tabs previews added to Component Showcase (`/design-system`).
+  - [x] Table headers support solid burgundy background variant and standard transparent variant.
+  - [x] Table cells support compact vertical padding and tabular monospace alignment.
+  - [x] Tabs switch active content smoothly via keyboard arrow keys.
+  - [x] Interactive Table and Tabs previews added to Component Showcase (`/design-system`).
 
 #### `TASK-2.6`: Tooltip, Skeleton, Accordion & Vertical Timeline
 - **Description:** Implement auxiliary primitives:

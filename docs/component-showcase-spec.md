@@ -85,8 +85,19 @@ flowchart TD
    - Triggerable `Dialog` (Self-Assignment confirmation).
    - Triggerable `Sheet` (Flight Dispatch Briefing slide-over).
    - `Tooltip` hover examples explaining aviation acronyms (`TOD`, `STEP`, `ACARS`).
-5. **Dense Telemetry Table:**
-   - Sample table displaying 5 mock Qatar Airways flights with columns: `Flight`, `Aircraft`, `Pilot`, `Route`, `Altitude`, `GS`, `Status`, `Actions`.
+5. **High-Density Table & Route Database View (`Table`):**
+   - High-density aviation table replicating the `qatarivirtual.com` Route Database with solid Al-Annabi burgundy header (`--table-header-bg: #6A0C2C` with bold white text).
+   - Columns: `Flt Num`, `Dep`, `Arr`, `Aircraft & Livery`, `Duration`.
+   - Features: Callsign outline badges (`QR1 Classic`, `QR1`, `QR3`, `+6`), route map modal triggers, bold monospace ICAO codes (`OTBD`, `EGLL`, `OTHH`, `OMDB`), aircraft & livery badges (`Airbus A340-600`, `Boeing 777-300ER`), right-aligned monospace durations (`7h 0m`, `5h 35m`, `0h 50m`), interactive sorting, resizable column widths, and responsive filter bar built with 100% official shadcn primitives (`Select`, `Input`, `Button`).
+   - 5,379 routes virtualized with `@tanstack/react-virtual` for 60fps scrolling.
+   - Multiple table examples provided:
+     1. Virtualized Route Database (5,379 routes with resizable columns and burgundy header).
+     2. Simple & Clean Table (Active Fleet Airframe Directory).
+     3. Complex Cockpit Table (Multi-row selection checkboxes, expandable flight dossiers, column visibility toggles).
+   - Standard transparent header variant comparison.
+6. **Accessible Operational Tabs (`Tabs`):**
+   - Pill and Underline variants with Al-Annabi burgundy active pill.
+   - Smooth keyboard arrow switching between operational views (e.g., `Route Network`, `Fleet Telemetry`, `Scheduled Waves`).
 
 ---
 
