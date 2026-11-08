@@ -185,8 +185,8 @@ flowchart TD
   - `frontend/src/components/ui/sheet.tsx`
   - `frontend/src/components/ui/__tests__/dialog.test.tsx`
 - **Acceptance Criteria (AC):**
-  - [ ] Dialog traps focus properly and dismisses on `Escape` or backdrop click.
-  - [ ] Slide-out animation performs smoothly at 60fps.
+  - [x] Dialog traps focus properly and dismisses on `Escape` or backdrop click.
+  - [x] Slide-out animation performs smoothly at 60fps.
 
 #### `TASK-2.5`: High-Density Aviation Table & Tabs
 - **Description:** Implement `Table` (`frontend/src/components/ui/table.tsx`) optimized for tabular monospace operational figures.

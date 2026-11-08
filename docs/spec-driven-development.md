@@ -61,7 +61,11 @@ Author unit tests using **Vitest** and **React Testing Library** asserting the e
 
 ### Phase 3: Implementation (`frontend/src/`)
 Write the code to make the tests pass:
-- Compose primitives from `@radix-ui` / shadcn and Kokonut UI animations.
+- **Never Build shadcn Primitives From Scratch:** Always scaffold/download the component directly from the official shadcn registry (`npx shadcn@latest add <component>` from `frontend/` or copy from the official shadcn/ui repository) and then adapt it.
+- **Apply the 3 Mandatory Adaptations:**
+  1. **Remix Icon Exclusive:** Replace `lucide-react` with `@remixicon/react` icons across triggers and close actions.
+  2. **Tailwind CSS v4 & 60fps Motion:** Convert `tailwindcss-animate` classes to hardware-accelerated CSS keyframes in `style.css` (`translate3d`, `opacity`, `cubic-bezier(0.16, 1, 0.3, 1)`).
+  3. **Qatar Al-Annabi Brand Tokens:** Map surfaces and borders to `--card`, `--border`, `--brand`, and `--ring` (`#6A0C2C` / `#a8244e`).
 - Rely on semantic CSS variables defined in `style.css` (or `globals.css`).
 - Add the component to the **Component Showcase Page** (`frontend/src/pages/ComponentShowcase.tsx`) with an interactive demonstration block.
 - Verify that `npm test` passes and `npx tsc --noEmit` produces zero type errors.
