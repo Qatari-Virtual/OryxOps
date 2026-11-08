@@ -271,6 +271,12 @@ flowchart TD
 
 ### 4.1 shadcn/ui Core Primitives (`frontend/src/components/ui/`)
 
+> **Iron Rule: Never Author shadcn Components from 0.**
+> Always pull the official primitive from the shadcn registry via `npx shadcn@latest add <component>` (inside `frontend/`, configured via `frontend/components.json`) or copy from the official shadcn/ui repository, then apply the **3 Mandatory OryxOps Adaptations**:
+> 1. **Remix Icon Only:** Swap any `lucide-react` icons to `@remixicon/react` (`RiCloseLine`, `RiCheckLine`, `RiArrowRightLine`).
+> 2. **Tailwind CSS v4 & 60fps Animations:** Replace `tailwindcss-animate` classes with GPU-accelerated keyframe animations in `style.css` (`translate3d`, `opacity`, `cubic-bezier(0.16, 1, 0.3, 1)`).
+> 3. **Al-Annabi Brand Tokens:** Map colors to Qatar Al-Annabi CSS variables (`--brand`, `--primary: #6A0C2C`, `--ring`, `--border: #ead9df`, `--card`) and use `rounded-xl` / `rounded-2xl` radii.
+
 1. **Button (`button.tsx`):**
    - Variants: `default` (Burgundy), `secondary`, `outline`, `ghost`, `gold` (Champagne Accent), `destructive`.
    - Sizes: `sm` (compact ops table), `default`, `lg`, `icon`.
@@ -283,7 +289,29 @@ flowchart TD
 4. **Vertical Timeline (`timeline.tsx`):**
    - Vertical operational timeline with continuous burgundy spine and circular state nodes for ACARS events and flight phase logs.
 5. **Dialog & Sheet (`dialog.tsx`, `sheet.tsx`):**
-   - Accessible modal and sliding drawer for self-assignment confirmations and briefing drawers.
+   - Accessible modal dialog and sliding drawer overlays powered by `@radix-ui/react-dialog`.
+   - **Dialog API:**
+     - `Dialog` (Root state manager)
+     - `DialogTrigger` (Trigger button or element)
+     - `DialogPortal` (Portaled overlay mount)
+     - `DialogClose` (Accessible close trigger)
+     - `DialogOverlay` (Backdrop with `bg-black/60` and `backdrop-blur-xs`)
+     - `DialogContent` (Centered elevated modal container with Al-Annabi border, smooth scale/fade animations, and Remix Icon `RiCloseLine` close button)
+     - `DialogHeader`, `DialogFooter`, `DialogTitle`, `DialogDescription`
+   - **Sheet API:**
+     - `Sheet` (Root state manager)
+     - `SheetTrigger`, `SheetPortal`, `SheetClose`, `SheetOverlay`
+     - `SheetContent` with `side`: `"right" | "bottom" | "left" | "top"` (default: `"right"`).
+       - `side="right"`: Slide-out drawer from right edge (`sm:max-w-md`), tailored for Flight Dispatch Briefing, route remarks, and operational NOTAMs.
+       - `side="bottom"`: Slide-up bottom sheet (`max-h-[85vh]` with `rounded-t-2xl`), tailored for mobile aircraft inspection, quick telemetry checklist, and ramp status checks.
+       - `side="left"` / `side="top"`: Standard directional drawer options.
+     - `SheetHeader`, `SheetFooter`, `SheetTitle`, `SheetDescription`
+   - **Accessibility & Focus Management:**
+     - Focus trap: When opened, focus is automatically moved to within the dialog/sheet content and trapped.
+     - Dismissal: Automatically dismisses on `Escape` keypress or backdrop overlay click.
+     - ARIA roles: `role="dialog"`, `aria-modal="true"`, accessible title and description associations.
+   - **Motion & Performance (60fps):**
+     - GPU-accelerated transforms (`translate3d`, `scale3d`) and opacity transitions with cubic-bezier easing (`cubic-bezier(0.16, 1, 0.3, 1)`), guaranteeing buttery smooth 60fps performance on all viewports without layout thrashing.
 5. **Table (`table.tsx`):**
    - High-density table support with monospace cell alignment for aviation data.
 6. **Tabs (`tabs.tsx`):**

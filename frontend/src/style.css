@@ -407,3 +407,178 @@ textarea {
   -ms-overflow-style: none !important;  /* IE and Edge */
   scrollbar-width: none !important;  /* Firefox */
 }
+
+/* ── Dialog & Sheet Overlays Keyframe Animations (60fps GPU-Accelerated) ── */
+@keyframes overlayShow {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes overlayHide {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes dialogContentShow {
+  from {
+    opacity: 0;
+    scale: 0.96;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@keyframes dialogContentHide {
+  from {
+    opacity: 1;
+    scale: 1;
+  }
+  to {
+    opacity: 0;
+    scale: 0.96;
+  }
+}
+
+@keyframes sheetSlideInRight {
+  from {
+    transform: translate3d(100%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes sheetSlideOutRight {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+@keyframes sheetSlideInBottom {
+  from {
+    transform: translate3d(0, 100%, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes sheetSlideOutBottom {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 100%, 0);
+  }
+}
+
+@keyframes sheetSlideInLeft {
+  from {
+    transform: translate3d(-100%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes sheetSlideOutLeft {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+@keyframes sheetSlideInTop {
+  from {
+    transform: translate3d(0, -100%, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes sheetSlideOutTop {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, -100%, 0);
+  }
+}
+
+.dialog-overlay[data-state="open"],
+.sheet-overlay[data-state="open"] {
+  animation: overlayShow 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: opacity;
+}
+
+.dialog-overlay[data-state="closed"],
+.sheet-overlay[data-state="closed"] {
+  animation: overlayHide 150ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: opacity;
+}
+
+.dialog-content[data-state="open"] {
+  animation: dialogContentShow 220ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: scale, opacity;
+}
+
+.dialog-content[data-state="closed"] {
+  animation: dialogContentHide 180ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: scale, opacity;
+}
+
+.sheet-content-right[data-state="open"] {
+  animation: sheetSlideInRight 300ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform;
+}
+
+.sheet-content-right[data-state="closed"] {
+  animation: sheetSlideOutRight 250ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform;
+}
+
+.sheet-content-bottom[data-state="open"] {
+  animation: sheetSlideInBottom 300ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform;
+}
+
+.sheet-content-bottom[data-state="closed"] {
+  animation: sheetSlideOutBottom 250ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform;
+}
+
+.sheet-content-left[data-state="open"] {
+  animation: sheetSlideInLeft 300ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform;
+}
+
+.sheet-content-left[data-state="closed"] {
+  animation: sheetSlideOutLeft 250ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform;
+}
+
+.sheet-content-top[data-state="open"] {
+  animation: sheetSlideInTop 300ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform;
+}
+
+.sheet-content-top[data-state="closed"] {
+  animation: sheetSlideOutTop 250ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform;
+}

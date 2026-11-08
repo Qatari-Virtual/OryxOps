@@ -86,7 +86,12 @@ OryxOps reflects the luxury, precision, and distinction of **Qatar Airways Virtu
 ### Task 1: Adding a New shadcn or Kokonut Component
 1. **Update Specs:** Check `docs/design-system-spec.md` or `docs/component-showcase-spec.md` for props, variants, and token mapping.
 2. **Write Tests:** Add unit tests in `frontend/src/components/ui/__tests__/<Component>.test.tsx` asserting rendering, variants, and keyboard focus.
-3. **Implement:** Scaffold the component under `frontend/src/components/ui/` or `frontend/src/components/kokonut/`, adhering to Qatar Al-Annabi CSS variables.
+3. **Implement via Official shadcn Scaffolding (Do NOT create from 0):**
+   - **Download/Scaffold:** Pull the primitive directly from the official shadcn registry via `npx shadcn@latest add <component>` (inside `frontend/`) or retrieve the official component template from `ui.shadcn.com`.
+   - **Apply the 3 Mandatory OryxOps Adaptations:**
+     - **a. Iconography Standard:** Replace any `lucide-react` icons with `@remixicon/react` (e.g. `RiCloseLine`, `RiCheckLine`, `RiArrowRightLine`). Lucide is strictly prohibited to prevent mismatched stroke weights and duplicate bundles.
+     - **b. Tailwind CSS v4 & 60fps Animations:** Replace legacy `tailwindcss-animate` classes (`animate-in`, `fade-in-0`, `zoom-in-95`, `slide-in-from-*`) with GPU-accelerated keyframe animations in `frontend/src/style.css` using `cubic-bezier(0.16, 1, 0.3, 1)` and `transform3d`.
+     - **c. Brand Tokens & Radii:** Map classes to Qatar Al-Annabi CSS tokens (`--border`, `--ring`, `--primary: #6A0C2C`, `--card`), `rounded-xl` / `rounded-2xl` radii, and high-contrast dark mode surface elevations.
 4. **Showcase:** Add a dedicated interactive sample block in the Component Showcase page (`frontend/src/pages/ComponentShowcase.tsx`).
 
 ### Task 2: Modifying Design Tokens or Theme
