@@ -93,6 +93,8 @@
   /* Operational Table Header */
   --color-table-header-bg: var(--table-header-bg);
   --color-table-header-fg: var(--table-header-fg);
+  --color-table-header-burgundy: var(--table-header-burgundy);
+  --color-table-header-burgundy-fg: var(--table-header-burgundy-fg);
 
   /* Radius Tokens */
   --radius-sm: calc(var(--radius) - 4px);
@@ -157,6 +159,8 @@
     /* ── Operational Table Header ───────────────────────────── */
     --table-header-bg: #6A0C2C;
     --table-header-fg: #ffffff;
+    --table-header-burgundy: #6A0C2C;
+    --table-header-burgundy-fg: #ffffff;
 
     --status-approved-bg: #f0fdf4;
     --status-approved-text: #15803d;
@@ -257,6 +261,8 @@
     /* ── Operational Table Header ───────────────────────────── */
     --table-header-bg: #4A0820;
     --table-header-fg: #ffffff;
+    --table-header-burgundy: #6A0C2C;
+    --table-header-burgundy-fg: #ffffff;
 
     --status-approved-bg: rgba(16, 185, 129, 0.13);
     --status-approved-text: #86efac;

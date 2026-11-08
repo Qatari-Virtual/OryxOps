@@ -607,7 +607,7 @@ export default function Showcase() {
               {/* HEADER MATCHING IMAGE */}
               <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                 <div>
-                  <h2 className="text-3xl font-extrabold text-[#6A0C2C] dark:text-[#C23867] tracking-tight">
+                  <h2 className="text-3xl font-extrabold text-brand dark:text-brand-light tracking-tight">
                     Route Database
                   </h2>
                   <p className="mt-1 text-sm text-muted-foreground">
@@ -616,7 +616,7 @@ export default function Showcase() {
                   <button
                     type="button"
                     onClick={() => setSelectedRouteForMap(allRoutes[0])}
-                    className="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-[#6A0C2C] dark:text-[#C23867] hover:underline"
+                    className="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-brand dark:text-brand-light hover:underline"
                   >
                     <RiMap2Line className="h-4 w-4" />
                     View Route Map &rarr;
@@ -624,7 +624,7 @@ export default function Showcase() {
                 </div>
 
                 <div className="flex items-center text-xs text-muted-foreground font-mono">
-                  <span className="text-[#6A0C2C] dark:text-[#C23867]">Home</span>
+                  <span className="text-brand dark:text-brand-light">Home</span>
                   <span className="mx-1.5">/</span>
                   <span>Route Database</span>
                 </div>

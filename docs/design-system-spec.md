@@ -83,6 +83,8 @@ To ensure seamless integration with the standard **shadcn/ui** component suite, 
     /* Operational Table Header (qatarivirtual.com style) */
     --table-header-bg: #6A0C2C;
     --table-header-fg: #ffffff;
+    --table-header-burgundy: #6A0C2C;
+    --table-header-burgundy-fg: #ffffff;
 
     /* Semantic Flight Status */
     --status-airborne: #10b981;
@@ -178,6 +180,8 @@ The semantic tokens are bound to Tailwind utility classes via `@theme static` in
   /* Table Header */
   --color-table-header-bg: var(--table-header-bg);
   --color-table-header-fg: var(--table-header-fg);
+  --color-table-header-burgundy: var(--table-header-burgundy);
+  --color-table-header-burgundy-fg: var(--table-header-burgundy-fg);
 
   /* Radius Tokens */
   --radius-sm: calc(var(--radius) - 4px);

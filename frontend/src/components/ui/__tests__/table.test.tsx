@@ -124,8 +124,8 @@ describe("Table Primitive Suite", () => {
       );
 
       const header = screen.getByTestId("burgundy-header");
-      expect(header.className).toMatch(/bg-\[#6A0C2C\]|bg-brand|bg-\[var\(--table-header-bg\)\]/);
-      expect(header.className).toContain("text-white");
+      expect(header.className).toMatch(/bg-\[#6A0C2C\]|bg-brand|bg-\[var\(--table-header-bg\)\]|bg-table-header-burgundy/);
+      expect(header.className).toMatch(/text-white|text-table-header-burgundy-fg/);
     });
 
     it("supports variant='burgundy' set at Table level propagating to header", () => {
@@ -145,8 +145,8 @@ describe("Table Primitive Suite", () => {
       );
 
       const header = screen.getByTestId("propagated-header");
-      expect(header.className).toMatch(/bg-\[#6A0C2C\]|bg-brand|bg-\[var\(--table-header-bg\)\]/);
-      expect(header.className).toContain("text-white");
+      expect(header.className).toMatch(/bg-\[#6A0C2C\]|bg-brand|bg-\[var\(--table-header-bg\)\]|bg-table-header-burgundy/);
+      expect(header.className).toMatch(/text-white|text-table-header-burgundy-fg/);
     });
 
     it("renders standard transparent/muted header variant by default", () => {
@@ -167,6 +167,7 @@ describe("Table Primitive Suite", () => {
 
       const header = screen.getByTestId("default-header");
       expect(header.className).not.toContain("bg-[#6A0C2C]");
+      expect(header.className).not.toContain("bg-table-header-burgundy");
       expect(header.className).not.toContain("bg-[var(--table-header-bg)]");
     });
 

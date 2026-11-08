@@ -97,7 +97,7 @@ const TableHeader = React.forwardRef<HTMLTableSectionElement, TableHeaderProps>(
           className={cn(
             isSticky && "sticky top-0 z-20 shadow-xs",
             isBurgundy
-              ? "bg-[#6A0C2C] bg-[var(--table-header-bg)] text-white font-bold [&_tr]:border-b-0"
+              ? "bg-table-header-burgundy text-table-header-burgundy-fg font-bold [&_tr]:border-b-0"
               : "[&_tr]:border-b border-border bg-card/95 backdrop-blur-xs text-muted-foreground",
             className
           )}
@@ -288,7 +288,7 @@ const TableHead = React.forwardRef<HTMLTableCellElement, TableHeadProps>(
         className={cn(
           "select-none font-semibold transition-colors",
           isSticky ? "sticky top-0 z-20 shadow-xs" : "relative",
-          isBurgundy ? "bg-[#6A0C2C] text-white" : "bg-card text-muted-foreground",
+          isBurgundy ? "bg-table-header-burgundy text-table-header-burgundy-fg" : "bg-card text-muted-foreground",
           isCompact ? "h-9 px-3 py-1.5" : "h-11 px-4 py-2.5",
           align === "right" ? "text-right" : align === "center" ? "text-center" : "text-left",
           mono && "font-mono tabular-nums",
