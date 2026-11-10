@@ -1,5 +1,7 @@
 import * as React from "react";
+import { cn } from "@/lib/utils";
 import { ActionList } from "@/components/kokonut/action-list";
+import { ShimmerInput } from "@/components/kokonut/shimmer-input";
 import { useState, useMemo, useRef, useCallback } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { Button } from "@/components/ui/button";
@@ -59,6 +61,7 @@ import {
   RiFlashlightLine,
   RiCalendarLine,
   RiAwardLine,
+  RiUserLine,
 } from "@remixicon/react";
 
 // =============================================================================
@@ -333,6 +336,8 @@ const COMPLEX_DISPATCH_DATA = [
 
 export default function Showcase() {
   const [selectedAction, setSelectedAction] = useState("Airbus A350-900");
+  const [shimmerSearchQuery, setShimmerSearchQuery] = useState("QTR843");
+  const [pilotSearchQuery, setPilotSearchQuery] = useState("");
   // All 5,379 routes loaded once
   const allRoutes = useMemo(() => generateRouteDatabase(), []);
 
@@ -1386,6 +1391,143 @@ export default function Showcase() {
           </div>
         </section>
 
+
+        {/* ========================================================================= */}
+        {/* KOKONUT UI: SHIMMER INPUT (CALLSIGN & AIRPORT LOOKUP) */}
+        {/* ========================================================================= */}
+        <section className="rounded-xl border border-border bg-card p-6">
+          <div className="mb-8 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <div className="flex items-center gap-2">
+                <Badge variant="gold">TASK-3.3</Badge>
+                <Badge variant="outline">Kokonut UI</Badge>
+              </div>
+              <h3 className="mt-2 text-xl font-bold tracking-tight">
+                Callsign & Airport Shimmer Search Input (ShimmerInput)
+              </h3>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Animated light sweep cycling through Qatar Al-Annabi burgundy (<span className="font-mono text-brand font-semibold">#6A0C2C</span>) 
+                and champagne gold (<span className="font-mono text-brand-gold font-semibold">#C5A059</span>). Optimized for quick pilot, callsign, and ICAO lookups with clean clear button.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid gap-8 lg:grid-cols-2">
+            {/* DEMO 1: Tabular Monospace Callsign & ICAO Lookup */}
+            <div className="space-y-4 rounded-xl border border-border/80 bg-muted/20 p-5">
+              <div>
+                <div className="flex items-center justify-between">
+                  <h4 className="font-semibold text-sm">Callsign & Airport Monospace Lookup</h4>
+                  <Badge variant="burgundy">Tabular Mono</Badge>
+                </div>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  Light sweep activates on focus or active query. Type a flight number or ICAO code.
+                </p>
+              </div>
+
+              <ShimmerInput
+                mono
+                value={shimmerSearchQuery}
+                onChange={(e) => setShimmerSearchQuery(e.target.value)}
+                onClear={() => setShimmerSearchQuery("")}
+                placeholder="Search callsign, ICAO, or airframe (e.g. QTR843, OTHH, A7-APC)..."
+              />
+
+              {/* Quick Suggestion Chips */}
+              <div className="flex flex-wrap items-center gap-2 pt-1">
+                <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
+                  Quick lookups:
+                </span>
+                {["QTR843", "A7-APC", "OTHH", "EGLL", "QR001", "OMDB"].map((chip) => (
+                  <button
+                    key={chip}
+                    type="button"
+                    onClick={() => setShimmerSearchQuery(chip)}
+                    className="rounded-md border border-border bg-card px-2 py-0.5 font-mono text-xs font-semibold hover:border-brand hover:text-brand transition-colors cursor-pointer"
+                  >
+                    {chip}
+                  </button>
+                ))}
+              </div>
+
+              {/* Query Status Card */}
+              <div className="rounded-lg border border-border/60 bg-card p-3 text-xs space-y-1">
+                <div className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Current Query:</span>
+                  <span className="font-mono font-bold text-brand">
+                    {shimmerSearchQuery ? shimmerSearchQuery : "(empty)"}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-muted-foreground">Shimmer State:</span>
+                  <span className="flex items-center gap-1 font-semibold">
+                    <span
+                      className={cn(
+                        "inline-block h-2 w-2 rounded-full",
+                        shimmerSearchQuery ? "bg-emerald-500 animate-pulse" : "bg-muted-foreground/50"
+                      )}
+                    />
+                    {shimmerSearchQuery ? "Active (Input / Focus Sweep)" : "Idle (Hairline Border)"}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* DEMO 2: Pilot Name & Custom Icon Search */}
+            <div className="space-y-4 rounded-xl border border-border/80 bg-muted/20 p-5">
+              <div>
+                <div className="flex items-center justify-between">
+                  <h4 className="font-semibold text-sm">Pilot Directory & Sizing Variants</h4>
+                  <Badge variant="outline">Clean [x] Reset</Badge>
+                </div>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  Standard typography with pilot avatar icon and size variations.
+                </p>
+              </div>
+
+              <div className="space-y-3">
+                <div>
+                  <span className="text-[11px] font-semibold text-muted-foreground uppercase">
+                    Large Command Bar (sizeVariant="lg"):
+                  </span>
+                  <ShimmerInput
+                    sizeVariant="lg"
+                    placeholder="Search pilot roster by name or ID..."
+                    icon={<RiUserLine className="h-5 w-5 text-muted-foreground" />}
+                    value={pilotSearchQuery}
+                    onChange={(e) => setPilotSearchQuery(e.target.value)}
+                    onClear={() => setPilotSearchQuery("")}
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                  <div>
+                    <span className="text-[11px] font-semibold text-muted-foreground uppercase">
+                      Compact / Table (sizeVariant="sm"):
+                    </span>
+                    <ShimmerInput
+                      sizeVariant="sm"
+                      mono
+                      placeholder="Quick ICAO..."
+                      defaultValue="OTHH"
+                    />
+                  </div>
+
+                  <div>
+                    <span className="text-[11px] font-semibold text-muted-foreground uppercase">
+                      Disabled State:
+                    </span>
+                    <ShimmerInput
+                      disabled
+                      placeholder="Airframe locked..."
+                      defaultValue="A7-BAB (In Maintenance)"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* BRAND COLORS */}
         <section className="rounded-xl border border-border bg-card p-6">
