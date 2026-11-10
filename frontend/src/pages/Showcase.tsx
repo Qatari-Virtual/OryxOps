@@ -1,4 +1,5 @@
 import * as React from "react";
+import { ActionList } from "@/components/kokonut/action-list";
 import { useState, useMemo, useRef, useCallback } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { Button } from "@/components/ui/button";
@@ -56,6 +57,8 @@ import {
   RiCompass3Line,
   RiPushpinLine,
   RiFlashlightLine,
+  RiCalendarLine,
+  RiAwardLine,
 } from "@remixicon/react";
 
 // =============================================================================
@@ -329,6 +332,7 @@ const COMPLEX_DISPATCH_DATA = [
 ];
 
 export default function Showcase() {
+  const [selectedAction, setSelectedAction] = useState("Airbus A350-900");
   // All 5,379 routes loaded once
   const allRoutes = useMemo(() => generateRouteDatabase(), []);
 
@@ -1283,6 +1287,105 @@ export default function Showcase() {
             <Badge variant="outline">Outline</Badge>
           </div>
         </section>
+
+        
+        {/* INTERACTIVE ACTION LIST */}
+        <section className="rounded-xl border border-border bg-card p-6">
+          <div className="mb-8">
+            <h3 className="text-xl font-bold">Interactive ActionList</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Animated, keyboard-accessible lists with support for images,
+              icons, descriptions and badges.
+            </p>
+          </div>
+
+          <div className="grid gap-8 lg:grid-cols-2">
+            {/* IMAGE VARIANT */}
+            <div className="space-y-4">
+              <div>
+                <h4 className="font-semibold">Image variant</h4>
+                <p className="text-sm text-muted-foreground">
+                  Items with thumbnail images on the left.
+                </p>
+              </div>
+
+              <ActionList
+                ariaLabel="Aircraft image selection"
+                defaultActiveId="image-a350"
+                onSelect={(item) => setSelectedAction(item.label)}
+                items={[
+                  {
+                    id: "image-a350",
+                    label: "Airbus A350-900",
+                    description: "Long-haul aircraft",
+                    image:
+                      "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=160&h=160&q=80",
+                    imageAlt: "Aircraft in flight",
+                    badge: <Badge variant="burgundy">A359</Badge>,
+                  },
+                  {
+                    id: "image-b777",
+                    label: "Boeing 777-300ER",
+                    description: "Wide-body aircraft",
+                    image:
+                      "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=160&h=160&q=80",
+                    imageAlt: "Aircraft in flight",
+                    badge: <Badge variant="gold">B77W</Badge>,
+                  },
+                ]}
+              />
+            </div>
+
+            {/* ICON VARIANT */}
+            <div className="space-y-4">
+              <div>
+                <h4 className="font-semibold">Icon variant</h4>
+                <p className="text-sm text-muted-foreground">
+                  Minimal icons without surrounding background boxes.
+                </p>
+              </div>
+
+              <ActionList
+                ariaLabel="Flight management actions"
+                defaultActiveId="flights"
+                onSelect={(item) => setSelectedAction(item.label)}
+                items={[
+                  {
+                    id: "flights",
+                    label: "My Flights",
+                    description: "View your flight history",
+                    icon: <RiPlaneLine />,
+                    badge: <Badge variant="burgundy">Flights</Badge>,
+                  },
+                  {
+                    id: "schedule",
+                    label: "Flight Schedule",
+                    description: "Manage upcoming flights",
+                    icon: <RiCalendarLine />,
+                    badge: <Badge variant="outline">Schedule</Badge>,
+                  },
+                  {
+                    id: "rewards",
+                    label: "Pilot Rewards",
+                    description: "Check your earned rewards",
+                    icon: <RiAwardLine />,
+                    badge: <Badge variant="gold">Rewards</Badge>,
+                  },
+                ]}
+              />
+            </div>
+          </div>
+
+          <div className="mt-8 rounded-lg bg-muted/60 p-4 text-sm">
+            <span className="text-muted-foreground">
+              Last selected item:{" "}
+            </span>
+            <span className="font-semibold text-brand">
+              {selectedAction}
+            </span>
+          </div>
+        </section>
+
 
         {/* BRAND COLORS */}
         <section className="rounded-xl border border-border bg-card p-6">
