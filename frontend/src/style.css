@@ -676,3 +676,45 @@ textarea {
   animation: selectContentHide 140ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
   will-change: scale, opacity;
 }
+
+
+/* ── Kokonut UI GlowCard Keyframe Animations (Hardware-Accelerated Compositor Transforms) ── */
+@keyframes glowCardSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes glowCardPulse {
+  0%, 100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.65;
+    transform: scale(1.02);
+  }
+}
+
+.glow-card-gradient {
+  animation: glowCardSpin 8s linear infinite;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.glow-card-ambient {
+  animation: glowCardPulse 4s ease-in-out infinite;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glow-card-gradient,
+  .glow-card-ambient {
+    animation: none;
+    transform: none;
+  }
+}

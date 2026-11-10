@@ -34,6 +34,18 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import {
+  GlowCard,
+  type GlowCardVariant,
+  type GlowCardIntensity,
+} from "@/components/kokonut/glow-card";
+import {
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
+import {
   RiAddLine,
   RiArrowRightLine,
   RiSettings3Line,
@@ -56,6 +68,8 @@ import {
   RiCompass3Line,
   RiPushpinLine,
   RiFlashlightLine,
+  RiAlertLine,
+  RiFlightLandLine,
 } from "@remixicon/react";
 
 // =============================================================================
@@ -515,6 +529,11 @@ export default function Showcase() {
       setSelectedRowIds(all);
     }
   };
+
+  // GlowCard Showcase State
+  const [glowCardVariant, setGlowCardVariant] = useState<GlowCardVariant>("default");
+  const [glowCardIntensity, setGlowCardIntensity] = useState<GlowCardIntensity>("subtle");
+  const [glowCardActive, setGlowCardActive] = useState<boolean>(true);
 
   return (
     <main className="min-h-screen bg-background text-foreground">
@@ -1242,6 +1261,239 @@ export default function Showcase() {
             </div>
           </TabsContent>
         </Tabs>
+
+        {/* ========================================================================= */}
+        {/* KOKONUT UI: GLOW CARD (TASK-3.2) */}
+        {/* ========================================================================= */}
+        <section className="rounded-2xl border border-border bg-card p-6 md:p-8 space-y-6">
+          <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between border-b border-border pb-4">
+            <div>
+              <div className="flex items-center gap-2">
+                <Badge variant="burgundy">Kokonut UI</Badge>
+                <Badge variant="gold">TASK-3.2</Badge>
+                <span className="text-xs font-mono text-muted-foreground">GPU-Accelerated 60fps</span>
+              </div>
+              <h3 className="mt-2 text-2xl font-bold tracking-tight">
+                Al-Annabi & Gold Glow Card (<code className="text-brand dark:text-brand-light">GlowCard</code>)
+              </h3>
+              <p className="mt-1 text-sm text-muted-foreground max-w-2xl">
+                Hardware-accelerated animated border gradient cycling subtly through Al-Annabi burgundy
+                (<code className="font-mono text-brand font-bold">#6A0C2C</code>) and champagne gold
+                (<code className="font-mono text-brand-gold font-bold">#C5A059</code>). Designed for high-priority operational callouts, Top of Descent (TOD) advisories, and stopped flight escalation warnings.
+              </p>
+            </div>
+
+            {/* Controls */}
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="flex items-center gap-1.5">
+                <span className="text-xs font-semibold text-muted-foreground">Variant:</span>
+                <div className="flex gap-1">
+                  {(["default", "tod", "escalation"]).map((v) => (
+                    <Button
+                      key={v}
+                      size="sm"
+                      variant={glowCardVariant === v ? "default" : "outline"}
+                      onClick={() => setGlowCardVariant(v as GlowCardVariant)}
+                      className="capitalize text-xs"
+                    >
+                      {v}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex items-center gap-1.5">
+                <span className="text-xs font-semibold text-muted-foreground">Intensity:</span>
+                <div className="flex gap-1">
+                  {(["subtle", "normal", "strong"]).map((i) => (
+                    <Button
+                      key={i}
+                      size="sm"
+                      variant={glowCardIntensity === i ? "gold" : "outline"}
+                      onClick={() => setGlowCardIntensity(i as GlowCardIntensity)}
+                      className="capitalize text-xs"
+                    >
+                      {i}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+
+              <Button
+                size="sm"
+                variant={glowCardActive ? "default" : "outline"}
+                onClick={() => setGlowCardActive((prev) => !prev)}
+                className="text-xs"
+              >
+                Glow: {glowCardActive ? "Active" : "Disabled"}
+              </Button>
+            </div>
+          </div>
+
+          {/* Cards Showcase Grid */}
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+            {/* 1. Interactive Playground Card */}
+            <GlowCard
+              variant={glowCardVariant}
+              intensity={glowCardIntensity}
+              glow={glowCardActive}
+              badge={
+                <Badge variant={glowCardVariant === "tod" ? "gold" : glowCardVariant === "escalation" ? "stopped" : "burgundy"}>
+                  <RiFlashlightLine className="mr-1 h-3.5 w-3.5" />
+                  Live Preview
+                </Badge>
+              }
+              className="flex flex-col justify-between"
+            >
+              <CardHeader>
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-muted-foreground">
+                    Interactive Playground
+                  </span>
+                </div>
+                <CardTitle className="text-xl">
+                  {glowCardVariant === "default" && "Al-Annabi Luxury Cycling Card"}
+                  {glowCardVariant === "tod" && "Top of Descent (TOD) Advisory"}
+                  {glowCardVariant === "escalation" && "Automated Guard Escalation"}
+                </CardTitle>
+                <CardDescription>
+                  Current Preset: <span className="font-mono font-semibold text-foreground uppercase">{glowCardVariant}</span> · Intensity: <span className="font-mono font-semibold text-foreground uppercase">{glowCardIntensity}</span> · Animation: <span className="font-mono font-semibold text-foreground">{glowCardActive ? "60fps GPU" : "Static"}</span>
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  Smooth CSS compositor transforms ensure continuous 360° gradient circulation without thread blocking or CPU load spikes.
+                </p>
+                <div className="rounded-lg bg-muted/60 p-3 font-mono text-xs space-y-1">
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Gradient:</span>
+                    <span className="font-semibold text-brand dark:text-brand-light">#6A0C2C ↔ #C5A059</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Compositor:</span>
+                    <span className="font-semibold text-emerald-600 dark:text-emerald-400">translateZ(0) / rotate</span>
+                  </div>
+                </div>
+              </CardContent>
+              <CardFooter className="pt-0">
+                <Button variant="default" size="sm" className="w-full">
+                  Acknowledge Advisory
+                </Button>
+              </CardFooter>
+            </GlowCard>
+
+            {/* 2. Top of Descent (TOD) Advisory Card */}
+            <GlowCard
+              variant="tod"
+              intensity="normal"
+              badge={
+                <Badge variant="tod">
+                  <RiFlightLandLine className="mr-1 h-3.5 w-3.5" />
+                  TOD Advisory
+                </Badge>
+              }
+              role="alert"
+              aria-live="polite"
+              className="flex flex-col justify-between"
+            >
+              <CardHeader>
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-amber-600 dark:text-amber-400">
+                    Flight Telemetry Guard
+                  </span>
+                </div>
+                <CardTitle className="text-xl">
+                  TOD Approaching: 18 NM to Descent
+                </CardTitle>
+                <CardDescription>
+                  Flight QR843 · OTHH (Hamad Intl) Approach Corridor
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="grid grid-cols-2 gap-2 rounded-lg bg-muted/60 p-3 text-xs font-mono">
+                  <div>
+                    <span className="text-[10px] uppercase text-muted-foreground block">Target Alt</span>
+                    <span className="font-bold text-foreground">FL180 @ 240 KIAS</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] uppercase text-muted-foreground block">Descent Path</span>
+                    <span className="font-bold text-foreground">3.0° VNAV Path</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] uppercase text-muted-foreground block">Distance to TOD</span>
+                    <span className="font-bold text-amber-600 dark:text-amber-400">18.4 NM</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] uppercase text-muted-foreground block">Time to TOD</span>
+                    <span className="font-bold text-foreground">02:45 MIN</span>
+                  </div>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  SimBrief OFP descent checklist armed. Spoilers set to ARMED upon reaching FL240.
+                </p>
+              </CardContent>
+              <CardFooter className="pt-0 flex gap-2">
+                <Button variant="gold" size="sm" className="w-full">
+                  Commence VNAV Descent
+                </Button>
+              </CardFooter>
+            </GlowCard>
+
+            {/* 3. Stopped Aircraft Guard Escalation */}
+            <GlowCard
+              variant="escalation"
+              intensity="strong"
+              badge={
+                <Badge variant="stopped">
+                  <RiAlertLine className="mr-1 h-3.5 w-3.5" />
+                  Guard Escalation
+                </Badge>
+              }
+              role="alert"
+              aria-live="assertive"
+              className="flex flex-col justify-between"
+            >
+              <CardHeader>
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-rose-600 dark:text-rose-400">
+                    Automated Fleet Protection
+                  </span>
+                </div>
+                <CardTitle className="text-xl text-rose-700 dark:text-rose-400">
+                  Airborne-Stopped Flight Detected
+                </CardTitle>
+                <CardDescription>
+                  Airframe A7-BAB (A350-1000) · Pilot: @Daniel (QRV012)
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <p className="text-xs text-muted-foreground">
+                  Aircraft has been stationary mid-air at FL380 on AP+ hold for <strong className="text-foreground">18 minutes</strong>. Escalation threshold active.
+                </p>
+                <div className="rounded-lg border border-destructive/20 bg-destructive/5 p-3 text-xs font-mono">
+                  <div className="flex items-center justify-between text-rose-700 dark:text-rose-400 font-bold">
+                    <span className="flex items-center gap-1">
+                      <RiTimeLine className="h-4 w-4" />
+                      Auto-Unassign In:
+                    </span>
+                    <span className="text-sm">12:00 MIN</span>
+                  </div>
+                  <p className="mt-1 text-[11px] text-muted-foreground">
+                    Action required to avoid automatic airframe release back to VA pool.
+                  </p>
+                </div>
+              </CardContent>
+              <CardFooter className="pt-0 flex gap-2">
+                <Button variant="outline" size="sm" className="flex-1">
+                  Discord Reminder
+                </Button>
+                <Button variant="destructive" size="sm" className="flex-1">
+                  Force Release
+                </Button>
+              </CardFooter>
+            </GlowCard>
+          </div>
+        </section>
 
         {/* ========================================================================= */}
         {/* EXISTING SHOWCASE PRIMITIVES (BUTTONS, BADGES, COLORS) */}

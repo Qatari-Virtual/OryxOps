@@ -394,7 +394,23 @@ flowchart TD
 1. **Action List (`action-list.tsx`):**
    - Interactive list component with keyboard navigation, active highlight bar, and slot metadata. Ideal for selecting available aircraft or schedules.
 2. **Glow Border Card (`glow-card.tsx`):**
-   - Dynamic animated gradient border reflecting Al-Annabi burgundy and champagne gold. Used for high-priority alerts (e.g. TOD approaching, stopped flight escalation).
+   - Dynamic animated gradient border cycling subtly through Al-Annabi burgundy (`#6A0C2C` / `#A8244E`) and champagne gold (`#C5A059` / `#E5C378`). Used for high-priority operational callouts (e.g. TOD approaching, stopped flight escalation).
+   - **Component API (`GlowCardProps`):**
+     - `variant?: "default" | "tod" | "escalation"` — selects color gradient weighting:
+       - `"default"`: Balanced Al-Annabi burgundy (`#6A0C2C`) and champagne gold (`#C5A059`) cycle.
+       - `"tod"`: Champagne gold accent emphasis with burgundy undertones for Top of Descent.
+       - `"escalation"`: Deep Al-Annabi burgundy emphasis with alert rose/gold undertones for stopped flight guards.
+     - `intensity?: "subtle" | "normal" | "strong"` (default: `"subtle"`): Controls ambient glow bloom opacity to prevent distraction.
+     - `glow?: boolean` (default: `true`): Enables or pauses the animated border and ambient glow.
+     - `badge?: React.ReactNode`: Optional top priority pill/badge slot.
+     - `as?: React.ElementType`: Container element tag (defaults to `"div"`).
+   - **Hardware-Accelerated Architecture:**
+     - Uses CSS compositor transforms (`rotate(0deg)` to `rotate(360deg)`) on an isolated pseudo-element or background gradient with `will-change: transform` and `transform: translateZ(0)` to guarantee zero CPU spikes and 60fps execution.
+     - Includes a calm, non-distracting ambient bloom with low opacity (`0.25` - `0.45`) and subtle breathing pulse (`glowCardPulse`).
+     - Fully respects `@media (prefers-reduced-motion: reduce)` by disabling rotation and falling back to a static, elegant Al-Annabi/gold border.
+   - **Accessibility & Contrast:**
+     - Supports `role="alert"` or `role="region"` with accessible contrast compliance against light (`#FDF8F9`) and dark (`#0D0E12`) canvases.
+     - Inner content card is fully opaque (`bg-card text-card-foreground`) ensuring perfect typographic readability.
 3. **Shimmer Input (`shimmer-input.tsx`):**
    - Search bar with a subtle animated light sweep along the border. Used for global flight and pilot lookup.
 4. **Flight Phase Rail (`phase-rail.tsx`):**
