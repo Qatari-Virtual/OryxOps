@@ -679,6 +679,26 @@ textarea {
 
 
 /* ── Kokonut UI GlowCard Keyframe Animations (Hardware-Accelerated Compositor Transforms) ── */
+.group\/glow-card {
+  --glow-opacity-min: 0.15;
+  --glow-opacity-max: 0.35;
+}
+
+.group\/glow-card[data-intensity="subtle"] {
+  --glow-opacity-min: 0.15;
+  --glow-opacity-max: 0.35;
+}
+
+.group\/glow-card[data-intensity="normal"] {
+  --glow-opacity-min: 0.25;
+  --glow-opacity-max: 0.50;
+}
+
+.group\/glow-card[data-intensity="strong"] {
+  --glow-opacity-min: 0.40;
+  --glow-opacity-max: 0.70;
+}
+
 @keyframes glowCardSpin {
   0% {
     transform: rotate(0deg);
@@ -690,11 +710,11 @@ textarea {
 
 @keyframes glowCardPulse {
   0%, 100% {
-    opacity: 0.35;
+    opacity: var(--glow-opacity-min, 0.15);
     transform: scale(1);
   }
   50% {
-    opacity: 0.65;
+    opacity: var(--glow-opacity-max, 0.35);
     transform: scale(1.02);
   }
 }

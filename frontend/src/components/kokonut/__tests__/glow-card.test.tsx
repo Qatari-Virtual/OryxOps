@@ -71,8 +71,8 @@ describe("GlowCard (Kokonut UI)", () => {
     );
   });
 
-  it("supports intensity options ('subtle', 'normal', 'strong')", () => {
-    const { rerender } = render(
+  it("supports intensity options ('subtle', 'normal', 'strong') and sets intensity-specific opacity properties", () => {
+    const { rerender, container } = render(
       <GlowCard data-testid="glow-card" intensity="subtle">
         <span>Subtle Glow</span>
       </GlowCard>
@@ -81,6 +81,9 @@ describe("GlowCard (Kokonut UI)", () => {
       "data-intensity",
       "subtle"
     );
+    let ambient = container.querySelector(".glow-card-ambient") as HTMLElement;
+    expect(ambient.style.getPropertyValue("--glow-opacity-min")).toBe("0.15");
+    expect(ambient.style.getPropertyValue("--glow-opacity-max")).toBe("0.35");
 
     rerender(
       <GlowCard data-testid="glow-card" intensity="normal">
@@ -91,6 +94,9 @@ describe("GlowCard (Kokonut UI)", () => {
       "data-intensity",
       "normal"
     );
+    ambient = container.querySelector(".glow-card-ambient") as HTMLElement;
+    expect(ambient.style.getPropertyValue("--glow-opacity-min")).toBe("0.25");
+    expect(ambient.style.getPropertyValue("--glow-opacity-max")).toBe("0.5");
 
     rerender(
       <GlowCard data-testid="glow-card" intensity="strong">
@@ -101,6 +107,9 @@ describe("GlowCard (Kokonut UI)", () => {
       "data-intensity",
       "strong"
     );
+    ambient = container.querySelector(".glow-card-ambient") as HTMLElement;
+    expect(ambient.style.getPropertyValue("--glow-opacity-min")).toBe("0.4");
+    expect(ambient.style.getPropertyValue("--glow-opacity-max")).toBe("0.7");
   });
 
   it("disables glow animation when glow is false", () => {

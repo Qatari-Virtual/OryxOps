@@ -43,24 +43,28 @@ const intensityStyles: Record<
   GlowCardIntensity,
   {
     gradientOpacity: string;
-    ambientOpacity: string;
     ambientBlur: string;
+    opacityMin: number;
+    opacityMax: number;
   }
 > = {
   subtle: {
     gradientOpacity: "opacity-70 dark:opacity-85",
-    ambientOpacity: "opacity-25 dark:opacity-35",
     ambientBlur: "blur-xl",
+    opacityMin: 0.15,
+    opacityMax: 0.35,
   },
   normal: {
     gradientOpacity: "opacity-85 dark:opacity-95",
-    ambientOpacity: "opacity-40 dark:opacity-50",
     ambientBlur: "blur-xl",
+    opacityMin: 0.25,
+    opacityMax: 0.5,
   },
   strong: {
     gradientOpacity: "opacity-100",
-    ambientOpacity: "opacity-55 dark:opacity-65",
     ambientBlur: "blur-2xl",
+    opacityMin: 0.4,
+    opacityMax: 0.7,
   },
 };
 
@@ -79,7 +83,7 @@ const GlowCard = React.forwardRef<HTMLDivElement, GlowCardProps>(
     ref
   ) => {
     const { conic, radial } = variantGradients[variant];
-    const { gradientOpacity, ambientOpacity, ambientBlur } =
+    const { gradientOpacity, ambientBlur, opacityMin, opacityMax } =
       intensityStyles[intensity];
 
     return (
@@ -96,17 +100,20 @@ const GlowCard = React.forwardRef<HTMLDivElement, GlowCardProps>(
       >
         {glow && (
           <>
-            {/* Ambient Breathing Bloom Layer */}
+            {/* Ambient Breathing Bloom Layer with Intensity-Specific Custom Properties */}
             <div
               aria-hidden="true"
               className={cn(
                 "glow-card-ambient pointer-events-none absolute -inset-[20%]",
-                ambientOpacity,
                 ambientBlur
               )}
-              style={{
-                backgroundImage: radial,
-              }}
+              style={
+                {
+                  backgroundImage: radial,
+                  "--glow-opacity-min": opacityMin,
+                  "--glow-opacity-max": opacityMax,
+                } as React.CSSProperties
+              }
             />
 
             {/* Hardware-Accelerated 360-degree Border Gradient */}
