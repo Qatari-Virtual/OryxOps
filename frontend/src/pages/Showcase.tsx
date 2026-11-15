@@ -1,5 +1,6 @@
 import * as React from "react";
 import { ActionList } from "@/components/kokonut/action-list";
+import { PhaseRail, FLIGHT_PHASES, type FlightPhase } from "@/components/kokonut/phase-rail";
 import { useState, useMemo, useRef, useCallback } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { Button } from "@/components/ui/button";
@@ -96,7 +97,7 @@ const DESTINATIONS = [
   { icao: "LSGG", city: "Geneva (Cointrin)", hours: 5, mins: 35 },
   { icao: "VABB", city: "Mumbai (Chhatrapati Shivaji)", hours: 3, mins: 40 },
   { icao: "FAOR", city: "Johannesburg (O.R. Tambo)", hours: 8, mins: 15 },
-  { icao: "SBGR", city: "São Paulo (Guarulhos)", hours: 15, mins: 30 },
+  { icao: "SBGR", city: "SÃƒÂ£o Paulo (Guarulhos)", hours: 15, mins: 30 },
   { icao: "KLAX", city: "Los Angeles (Int'l)", hours: 16, mins: 10 },
   { icao: "OERK", city: "Riyadh (King Khalid)", hours: 1, mins: 25 },
   { icao: "VIDP", city: "Delhi (Indira Gandhi)", hours: 3, mins: 50 },
@@ -272,7 +273,7 @@ const COMPLEX_DISPATCH_DATA = [
   {
     id: "DSP-001",
     callsign: "QTR843",
-    route: "OTHH → EGLL",
+    route: "OTHH Ã¢â€ â€™ EGLL",
     acft: "A350-900 (A7-APC)",
     altitude: "FL380",
     speed: "485 kts",
@@ -287,7 +288,7 @@ const COMPLEX_DISPATCH_DATA = [
   {
     id: "DSP-002",
     callsign: "QTR001",
-    route: "OTHH → KJFK",
+    route: "OTHH Ã¢â€ â€™ KJFK",
     acft: "B777-300ER (A7-BAN)",
     altitude: "FL340",
     speed: "472 kts",
@@ -302,7 +303,7 @@ const COMPLEX_DISPATCH_DATA = [
   {
     id: "DSP-003",
     callsign: "QTR1002",
-    route: "OTHH → OMDB",
+    route: "OTHH Ã¢â€ â€™ OMDB",
     acft: "A350-1000 (A7-ANA)",
     altitude: "FL140",
     speed: "290 kts",
@@ -317,7 +318,7 @@ const COMPLEX_DISPATCH_DATA = [
   {
     id: "DSP-004",
     callsign: "QTR8818",
-    route: "OTHH → EDDF",
+    route: "OTHH Ã¢â€ â€™ EDDF",
     acft: "B777F Cargo (A7-BFG)",
     altitude: "FL000",
     speed: "0 kts",
@@ -333,6 +334,7 @@ const COMPLEX_DISPATCH_DATA = [
 
 export default function Showcase() {
   const [selectedAction, setSelectedAction] = useState("Airbus A350-900");
+  const [currentPhase, setCurrentPhase] = useState<FlightPhase>("Cruise");
   // All 5,379 routes loaded once
   const allRoutes = useMemo(() => generateRouteDatabase(), []);
 
@@ -537,7 +539,7 @@ export default function Showcase() {
             </div>
             <div className="ml-auto flex items-center gap-2">
               <Badge variant="outline">React 19 + Tailwind v4</Badge>
-              <Badge variant="burgundy">Sprint 2 · High-Density Tables</Badge>
+              <Badge variant="burgundy">Sprint 2 Ã‚Â· High-Density Tables</Badge>
             </div>
           </div>
 
@@ -1175,7 +1177,7 @@ export default function Showcase() {
                                   <div className="flex items-center justify-between border-b border-border pb-2">
                                     <div className="flex items-center gap-2">
                                       <RiPlaneLine className="h-4 w-4 text-brand" />
-                                      <span className="font-bold text-sm">Operational Flight Plan Remarks · {flight.callsign}</span>
+                                      <span className="font-bold text-sm">Operational Flight Plan Remarks Ã‚Â· {flight.callsign}</span>
                                     </div>
                                     <span className="text-xs text-muted-foreground font-mono">Pax Onboard: {flight.pax}</span>
                                   </div>
@@ -1387,6 +1389,40 @@ export default function Showcase() {
         </section>
 
 
+        {/* INTERACTIVE FLIGHT PHASE RAIL */}
+        <section className="rounded-xl border border-border bg-card p-6">
+          <div className="mb-8">
+            <h3 className="text-xl font-bold">Flight Phase Progress Rail</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Animated flight progress indicator with interactive phase selection.
+            </p>
+          </div>
+
+          <div className="rounded-xl border border-border bg-muted/30 p-5 sm:p-6">
+            <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  Current flight phase
+                </p>
+                <p className="mt-1 text-lg font-bold text-brand">
+                  {currentPhase}
+                </p>
+              </div>
+              <Badge variant="burgundy">
+                Phase {FLIGHT_PHASES.indexOf(currentPhase) + 1} of 7
+              </Badge>
+            </div>
+
+            <PhaseRail
+              currentPhase={currentPhase}
+              onPhaseChange={setCurrentPhase}
+            />
+
+            <p className="mt-3 text-center text-xs text-muted-foreground">
+              Select any phase above to preview the progress state.
+            </p>
+          </div>
+        </section>
         {/* BRAND COLORS */}
         <section className="rounded-xl border border-border bg-card p-6">
           <h3 className="text-xl font-bold">Brand Colors</h3>
@@ -1492,7 +1528,7 @@ export default function Showcase() {
         )}
 
         <footer className="border-t border-border py-6 text-center text-sm text-muted-foreground">
-          OryxOps Design System · Component Showcase · Task 2.5
+          OryxOps Design System Ã‚Â· Component Showcase Ã‚Â· Task 2.5
         </footer>
       </div>
     </main>
