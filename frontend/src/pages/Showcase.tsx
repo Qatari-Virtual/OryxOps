@@ -1,5 +1,6 @@
 import * as React from "react";
 import { ActionList } from "@/components/kokonut/action-list";
+import { PhaseRail, FLIGHT_PHASES, type FlightPhase } from "@/components/kokonut/phase-rail";
 import { useState, useMemo, useRef, useCallback } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { Button } from "@/components/ui/button";
@@ -333,6 +334,7 @@ const COMPLEX_DISPATCH_DATA = [
 
 export default function Showcase() {
   const [selectedAction, setSelectedAction] = useState("Airbus A350-900");
+  const [currentPhase, setCurrentPhase] = useState<FlightPhase>("Cruise");
   // All 5,379 routes loaded once
   const allRoutes = useMemo(() => generateRouteDatabase(), []);
 
@@ -1387,6 +1389,40 @@ export default function Showcase() {
         </section>
 
 
+        {/* INTERACTIVE FLIGHT PHASE RAIL */}
+        <section className="rounded-xl border border-border bg-card p-6">
+          <div className="mb-8">
+            <h3 className="text-xl font-bold">Flight Phase Progress Rail</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Animated flight progress indicator with interactive phase selection.
+            </p>
+          </div>
+
+          <div className="rounded-xl border border-border bg-muted/30 p-5 sm:p-6">
+            <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  Current flight phase
+                </p>
+                <p className="mt-1 text-lg font-bold text-brand">
+                  {currentPhase}
+                </p>
+              </div>
+              <Badge variant="burgundy">
+                Phase {FLIGHT_PHASES.indexOf(currentPhase) + 1} of 7
+              </Badge>
+            </div>
+
+            <PhaseRail
+              currentPhase={currentPhase}
+              onPhaseChange={setCurrentPhase}
+            />
+
+            <p className="mt-3 text-center text-xs text-muted-foreground">
+              Select any phase above to preview the progress state.
+            </p>
+          </div>
+        </section>
         {/* BRAND COLORS */}
         <section className="rounded-xl border border-border bg-card p-6">
           <h3 className="text-xl font-bold">Brand Colors</h3>
