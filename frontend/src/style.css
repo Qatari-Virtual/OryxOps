@@ -150,9 +150,9 @@
     --radius: 0.75rem;
 
     /* ── Flight Status Colors ────────────────────────────────── */
-    --status-airborne: #10b981;
+    --status-airborne: #047857;
     --status-radar: #0284c7;
-    --status-tod: #f59e0b;
+    --status-tod: #B45309;
     --status-stopped: #e11d48;
     --status-parked: #6366f1;
 

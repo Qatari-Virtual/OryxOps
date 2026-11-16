@@ -1,6 +1,8 @@
 import * as React from "react";
 import { ActionList } from "@/components/kokonut/action-list";
 import { PhaseRail, FLIGHT_PHASES, type FlightPhase } from "@/components/kokonut/phase-rail";
+import { HoldToConfirmButton } from "@/components/kokonut/hold-to-confirm";
+import { StatusDot, StatusPill } from "@/components/ui/status-pill";
 import { useState, useMemo, useRef, useCallback } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { Button } from "@/components/ui/button";
@@ -335,6 +337,7 @@ const COMPLEX_DISPATCH_DATA = [
 export default function Showcase() {
   const [selectedAction, setSelectedAction] = useState("Airbus A350-900");
   const [currentPhase, setCurrentPhase] = useState<FlightPhase>("Cruise");
+  const [confirmationMessage, setConfirmationMessage] = useState("No demo action confirmed yet.");
   // All 5,379 routes loaded once
   const allRoutes = useMemo(() => generateRouteDatabase(), []);
 
@@ -1389,6 +1392,84 @@ export default function Showcase() {
         </section>
 
 
+        {/* HOLD TO CONFIRM AND QUIET STATUS INDICATORS */}
+        <section className="rounded-xl border border-border bg-card p-6">
+          <div className="mb-8">
+            <h3 className="text-xl font-bold">Hold to Confirm & Status Indicators</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Deliberate 1.5-second confirmation for sensitive actions, alongside quiet static flight status indicators.
+            </p>
+          </div>
+
+          <div className="grid gap-8 lg:grid-cols-2">
+            <div className="space-y-4">
+              <div>
+                <h4 className="font-semibold">High-stakes action confirmation</h4>
+                <p className="text-sm text-muted-foreground">
+                  Press and hold for 1.5 seconds. Releasing early cancels the demo action.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap gap-3">
+                <HoldToConfirmButton
+                  onConfirm={() => setConfirmationMessage("Demo: Airframe release confirmed.")}
+                  className="border-rose-500/40 text-rose-600 hover:bg-rose-500/10"
+                >
+                  Hold to Release Airframe
+                </HoldToConfirmButton>
+
+                <HoldToConfirmButton
+                  onConfirm={() => setConfirmationMessage("Demo: Force unassign confirmed.")}
+                  className="border-rose-500/40 text-rose-600 hover:bg-rose-500/10"
+                >
+                  Hold to Force Unassign
+                </HoldToConfirmButton>
+
+                <HoldToConfirmButton
+                  onConfirm={() => setConfirmationMessage("Demo: Flight cancellation confirmed.")}
+                  className="border-rose-500/40 text-rose-600 hover:bg-rose-500/10"
+                >
+                  Hold to Cancel Flight
+                </HoldToConfirmButton>
+              </div>
+
+              <div className="rounded-lg bg-muted/60 p-4 text-sm" aria-live="polite">
+                <span className="text-muted-foreground">Preview result: </span>
+                <span className="font-semibold">{confirmationMessage}</span>
+              </div>
+            </div>
+
+            <div className="space-y-5">
+              <div>
+                <h4 className="font-semibold">Quiet status dots</h4>
+                <p className="mb-3 text-sm text-muted-foreground">
+                  Fixed 6px indicators with no pulsing or animation.
+                </p>
+                <div className="flex flex-wrap items-center gap-5">
+                  <span className="inline-flex items-center gap-2 text-sm"><StatusDot status="airborne" /> Airborne</span>
+                  <span className="inline-flex items-center gap-2 text-sm"><StatusDot status="radar" /> Radar</span>
+                  <span className="inline-flex items-center gap-2 text-sm"><StatusDot status="tod" /> TOD Advisory</span>
+                  <span className="inline-flex items-center gap-2 text-sm"><StatusDot status="stopped" /> Stopped</span>
+                  <span className="inline-flex items-center gap-2 text-sm"><StatusDot status="parked" /> Parked</span>
+                </div>
+              </div>
+
+              <div>
+                <h4 className="font-semibold">Status pills</h4>
+                <p className="mb-3 text-sm text-muted-foreground">
+                  Compact uppercase codes using the existing light and dark theme colours.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <StatusPill status="airborne" />
+                  <StatusPill status="radar" />
+                  <StatusPill status="tod" />
+                  <StatusPill status="stopped" />
+                  <StatusPill status="parked" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
         {/* INTERACTIVE FLIGHT PHASE RAIL */}
         <section className="rounded-xl border border-border bg-card p-6">
           <div className="mb-8">
