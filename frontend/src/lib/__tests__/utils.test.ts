@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+﻿import { describe, it, expect } from "vitest";
 import { cn } from "../utils";
 
 describe("cn utility helper - core clsx and tailwind-merge capabilities", () => {
@@ -279,9 +279,9 @@ describe("CSS theme variables verification in style.css", () => {
       "--card: #ffffff;",
       "--primary: #6A0C2C;",
       "--ring: #6A0C2C;",
-      "--status-airborne: #10b981;",
+      "--status-airborne: #047857;",
       "--status-radar: #0284c7;",
-      "--status-tod: #f59e0b;",
+      "--status-tod: #B45309;",
       "--status-stopped: #e11d48;",
       "--status-parked: #6366f1;",
       "--table-header-bg: #6A0C2C;",

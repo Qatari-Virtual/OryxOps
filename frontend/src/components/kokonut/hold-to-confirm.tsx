@@ -30,9 +30,14 @@ export const HoldToConfirmButton = React.forwardRef<
   ref,
 ) {
   const [holding, setHolding] = React.useState(false);
+
   const timerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
   const confirmedRef = React.useRef(false);
   const holdingRef = React.useRef(false);
+  const disabledRef = React.useRef(disabled);
+
+  // Keep the latest disabled value available to the timer.
+  disabledRef.current = disabled;
 
   const cancelHold = React.useCallback(() => {
     if (timerRef.current) {
@@ -45,14 +50,21 @@ export const HoldToConfirmButton = React.forwardRef<
   }, []);
 
   const startHold = React.useCallback(() => {
-    if (disabled || holdingRef.current) return;
+    if (disabledRef.current || holdingRef.current) return;
 
     holdingRef.current = true;
     confirmedRef.current = false;
     setHolding(true);
 
     timerRef.current = setTimeout(() => {
-      if (!holdingRef.current || confirmedRef.current) return;
+      if (
+        !holdingRef.current ||
+        confirmedRef.current ||
+        disabledRef.current
+      ) {
+        cancelHold();
+        return;
+      }
 
       confirmedRef.current = true;
       holdingRef.current = false;
@@ -60,8 +72,16 @@ export const HoldToConfirmButton = React.forwardRef<
       setHolding(false);
       onConfirm();
     }, Math.max(0, duration));
-  }, [disabled, duration, onConfirm]);
+  }, [duration, onConfirm, cancelHold]);
 
+  // Cancel immediately when the button becomes disabled.
+  React.useEffect(() => {
+    if (disabled) {
+      cancelHold();
+    }
+  }, [disabled, cancelHold]);
+
+  // Clean up the timer when the component unmounts.
   React.useEffect(() => cancelHold, [cancelHold]);
 
   return (
