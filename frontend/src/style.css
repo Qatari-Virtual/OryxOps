@@ -676,3 +676,65 @@ textarea {
   animation: selectContentHide 140ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
   will-change: scale, opacity;
 }
+
+
+/* ── Kokonut UI GlowCard Keyframe Animations (Hardware-Accelerated Compositor Transforms) ── */
+.group\/glow-card {
+  --glow-opacity-min: 0.15;
+  --glow-opacity-max: 0.35;
+}
+
+.group\/glow-card[data-intensity="subtle"] {
+  --glow-opacity-min: 0.15;
+  --glow-opacity-max: 0.35;
+}
+
+.group\/glow-card[data-intensity="normal"] {
+  --glow-opacity-min: 0.25;
+  --glow-opacity-max: 0.50;
+}
+
+.group\/glow-card[data-intensity="strong"] {
+  --glow-opacity-min: 0.40;
+  --glow-opacity-max: 0.70;
+}
+
+@keyframes glowCardSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes glowCardPulse {
+  0%, 100% {
+    opacity: var(--glow-opacity-min, 0.15);
+    transform: scale(1);
+  }
+  50% {
+    opacity: var(--glow-opacity-max, 0.35);
+    transform: scale(1.02);
+  }
+}
+
+.glow-card-gradient {
+  animation: glowCardSpin 8s linear infinite;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.glow-card-ambient {
+  animation: glowCardPulse 4s ease-in-out infinite;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glow-card-gradient,
+  .glow-card-ambient {
+    animation: none;
+    transform: none;
+  }
+}
