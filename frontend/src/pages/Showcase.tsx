@@ -1,5 +1,6 @@
 import * as React from "react";
 import { ActionList } from "@/components/kokonut/action-list";
+import { BentoGrid, BentoCard } from "@/components/kokonut/bento-grid";
 import { PhaseRail, FLIGHT_PHASES, type FlightPhase } from "@/components/kokonut/phase-rail";
 import { HoldToConfirmButton } from "@/components/kokonut/hold-to-confirm";
 import { StatusDot, StatusPill } from "@/components/ui/status-pill";
@@ -51,6 +52,7 @@ import {
 } from "@/components/ui/card";
 import {
   RiAddLine,
+  RiAlertLine,
   RiArrowRightLine,
   RiSettings3Line,
   RiMap2Line,
@@ -350,6 +352,7 @@ const COMPLEX_DISPATCH_DATA = [
 
 export default function Showcase() {
   const [selectedAction, setSelectedAction] = useState("Airbus A350-900");
+  const [bentoLayoutMode, setBentoLayoutMode] = useState<"standard" | "spans">("standard");
   const [currentPhase, setCurrentPhase] = useState<FlightPhase>("Cruise");
   const [confirmationMessage, setConfirmationMessage] = useState("No demo action confirmed yet.");
   // All 5,379 routes loaded once
@@ -1756,6 +1759,196 @@ export default function Showcase() {
             </p>
           </div>
         </section>
+                {/* ========================================================================= */}
+        {/* KOKONUT UI: OPERATIONAL BENTO GRID (BENTOGRID & BENTOCARD) */}
+        {/* ========================================================================= */}
+        <section className="rounded-xl border border-border bg-card p-6">
+          <div className="mb-8 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <div className="flex items-center gap-2">
+                <Badge variant="gold">TASK-3.5</Badge>
+                <Badge variant="outline">Kokonut UI</Badge>
+              </div>
+              <h3 className="mt-2 text-xl font-bold tracking-tight">
+                Operational Bento Grid (BentoGrid & BentoCard)
+              </h3>
+              <p className="mt-1 text-sm text-muted-foreground">
+                High-density responsive grid layout for live operations metrics (Active Flights, Unassigned Fleet, Guard Escalations, PIREPs).
+                Adapts from 1 column on mobile to 2 on tablet, and 3-4 on desktop with configurable spans (<span className="font-mono text-brand font-semibold">col-span-1</span>, <span className="font-mono text-brand font-semibold">col-span-2</span>, <span className="font-mono text-brand font-semibold">row-span-2</span>).
+              </p>
+            </div>
+            <div className="flex items-center gap-2 self-start sm:self-auto">
+              <Button
+                size="sm"
+                variant={bentoLayoutMode === "standard" ? "default" : "outline"}
+                onClick={() => setBentoLayoutMode("standard")}
+              >
+                Standard KPI Strip
+              </Button>
+              <Button
+                size="sm"
+                variant={bentoLayoutMode === "spans" ? "default" : "outline"}
+                onClick={() => setBentoLayoutMode("spans")}
+              >
+                Multi-Span Cockpit Grid
+              </Button>
+            </div>
+          </div>
+
+          {bentoLayoutMode === "standard" ? (
+            <BentoGrid cols={4}>
+              {/* Tile 1: Active Flights */}
+              <BentoCard
+                title="Active Flights"
+                value="14"
+                icon={<RiPlaneLine className="h-5 w-5" />}
+                badge={
+                  <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                    AIRBORNE
+                  </span>
+                }
+                description="Cruising across 9 active oceanic & continental corridors."
+                footer={
+                  <div className="flex items-center justify-between">
+                    <span>OryxGate Telemetry</span>
+                    <span className="font-mono font-semibold text-emerald-600 dark:text-emerald-400">Stable</span>
+                  </div>
+                }
+              />
+
+              {/* Tile 2: Unassigned Fleet */}
+              <BentoCard
+                title="Unassigned Fleet"
+                value="8 Airframes"
+                icon={<RiCompass3Line className="h-5 w-5" />}
+                badge={<Badge variant="outline">A350 / B777 / Cargo</Badge>}
+                description="Stationed at OTHH ramp pool available for pilot self-rostering."
+                footer={
+                  <div className="flex items-center justify-between">
+                    <span>Turnaround Buffer</span>
+                    <span className="font-mono font-semibold">45m avg</span>
+                  </div>
+                }
+              />
+
+              {/* Tile 3: TOD Guard Alert */}
+              <BentoCard
+                variant="accent-stripe"
+                title="Stopped Guard Alert"
+                value="1 Active"
+                icon={<RiAlertLine className="h-5 w-5 text-rose-600 dark:text-rose-400" />}
+                badge={
+                  <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20">
+                    <span className="h-1.5 w-1.5 rounded-full bg-rose-500"></span>
+                    TOD HOLD
+                  </span>
+                }
+                description="A7-BAB stopped for 18 min at TOD. Escalation timer: 12 min before release."
+                footer={
+                  <div className="flex items-center justify-between text-rose-600 dark:text-rose-400 font-semibold">
+                    <span>Auto-Unassign Timer</span>
+                    <span className="font-mono">11:42</span>
+                  </div>
+                }
+              />
+
+              {/* Tile 4: PIREPs Logged */}
+              <BentoCard
+                title="PIREPs Logged Today"
+                value="124"
+                icon={<RiAwardLine className="h-5 w-5" />}
+                badge={<Badge variant="gold">100% Verified</Badge>}
+                description="Completed flights approved by flight operations staff."
+                footer={
+                  <div className="flex items-center justify-between">
+                    <span>Gross Revenue</span>
+                    <span className="font-mono font-semibold text-brand">342,850 QAR</span>
+                  </div>
+                }
+              />
+            </BentoGrid>
+          ) : (
+            <BentoGrid cols={3}>
+              {/* Span col-span-2: Primary Operations Radar Overview */}
+              <BentoCard
+                colSpan={2}
+                title="Primary Flight Dispatch & Waves Overview"
+                value="4 Oceanic Corridors Active"
+                icon={<RiDashboardLine className="h-5 w-5" />}
+                badge={<Badge variant="burgundy">Wave 02 (14:00Z - 18:00Z)</Badge>}
+                description="Real-time capacity tracking across Doha Hamad Hub (OTHH) departures and European long-haul arrivals. All aircraft operating within SimBrief OFP fuel reserves."
+                footer={
+                  <div className="grid grid-cols-3 gap-2 text-center pt-1 font-mono">
+                    <div className="rounded border border-border/60 bg-muted/20 p-2">
+                      <div className="text-[10px] text-muted-foreground uppercase">Departures</div>
+                      <div className="font-bold text-sm">6 Flights</div>
+                    </div>
+                    <div className="rounded border border-border/60 bg-muted/20 p-2">
+                      <div className="text-[10px] text-muted-foreground uppercase">En-Route</div>
+                      <div className="font-bold text-sm text-emerald-600 dark:text-emerald-400">14 Flights</div>
+                    </div>
+                    <div className="rounded border border-border/60 bg-muted/20 p-2">
+                      <div className="text-[10px] text-muted-foreground uppercase">Arrivals</div>
+                      <div className="font-bold text-sm text-brand">8 Flights</div>
+                    </div>
+                  </div>
+                }
+              />
+
+              {/* Span row-span-2: Live ACARS Telemetry Stream */}
+              <BentoCard
+                rowSpan={2}
+                title="ACARS Telemetry Stream"
+                value="Live Events"
+                icon={<RiTimeLine className="h-5 w-5" />}
+                badge={
+                  <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20">
+                    <span className="h-1.5 w-1.5 rounded-full bg-sky-500 animate-pulse"></span>
+                    STREAMING
+                  </span>
+                }
+                description="Real-time downlinked ACARS telemetry events received via OryxGate."
+                footer={
+                  <div className="space-y-2 font-mono text-[11px]">
+                    <div className="rounded border border-border/60 bg-muted/30 p-2">
+                      <div className="text-muted-foreground text-[10px]">[14:28:10Z] QTR843</div>
+                      <div className="text-foreground">Passing FL360, STEP Advisory Calculated</div>
+                    </div>
+                    <div className="rounded border border-border/60 bg-muted/30 p-2">
+                      <div className="text-muted-foreground text-[10px]">[14:31:05Z] QTR001</div>
+                      <div className="text-emerald-600 dark:text-emerald-400">Touchdown RWY 27R at EGLL (-112 FPM)</div>
+                    </div>
+                    <div className="rounded border border-border/60 bg-muted/30 p-2">
+                      <div className="text-muted-foreground text-[10px]">[14:32:00Z] A7-BAB</div>
+                      <div className="text-rose-600 dark:text-rose-400">TOD Hold Warning: Ground Speed &lt; 50 kts</div>
+                    </div>
+                  </div>
+                }
+              />
+
+              {/* Tile: Fleet Roster Status */}
+              <BentoCard
+                title="Fleet In Service"
+                value="94.2%"
+                icon={<RiPlaneLine className="h-5 w-5" />}
+                badge={<Badge variant="gold">48 Airframes</Badge>}
+                description="Available across Widebody (A350/B777) and Narrowbody (A320/A321) divisions."
+              />
+
+              {/* Tile: Automated Guards */}
+              <BentoCard
+                variant="accent-stripe"
+                title="Guard Heuristics"
+                value="Zero Overdue"
+                icon={<RiAlertLine className="h-5 w-5" />}
+                badge={<Badge variant="outline">Active</Badge>}
+                description="Automated unassignment guards running every 60s against Infinite Flight Live."
+              />
+            </BentoGrid>
+          )}
+        </section>
+
         {/* BRAND COLORS */}
         <section className="rounded-xl border border-border bg-card p-6">
           <h3 className="text-xl font-bold">Brand Colors</h3>
