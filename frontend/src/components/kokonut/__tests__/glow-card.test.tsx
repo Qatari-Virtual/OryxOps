@@ -2,15 +2,10 @@ import * as React from "react";
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { GlowCard } from "@/components/kokonut/glow-card";
-import {
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from "@/components/ui/card";
+import { CardTitle, CardDescription } from "@/components/ui/card";
 
 describe("GlowCard (Kokonut UI)", () => {
-  it("renders children and default classes cleanly", () => {
+  it("renders children with default variant, intensity and glow state", () => {
     render(
       <GlowCard data-testid="glow-card">
         <div>Operational Callout Content</div>
@@ -25,22 +20,35 @@ describe("GlowCard (Kokonut UI)", () => {
     expect(card).toHaveAttribute("data-glow", "true");
   });
 
-  it("renders hardware-accelerated animated border and ambient layers", () => {
+  it("renders a masked aurora wash with two blurred blobs", () => {
     const { container } = render(
       <GlowCard>
         <p>Active Telemetry</p>
       </GlowCard>
     );
 
-    const gradientEl = container.querySelector(".glow-card-gradient");
-    const ambientEl = container.querySelector(".glow-card-ambient");
-
-    expect(gradientEl).toBeInTheDocument();
-    expect(ambientEl).toBeInTheDocument();
+    const wash = container.querySelector(".glow-card-wash");
+    expect(wash).toBeInTheDocument();
+    expect(wash).toHaveAttribute("aria-hidden", "true");
+    expect(container.querySelector(".glow-card-blob-a")).toBeInTheDocument();
+    expect(container.querySelector(".glow-card-blob-b")).toBeInTheDocument();
   });
 
-  it("supports variant prop ('default', 'tod', 'escalation')", () => {
-    const { rerender } = render(
+  it("renders a compact content column without reserved whitespace", () => {
+    const { container } = render(
+      <GlowCard>
+        <p>Compact Callout</p>
+      </GlowCard>
+    );
+
+    const content = container.querySelector(".glow-card-content");
+    expect(content).toBeInTheDocument();
+    expect(content).toHaveClass("px-5", "py-4");
+    expect(content).not.toHaveClass("min-h-60", "justify-end");
+  });
+
+  it("supports variant prop ('default', 'tod', 'escalation') with distinct wash hues", () => {
+    const { rerender, container } = render(
       <GlowCard data-testid="glow-card" variant="default">
         <span>Default Flight Card</span>
       </GlowCard>
@@ -49,6 +57,8 @@ describe("GlowCard (Kokonut UI)", () => {
       "data-variant",
       "default"
     );
+    let blob = container.querySelector(".glow-card-blob-a") as HTMLElement;
+    expect(blob.style.backgroundImage).toContain("--brand");
 
     rerender(
       <GlowCard data-testid="glow-card" variant="tod">
@@ -59,6 +69,8 @@ describe("GlowCard (Kokonut UI)", () => {
       "data-variant",
       "tod"
     );
+    blob = container.querySelector(".glow-card-blob-a") as HTMLElement;
+    expect(blob.style.backgroundImage).toContain("--brand-gold");
 
     rerender(
       <GlowCard data-testid="glow-card" variant="escalation">
@@ -69,9 +81,11 @@ describe("GlowCard (Kokonut UI)", () => {
       "data-variant",
       "escalation"
     );
+    blob = container.querySelector(".glow-card-blob-a") as HTMLElement;
+    expect(blob.style.backgroundImage).toContain("--destructive");
   });
 
-  it("supports intensity options ('subtle', 'normal', 'strong') and sets intensity-specific opacity properties", () => {
+  it("supports intensity options ('subtle', 'normal', 'strong') via wash opacity", () => {
     const { rerender, container } = render(
       <GlowCard data-testid="glow-card" intensity="subtle">
         <span>Subtle Glow</span>
@@ -81,9 +95,8 @@ describe("GlowCard (Kokonut UI)", () => {
       "data-intensity",
       "subtle"
     );
-    let ambient = container.querySelector(".glow-card-ambient") as HTMLElement;
-    expect(ambient.style.getPropertyValue("--glow-opacity-min")).toBe("0.15");
-    expect(ambient.style.getPropertyValue("--glow-opacity-max")).toBe("0.35");
+    let wash = container.querySelector(".glow-card-wash") as HTMLElement;
+    expect(wash.style.getPropertyValue("--glow-wash-opacity")).toBe("0.35");
 
     rerender(
       <GlowCard data-testid="glow-card" intensity="normal">
@@ -94,9 +107,8 @@ describe("GlowCard (Kokonut UI)", () => {
       "data-intensity",
       "normal"
     );
-    ambient = container.querySelector(".glow-card-ambient") as HTMLElement;
-    expect(ambient.style.getPropertyValue("--glow-opacity-min")).toBe("0.25");
-    expect(ambient.style.getPropertyValue("--glow-opacity-max")).toBe("0.5");
+    wash = container.querySelector(".glow-card-wash") as HTMLElement;
+    expect(wash.style.getPropertyValue("--glow-wash-opacity")).toBe("0.55");
 
     rerender(
       <GlowCard data-testid="glow-card" intensity="strong">
@@ -107,44 +119,57 @@ describe("GlowCard (Kokonut UI)", () => {
       "data-intensity",
       "strong"
     );
-    ambient = container.querySelector(".glow-card-ambient") as HTMLElement;
-    expect(ambient.style.getPropertyValue("--glow-opacity-min")).toBe("0.4");
-    expect(ambient.style.getPropertyValue("--glow-opacity-max")).toBe("0.7");
+    wash = container.querySelector(".glow-card-wash") as HTMLElement;
+    expect(wash.style.getPropertyValue("--glow-wash-opacity")).toBe("0.8");
   });
 
-  it("disables glow animation when glow is false", () => {
-    const { container } = render(
+  it("drifts the wash only while glow is enabled", () => {
+    const { container, rerender } = render(
+      <GlowCard data-testid="glow-card">
+        <span>Animated Wash</span>
+      </GlowCard>
+    );
+    expect(container.querySelector(".glow-card-wash")).toHaveClass(
+      "glow-card-drift"
+    );
+
+    rerender(
       <GlowCard data-testid="glow-card" glow={false}>
-        <span>Static Alert</span>
+        <span>Static Wash</span>
       </GlowCard>
     );
-
-    const card = screen.getByTestId("glow-card");
-    expect(card).toHaveAttribute("data-glow", "false");
-
-    const gradientEl = container.querySelector(".glow-card-gradient");
-    const ambientEl = container.querySelector(".glow-card-ambient");
-
-    expect(gradientEl).not.toBeInTheDocument();
-    expect(ambientEl).not.toBeInTheDocument();
+    expect(screen.getByTestId("glow-card")).toHaveAttribute(
+      "data-glow",
+      "false"
+    );
+    const wash = container.querySelector(".glow-card-wash");
+    expect(wash).toBeInTheDocument();
+    expect(wash).not.toHaveClass("glow-card-drift");
   });
 
-  it("renders custom badge when badge prop is provided", () => {
-    render(
-      <GlowCard
-        badge={
-          <span data-testid="custom-badge" className="text-xs font-bold">
-            CRITICAL ADVISORY
-          </span>
-        }
-      >
-        <p>Aircraft A7-APC Escalate</p>
+  it("plays a mount entrance animation only when entrance is enabled", () => {
+    const { container, rerender } = render(
+      <GlowCard data-testid="glow-card">
+        <span>Calm Mount</span>
       </GlowCard>
     );
+    expect(screen.getByTestId("glow-card")).not.toHaveClass("glow-card-enter");
+    expect(screen.getByTestId("glow-card")).toHaveAttribute(
+      "data-entrance",
+      "false"
+    );
 
-    const badge = screen.getByTestId("custom-badge");
-    expect(badge).toBeInTheDocument();
-    expect(badge).toHaveTextContent("CRITICAL ADVISORY");
+    rerender(
+      <GlowCard data-testid="glow-card" entrance>
+        <span>Live Callout</span>
+      </GlowCard>
+    );
+    expect(screen.getByTestId("glow-card")).toHaveClass("glow-card-enter");
+    expect(screen.getByTestId("glow-card")).toHaveAttribute(
+      "data-entrance",
+      "true"
+    );
+    expect(container.querySelector(".glow-card-enter")).toBeInTheDocument();
   });
 
   it("forwards ref and merges custom className", () => {
@@ -174,29 +199,17 @@ describe("GlowCard (Kokonut UI)", () => {
     ).toBeInTheDocument();
   });
 
-  it("composes seamlessly with CardHeader, CardTitle, CardDescription, and CardContent", () => {
+  it("composes with CardTitle and CardDescription for quiet callouts", () => {
     render(
       <GlowCard variant="tod">
-        <CardHeader>
-          <CardTitle>Top of Descent (TOD) Inbound</CardTitle>
-          <CardDescription>
-            Target altitude FL180 reaching DOH VOR
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p className="font-mono text-xs">COMMENCING DESCENT IN 04:30 MIN</p>
-        </CardContent>
+        <CardTitle>Top of Descent</CardTitle>
+        <CardDescription>QR843 begins descent in 02:45.</CardDescription>
       </GlowCard>
     );
 
+    expect(screen.getByText("Top of Descent")).toBeInTheDocument();
     expect(
-      screen.getByText("Top of Descent (TOD) Inbound")
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText("Target altitude FL180 reaching DOH VOR")
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText("COMMENCING DESCENT IN 04:30 MIN")
+      screen.getByText("QR843 begins descent in 02:45.")
     ).toBeInTheDocument();
   });
 });
