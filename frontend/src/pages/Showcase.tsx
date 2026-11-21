@@ -58,7 +58,6 @@ import {
   RiRefreshLine,
   RiPlaneLine,
   RiRouteLine,
-  RiTimeLine,
   RiFilter3Line,
   RiSpeedUpLine,
   RiCheckLine,
@@ -72,8 +71,6 @@ import {
   RiCompass3Line,
   RiPushpinLine,
   RiFlashlightLine,
-  RiAlertLine,
-  RiFlightLandLine,
   RiCalendarLine,
   RiAwardLine,
 } from "@remixicon/react";
@@ -543,6 +540,7 @@ export default function Showcase() {
   const [glowCardVariant, setGlowCardVariant] = useState<GlowCardVariant>("default");
   const [glowCardIntensity, setGlowCardIntensity] = useState<GlowCardIntensity>("subtle");
   const [glowCardActive, setGlowCardActive] = useState<boolean>(true);
+  const [glowCardEntrance, setGlowCardEntrance] = useState<boolean>(false);
 
   return (
     <main className="min-h-screen bg-background text-foreground">
@@ -1280,15 +1278,12 @@ export default function Showcase() {
               <div className="flex items-center gap-2">
                 <Badge variant="burgundy">Kokonut UI</Badge>
                 <Badge variant="gold">TASK-3.2</Badge>
-                <span className="text-xs font-mono text-muted-foreground">GPU-Accelerated 60fps</span>
               </div>
               <h3 className="mt-2 text-2xl font-bold tracking-tight">
-                Al-Annabi & Gold Glow Card (<code className="text-brand dark:text-brand-light">GlowCard</code>)
+                Glow Card (<code className="text-brand dark:text-brand-light">GlowCard</code>)
               </h3>
               <p className="mt-1 text-sm text-muted-foreground max-w-2xl">
-                Hardware-accelerated animated border gradient cycling subtly through Al-Annabi burgundy
-                (<code className="font-mono text-brand font-bold">#6A0C2C</code>) and champagne gold
-                (<code className="font-mono text-brand-gold font-bold">#C5A059</code>). Designed for high-priority operational callouts, Top of Descent (TOD) advisories, and stopped flight escalation warnings.
+                A quiet Al-Annabi and champagne gold wash for high-priority callouts.
               </p>
             </div>
 
@@ -1336,170 +1331,47 @@ export default function Showcase() {
               >
                 Glow: {glowCardActive ? "Active" : "Disabled"}
               </Button>
+
+              <Button
+                size="sm"
+                variant={glowCardEntrance ? "default" : "outline"}
+                onClick={() => setGlowCardEntrance((prev) => !prev)}
+                className="text-xs"
+              >
+                Entrance: {glowCardEntrance ? "On" : "Off"}
+              </Button>
             </div>
           </div>
 
-          {/* Cards Showcase Grid */}
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-            {/* 1. Interactive Playground Card */}
+          {/* Compact Alert Feed */}
+          <div className="grid grid-cols-1 gap-3">
             <GlowCard
+              key={glowCardEntrance ? "entrance-on" : "entrance-off"}
               variant={glowCardVariant}
               intensity={glowCardIntensity}
               glow={glowCardActive}
-              badge={
-                <Badge variant={glowCardVariant === "tod" ? "gold" : glowCardVariant === "escalation" ? "stopped" : "burgundy"}>
-                  <RiFlashlightLine className="mr-1 h-3.5 w-3.5" />
-                  Live Preview
-                </Badge>
-              }
-              className="flex flex-col justify-between"
+              entrance={glowCardEntrance}
             >
-              <CardHeader>
-                <div className="flex items-center gap-2">
-                  <span className="text-[10px] font-black uppercase tracking-wider text-muted-foreground">
-                    Interactive Playground
-                  </span>
-                </div>
-                <CardTitle className="text-xl">
-                  {glowCardVariant === "default" && "Al-Annabi Luxury Cycling Card"}
-                  {glowCardVariant === "tod" && "Top of Descent (TOD) Advisory"}
-                  {glowCardVariant === "escalation" && "Automated Guard Escalation"}
-                </CardTitle>
-                <CardDescription>
-                  Current Preset: <span className="font-mono font-semibold text-foreground uppercase">{glowCardVariant}</span> · Intensity: <span className="font-mono font-semibold text-foreground uppercase">{glowCardIntensity}</span> · Animation: <span className="font-mono font-semibold text-foreground">{glowCardActive ? "60fps GPU" : "Static"}</span>
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  Smooth CSS compositor transforms ensure continuous 360° gradient circulation without thread blocking or CPU load spikes.
-                </p>
-                <div className="rounded-lg bg-muted/60 p-3 font-mono text-xs space-y-1">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Gradient:</span>
-                    <span className="font-semibold text-brand dark:text-brand-light">#6A0C2C ↔ #C5A059</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Compositor:</span>
-                    <span className="font-semibold text-emerald-600 dark:text-emerald-400">translateZ(0) / rotate</span>
-                  </div>
-                </div>
-              </CardContent>
-              <CardFooter className="pt-0">
-                <Button variant="default" size="sm" className="w-full">
-                  Acknowledge Advisory
-                </Button>
-              </CardFooter>
+              <CardTitle>
+                {glowCardVariant === "default" && "Dispatch board"}
+                {glowCardVariant === "tod" && "Descent window"}
+                {glowCardVariant === "escalation" && "Fleet guard"}
+              </CardTitle>
+              <CardDescription>
+                {glowCardVariant === "default" && "Live assignments and schedule waves."}
+                {glowCardVariant === "tod" && "Step climb complete. TOD armed."}
+                {glowCardVariant === "escalation" && "Stopped-airframe threshold reached."}
+              </CardDescription>
             </GlowCard>
 
-            {/* 2. Top of Descent (TOD) Advisory Card */}
-            <GlowCard
-              variant="tod"
-              intensity="normal"
-              badge={
-                <Badge variant="tod">
-                  <RiFlightLandLine className="mr-1 h-3.5 w-3.5" />
-                  TOD Advisory
-                </Badge>
-              }
-              role="alert"
-              aria-live="polite"
-              className="flex flex-col justify-between"
-            >
-              <CardHeader>
-                <div className="flex items-center gap-2">
-                  <span className="text-[10px] font-black uppercase tracking-wider text-amber-600 dark:text-amber-400">
-                    Flight Telemetry Guard
-                  </span>
-                </div>
-                <CardTitle className="text-xl">
-                  TOD Approaching: 18 NM to Descent
-                </CardTitle>
-                <CardDescription>
-                  Flight QR843 · OTHH (Hamad Intl) Approach Corridor
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="grid grid-cols-2 gap-2 rounded-lg bg-muted/60 p-3 text-xs font-mono">
-                  <div>
-                    <span className="text-[10px] uppercase text-muted-foreground block">Target Alt</span>
-                    <span className="font-bold text-foreground">FL180 @ 240 KIAS</span>
-                  </div>
-                  <div>
-                    <span className="text-[10px] uppercase text-muted-foreground block">Descent Path</span>
-                    <span className="font-bold text-foreground">3.0° VNAV Path</span>
-                  </div>
-                  <div>
-                    <span className="text-[10px] uppercase text-muted-foreground block">Distance to TOD</span>
-                    <span className="font-bold text-amber-600 dark:text-amber-400">18.4 NM</span>
-                  </div>
-                  <div>
-                    <span className="text-[10px] uppercase text-muted-foreground block">Time to TOD</span>
-                    <span className="font-bold text-foreground">02:45 MIN</span>
-                  </div>
-                </div>
-                <p className="text-xs text-muted-foreground">
-                  SimBrief OFP descent checklist armed. Spoilers set to ARMED upon reaching FL240.
-                </p>
-              </CardContent>
-              <CardFooter className="pt-0 flex gap-2">
-                <Button variant="gold" size="sm" className="w-full">
-                  Commence VNAV Descent
-                </Button>
-              </CardFooter>
+            <GlowCard variant="tod" intensity="normal" role="alert" aria-live="polite">
+              <CardTitle>TOD advisory</CardTitle>
+              <CardDescription>QR843 begins descent in 02:45.</CardDescription>
             </GlowCard>
 
-            {/* 3. Stopped Aircraft Guard Escalation */}
-            <GlowCard
-              variant="escalation"
-              intensity="strong"
-              badge={
-                <Badge variant="stopped">
-                  <RiAlertLine className="mr-1 h-3.5 w-3.5" />
-                  Guard Escalation
-                </Badge>
-              }
-              role="alert"
-              aria-live="assertive"
-              className="flex flex-col justify-between"
-            >
-              <CardHeader>
-                <div className="flex items-center gap-2">
-                  <span className="text-[10px] font-black uppercase tracking-wider text-rose-600 dark:text-rose-400">
-                    Automated Fleet Protection
-                  </span>
-                </div>
-                <CardTitle className="text-xl text-rose-700 dark:text-rose-400">
-                  Airborne-Stopped Flight Detected
-                </CardTitle>
-                <CardDescription>
-                  Airframe A7-BAB (A350-1000) · Pilot: @Daniel (QRV012)
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <p className="text-xs text-muted-foreground">
-                  Aircraft has been stationary mid-air at FL380 on AP+ hold for <strong className="text-foreground">18 minutes</strong>. Escalation threshold active.
-                </p>
-                <div className="rounded-lg border border-destructive/20 bg-destructive/5 p-3 text-xs font-mono">
-                  <div className="flex items-center justify-between text-rose-700 dark:text-rose-400 font-bold">
-                    <span className="flex items-center gap-1">
-                      <RiTimeLine className="h-4 w-4" />
-                      Auto-Unassign In:
-                    </span>
-                    <span className="text-sm">12:00 MIN</span>
-                  </div>
-                  <p className="mt-1 text-[11px] text-muted-foreground">
-                    Action required to avoid automatic airframe release back to VA pool.
-                  </p>
-                </div>
-              </CardContent>
-              <CardFooter className="pt-0 flex gap-2">
-                <Button variant="outline" size="sm" className="flex-1">
-                  Discord Reminder
-                </Button>
-                <Button variant="destructive" size="sm" className="flex-1">
-                  Force Release
-                </Button>
-              </CardFooter>
+            <GlowCard variant="escalation" intensity="strong" entrance role="alert" aria-live="assertive">
+              <CardTitle>Guard escalation</CardTitle>
+              <CardDescription>A7-BAB stationary for 18 min at FL380.</CardDescription>
             </GlowCard>
           </div>
         </section>

@@ -8,64 +8,29 @@ export interface GlowCardProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: GlowCardVariant;
   intensity?: GlowCardIntensity;
   glow?: boolean;
-  badge?: React.ReactNode;
+  entrance?: boolean;
   as?: React.ElementType;
 }
 
-const variantGradients: Record<
-  GlowCardVariant,
-  {
-    conic: string;
-    radial: string;
-  }
-> = {
+const variantWashes: Record<GlowCardVariant, { a: string; b: string }> = {
   default: {
-    conic:
-      "conic-gradient(from 0deg at 50% 50%, var(--brand, #6A0C2C) 0%, var(--brand-gold, #C5A059) 25%, var(--brand-dark, #4A0820) 50%, var(--brand-gold, #C5A059) 75%, var(--brand, #6A0C2C) 100%)",
-    radial:
-      "radial-gradient(circle at 50% 50%, var(--brand-gold, #C5A059) 0%, var(--brand, #6A0C2C) 50%, transparent 100%)",
+    a: "var(--brand, #6A0C2C)",
+    b: "var(--brand-gold, #C5A059)",
   },
   tod: {
-    conic:
-      "conic-gradient(from 0deg at 50% 50%, var(--brand-gold, #C5A059) 0%, var(--brand, #6A0C2C) 30%, var(--brand-gold, #C5A059) 60%, var(--brand-light, #8A1840) 80%, var(--brand-gold, #C5A059) 100%)",
-    radial:
-      "radial-gradient(circle at 50% 50%, var(--brand-gold, #C5A059) 0%, var(--brand, #6A0C2C) 60%, transparent 100%)",
+    a: "var(--brand-gold, #C5A059)",
+    b: "var(--brand-light, #8A1840)",
   },
   escalation: {
-    conic:
-      "conic-gradient(from 0deg at 50% 50%, var(--brand, #6A0C2C) 0%, var(--destructive, #be123c) 30%, var(--brand-gold, #C5A059) 55%, var(--brand-dark, #4A0820) 75%, var(--brand, #6A0C2C) 100%)",
-    radial:
-      "radial-gradient(circle at 50% 50%, var(--destructive, #be123c) 0%, var(--brand, #6A0C2C) 60%, transparent 100%)",
+    a: "var(--destructive, #be123c)",
+    b: "var(--brand, #6A0C2C)",
   },
 };
 
-const intensityStyles: Record<
-  GlowCardIntensity,
-  {
-    gradientOpacity: string;
-    ambientBlur: string;
-    opacityMin: number;
-    opacityMax: number;
-  }
-> = {
-  subtle: {
-    gradientOpacity: "opacity-70 dark:opacity-85",
-    ambientBlur: "blur-xl",
-    opacityMin: 0.15,
-    opacityMax: 0.35,
-  },
-  normal: {
-    gradientOpacity: "opacity-85 dark:opacity-95",
-    ambientBlur: "blur-xl",
-    opacityMin: 0.25,
-    opacityMax: 0.5,
-  },
-  strong: {
-    gradientOpacity: "opacity-100",
-    ambientBlur: "blur-2xl",
-    opacityMin: 0.4,
-    opacityMax: 0.7,
-  },
+const intensityOpacity: Record<GlowCardIntensity, number> = {
+  subtle: 0.35,
+  normal: 0.55,
+  strong: 0.8,
 };
 
 const GlowCard = React.forwardRef<HTMLDivElement, GlowCardProps>(
@@ -75,16 +40,14 @@ const GlowCard = React.forwardRef<HTMLDivElement, GlowCardProps>(
       variant = "default",
       intensity = "subtle",
       glow = true,
-      badge,
+      entrance = false,
       children,
       as: Component = "div",
       ...props
     },
     ref
   ) => {
-    const { conic, radial } = variantGradients[variant];
-    const { gradientOpacity, ambientBlur, opacityMin, opacityMax } =
-      intensityStyles[intensity];
+    const { a, b } = variantWashes[variant];
 
     return (
       <Component
@@ -92,59 +55,41 @@ const GlowCard = React.forwardRef<HTMLDivElement, GlowCardProps>(
         data-variant={variant}
         data-intensity={intensity}
         data-glow={glow ? "true" : "false"}
+        data-entrance={entrance ? "true" : "false"}
         className={cn(
-          "group/glow-card relative rounded-2xl p-[1.5px] overflow-hidden transition-all duration-300",
+          "group/glow-card relative overflow-hidden rounded-xl border border-border bg-card text-card-foreground",
+          entrance && "glow-card-enter",
           className
         )}
         {...props}
       >
-        {glow && (
-          <>
-            {/* Ambient Breathing Bloom Layer with Intensity-Specific Custom Properties */}
-            <div
-              aria-hidden="true"
-              className={cn(
-                "glow-card-ambient pointer-events-none absolute -inset-[20%]",
-                ambientBlur
-              )}
-              style={
-                {
-                  backgroundImage: radial,
-                  "--glow-opacity-min": opacityMin,
-                  "--glow-opacity-max": opacityMax,
-                } as React.CSSProperties
-              }
-            />
-
-            {/* Hardware-Accelerated 360-degree Border Gradient */}
-            <div
-              aria-hidden="true"
-              className={cn(
-                "glow-card-gradient pointer-events-none absolute -inset-[100%] m-auto aspect-square",
-                gradientOpacity
-              )}
-              style={{
-                backgroundImage: conic,
-              }}
-            />
-          </>
-        )}
-
-        {/* Fallback Static Border when Glow is Disabled */}
-        {!glow && (
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 rounded-2xl border border-border"
-          />
-        )}
-
-        {/* Inner Content Card (Full Opacity & WCAG AA Contrast) */}
-        <div className="relative z-10 flex h-full w-full flex-col rounded-[calc(1rem-1.5px)] bg-card text-card-foreground shadow-[0_1px_3px_0_rgba(0,0,0,0.02)] backdrop-blur-md">
-          {badge && (
-            <div className="absolute top-4 right-4 z-20 pointer-events-none">
-              {badge}
-            </div>
+        <div
+          aria-hidden="true"
+          className={cn(
+            "glow-card-wash pointer-events-none absolute inset-0",
+            glow && "glow-card-drift"
           )}
+          style={
+            {
+              "--glow-wash-opacity": intensityOpacity[intensity],
+            } as React.CSSProperties
+          }
+        >
+          <div
+            className="glow-card-blob glow-card-blob-a absolute -left-8 -top-10 h-24 w-2/3 rounded-full blur-3xl"
+            style={{
+              backgroundImage: `radial-gradient(closest-side, ${a}, transparent)`,
+            }}
+          />
+          <div
+            className="glow-card-blob glow-card-blob-b absolute -right-6 -top-12 h-28 w-3/5 rounded-full blur-3xl"
+            style={{
+              backgroundImage: `radial-gradient(closest-side, ${b}, transparent)`,
+            }}
+          />
+        </div>
+
+        <div className="glow-card-content relative flex flex-col gap-0.5 px-5 py-4">
           {children}
         </div>
       </Component>
