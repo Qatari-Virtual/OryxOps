@@ -1403,25 +1403,21 @@ export default function Showcase() {
                 <Badge variant="outline">Kokonut UI</Badge>
               </div>
               <h3 className="mt-2 text-xl font-bold tracking-tight">
-                Callsign & Airport Shimmer Search Input (ShimmerInput)
+                ShimmerInput
               </h3>
               <p className="mt-1 text-sm text-muted-foreground">
-                Animated light sweep cycling through Qatar Al-Annabi burgundy (<span className="font-mono text-brand font-semibold">#6A0C2C</span>) 
-                and champagne gold (<span className="font-mono text-brand-gold font-semibold">#C5A059</span>). Optimized for quick pilot, callsign, and ICAO lookups with clean clear button.
+                Clean search input with autocomplete dropdown. Supports filtering, keyboard navigation, and clear button.
               </p>
             </div>
           </div>
 
           <div className="grid gap-8 lg:grid-cols-2">
-            {/* DEMO 1: Tabular Monospace Callsign & ICAO Lookup */}
+            {/* DEMO 1: Callsign Lookup with Autocomplete */}
             <div className="space-y-4 rounded-xl border border-border/80 bg-muted/20 p-5">
               <div>
-                <div className="flex items-center justify-between">
-                  <h4 className="font-semibold text-sm">Callsign & Airport Monospace Lookup</h4>
-                  <Badge variant="burgundy">Tabular Mono</Badge>
-                </div>
+                <h4 className="font-semibold text-sm">Callsign & Airport Lookup</h4>
                 <p className="text-xs text-muted-foreground mt-0.5">
-                  Light sweep activates on focus or active query. Type a flight number or ICAO code.
+                  Type to filter. Arrow keys to navigate, Enter to select.
                 </p>
               </div>
 
@@ -1430,99 +1426,51 @@ export default function Showcase() {
                 value={shimmerSearchQuery}
                 onChange={(e) => setShimmerSearchQuery(e.target.value)}
                 onClear={() => setShimmerSearchQuery("")}
-                placeholder="Search callsign, ICAO, or airframe (e.g. QTR843, OTHH, A7-APC)..."
+                placeholder="Search callsign, ICAO, or airframe..."
+                options={[
+                  "QTR843", "QTR844", "QTR001", "QTR002",
+                  "A7-APC", "A7-BAB", "A7-BCU",
+                  "OTHH", "EGLL", "OMDB", "KJFK", "LTFM",
+                  "OTHH2", "EGLL2",
+                ]}
+                onPick={(v) => setShimmerSearchQuery(v)}
               />
-
-              {/* Quick Suggestion Chips */}
-              <div className="flex flex-wrap items-center gap-2 pt-1">
-                <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
-                  Quick lookups:
-                </span>
-                {["QTR843", "A7-APC", "OTHH", "EGLL", "QR001", "OMDB"].map((chip) => (
-                  <button
-                    key={chip}
-                    type="button"
-                    onClick={() => setShimmerSearchQuery(chip)}
-                    className="rounded-md border border-border bg-card px-2 py-0.5 font-mono text-xs font-semibold hover:border-brand hover:text-brand transition-colors cursor-pointer"
-                  >
-                    {chip}
-                  </button>
-                ))}
-              </div>
-
-              {/* Query Status Card */}
-              <div className="rounded-lg border border-border/60 bg-card p-3 text-xs space-y-1">
-                <div className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Current Query:</span>
-                  <span className="font-mono font-bold text-brand">
-                    {shimmerSearchQuery ? shimmerSearchQuery : "(empty)"}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Shimmer State:</span>
-                  <span className="flex items-center gap-1 font-semibold">
-                    <span
-                      className={cn(
-                        "inline-block h-2 w-2 rounded-full",
-                        shimmerSearchQuery ? "bg-emerald-500 animate-pulse" : "bg-muted-foreground/50"
-                      )}
-                    />
-                    {shimmerSearchQuery ? "Active (Input / Focus Sweep)" : "Idle (Hairline Border)"}
-                  </span>
-                </div>
-              </div>
             </div>
 
-            {/* DEMO 2: Pilot Name & Custom Icon Search */}
+            {/* DEMO 2: Variants */}
             <div className="space-y-4 rounded-xl border border-border/80 bg-muted/20 p-5">
               <div>
-                <div className="flex items-center justify-between">
-                  <h4 className="font-semibold text-sm">Pilot Directory & Sizing Variants</h4>
-                  <Badge variant="outline">Clean [x] Reset</Badge>
-                </div>
+                <h4 className="font-semibold text-sm">Size Variants</h4>
                 <p className="text-xs text-muted-foreground mt-0.5">
-                  Standard typography with pilot avatar icon and size variations.
+                  Large, default, and compact sizing with custom icons.
                 </p>
               </div>
 
               <div className="space-y-3">
-                <div>
-                  <span className="text-[11px] font-semibold text-muted-foreground uppercase">
-                    Large Command Bar (sizeVariant="lg"):
-                  </span>
+                <ShimmerInput
+                  sizeVariant="lg"
+                  placeholder="Search pilot roster..."
+                  icon={<RiUserLine className="h-5 w-5 text-muted-foreground" />}
+                  value={pilotSearchQuery}
+                  onChange={(e) => setPilotSearchQuery(e.target.value)}
+                  onClear={() => setPilotSearchQuery("")}
+                  options={["P001 - Capt. Ahmed", "P002 - F/O Sarah", "P003 - Capt. Omar", "P004 - F/O Fatima"]}
+                  onPick={(v) => setPilotSearchQuery(v)}
+                />
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <ShimmerInput
-                    sizeVariant="lg"
-                    placeholder="Search pilot roster by name or ID..."
-                    icon={<RiUserLine className="h-5 w-5 text-muted-foreground" />}
-                    value={pilotSearchQuery}
-                    onChange={(e) => setPilotSearchQuery(e.target.value)}
-                    onClear={() => setPilotSearchQuery("")}
+                    sizeVariant="sm"
+                    mono
+                    placeholder="Quick ICAO..."
+                    defaultValue="OTHH"
                   />
-                </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                  <div>
-                    <span className="text-[11px] font-semibold text-muted-foreground uppercase">
-                      Compact / Table (sizeVariant="sm"):
-                    </span>
-                    <ShimmerInput
-                      sizeVariant="sm"
-                      mono
-                      placeholder="Quick ICAO..."
-                      defaultValue="OTHH"
-                    />
-                  </div>
-
-                  <div>
-                    <span className="text-[11px] font-semibold text-muted-foreground uppercase">
-                      Disabled State:
-                    </span>
-                    <ShimmerInput
-                      disabled
-                      placeholder="Airframe locked..."
-                      defaultValue="A7-BAB (In Maintenance)"
-                    />
-                  </div>
+                  <ShimmerInput
+                    disabled
+                    placeholder="Airframe locked..."
+                    defaultValue="A7-BAB"
+                  />
                 </div>
               </div>
             </div>
