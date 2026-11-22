@@ -2,6 +2,9 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 import { ActionList } from "@/components/kokonut/action-list";
 import { ShimmerInput } from "@/components/kokonut/shimmer-input";
+import { PhaseRail, FLIGHT_PHASES, type FlightPhase } from "@/components/kokonut/phase-rail";
+import { HoldToConfirmButton } from "@/components/kokonut/hold-to-confirm";
+import { StatusDot, StatusPill } from "@/components/ui/status-pill";
 import { useState, useMemo, useRef, useCallback } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { Button } from "@/components/ui/button";
@@ -37,6 +40,18 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import {
+  GlowCard,
+  type GlowCardVariant,
+  type GlowCardIntensity,
+} from "@/components/kokonut/glow-card";
+import {
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
+import {
   RiAddLine,
   RiArrowRightLine,
   RiSettings3Line,
@@ -45,7 +60,6 @@ import {
   RiRefreshLine,
   RiPlaneLine,
   RiRouteLine,
-  RiTimeLine,
   RiFilter3Line,
   RiSpeedUpLine,
   RiCheckLine,
@@ -338,6 +352,8 @@ export default function Showcase() {
   const [selectedAction, setSelectedAction] = useState("Airbus A350-900");
   const [shimmerSearchQuery, setShimmerSearchQuery] = useState("QTR843");
   const [pilotSearchQuery, setPilotSearchQuery] = useState("");
+  const [currentPhase, setCurrentPhase] = useState<FlightPhase>("Cruise");
+  const [confirmationMessage, setConfirmationMessage] = useState("No demo action confirmed yet.");
   // All 5,379 routes loaded once
   const allRoutes = useMemo(() => generateRouteDatabase(), []);
 
@@ -524,6 +540,12 @@ export default function Showcase() {
       setSelectedRowIds(all);
     }
   };
+
+  // GlowCard Showcase State
+  const [glowCardVariant, setGlowCardVariant] = useState<GlowCardVariant>("default");
+  const [glowCardIntensity, setGlowCardIntensity] = useState<GlowCardIntensity>("subtle");
+  const [glowCardActive, setGlowCardActive] = useState<boolean>(true);
+  const [glowCardEntrance, setGlowCardEntrance] = useState<boolean>(false);
 
   return (
     <main className="min-h-screen bg-background text-foreground">
@@ -1253,6 +1275,113 @@ export default function Showcase() {
         </Tabs>
 
         {/* ========================================================================= */}
+        {/* KOKONUT UI: GLOW CARD (TASK-3.2) */}
+        {/* ========================================================================= */}
+        <section className="rounded-2xl border border-border bg-card p-6 md:p-8 space-y-6">
+          <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between border-b border-border pb-4">
+            <div>
+              <div className="flex items-center gap-2">
+                <Badge variant="burgundy">Kokonut UI</Badge>
+                <Badge variant="gold">TASK-3.2</Badge>
+              </div>
+              <h3 className="mt-2 text-2xl font-bold tracking-tight">
+                Glow Card (<code className="text-brand dark:text-brand-light">GlowCard</code>)
+              </h3>
+              <p className="mt-1 text-sm text-muted-foreground max-w-2xl">
+                A quiet Al-Annabi and champagne gold wash for high-priority callouts.
+              </p>
+            </div>
+
+            {/* Controls */}
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="flex items-center gap-1.5">
+                <span className="text-xs font-semibold text-muted-foreground">Variant:</span>
+                <div className="flex gap-1">
+                  {(["default", "tod", "escalation"]).map((v) => (
+                    <Button
+                      key={v}
+                      size="sm"
+                      variant={glowCardVariant === v ? "default" : "outline"}
+                      onClick={() => setGlowCardVariant(v as GlowCardVariant)}
+                      className="capitalize text-xs"
+                    >
+                      {v}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex items-center gap-1.5">
+                <span className="text-xs font-semibold text-muted-foreground">Intensity:</span>
+                <div className="flex gap-1">
+                  {(["subtle", "normal", "strong"]).map((i) => (
+                    <Button
+                      key={i}
+                      size="sm"
+                      variant={glowCardIntensity === i ? "gold" : "outline"}
+                      onClick={() => setGlowCardIntensity(i as GlowCardIntensity)}
+                      className="capitalize text-xs"
+                    >
+                      {i}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+
+              <Button
+                size="sm"
+                variant={glowCardActive ? "default" : "outline"}
+                onClick={() => setGlowCardActive((prev) => !prev)}
+                className="text-xs"
+              >
+                Glow: {glowCardActive ? "Active" : "Disabled"}
+              </Button>
+
+              <Button
+                size="sm"
+                variant={glowCardEntrance ? "default" : "outline"}
+                onClick={() => setGlowCardEntrance((prev) => !prev)}
+                className="text-xs"
+              >
+                Entrance: {glowCardEntrance ? "On" : "Off"}
+              </Button>
+            </div>
+          </div>
+
+          {/* Compact Alert Feed */}
+          <div className="grid grid-cols-1 gap-3">
+            <GlowCard
+              key={glowCardEntrance ? "entrance-on" : "entrance-off"}
+              variant={glowCardVariant}
+              intensity={glowCardIntensity}
+              glow={glowCardActive}
+              entrance={glowCardEntrance}
+            >
+              <CardTitle>
+                {glowCardVariant === "default" && "Dispatch board"}
+                {glowCardVariant === "tod" && "Descent window"}
+                {glowCardVariant === "escalation" && "Fleet guard"}
+              </CardTitle>
+              <CardDescription>
+                {glowCardVariant === "default" && "Live assignments and schedule waves."}
+                {glowCardVariant === "tod" && "Step climb complete. TOD armed."}
+                {glowCardVariant === "escalation" && "Stopped-airframe threshold reached."}
+              </CardDescription>
+            </GlowCard>
+
+            <GlowCard variant="tod" intensity="normal" role="alert" aria-live="polite">
+              <CardTitle>TOD advisory</CardTitle>
+              <CardDescription>QR843 begins descent in 02:45.</CardDescription>
+            </GlowCard>
+
+            <GlowCard variant="escalation" intensity="strong" entrance role="alert" aria-live="assertive">
+              <CardTitle>Guard escalation</CardTitle>
+              <CardDescription>A7-BAB stationary for 18 min at FL380.</CardDescription>
+            </GlowCard>
+          </div>
+        </section>
+
+        {/* ========================================================================= */}
         {/* EXISTING SHOWCASE PRIMITIVES (BUTTONS, BADGES, COLORS) */}
         {/* ========================================================================= */}
         <section className="rounded-xl border border-border bg-card p-6">
@@ -1477,6 +1606,119 @@ export default function Showcase() {
           </div>
         </section>
 
+        {/* HOLD TO CONFIRM AND QUIET STATUS INDICATORS */}
+        <section className="rounded-xl border border-border bg-card p-6">
+          <div className="mb-8">
+            <h3 className="text-xl font-bold">Hold to Confirm & Status Indicators</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Deliberate 1.5-second confirmation for sensitive actions, alongside quiet static flight status indicators.
+            </p>
+          </div>
+
+          <div className="grid gap-8 lg:grid-cols-2">
+            <div className="space-y-4">
+              <div>
+                <h4 className="font-semibold">High-stakes action confirmation</h4>
+                <p className="text-sm text-muted-foreground">
+                  Press and hold for 1.5 seconds. Releasing early cancels the demo action.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap gap-3">
+                <HoldToConfirmButton
+                  onConfirm={() => setConfirmationMessage("Demo: Airframe release confirmed.")}
+                  className="border-rose-500/40 text-rose-600 hover:bg-rose-500/10"
+                >
+                  Hold to Release Airframe
+                </HoldToConfirmButton>
+
+                <HoldToConfirmButton
+                  onConfirm={() => setConfirmationMessage("Demo: Force unassign confirmed.")}
+                  className="border-rose-500/40 text-rose-600 hover:bg-rose-500/10"
+                >
+                  Hold to Force Unassign
+                </HoldToConfirmButton>
+
+                <HoldToConfirmButton
+                  onConfirm={() => setConfirmationMessage("Demo: Flight cancellation confirmed.")}
+                  className="border-rose-500/40 text-rose-600 hover:bg-rose-500/10"
+                >
+                  Hold to Cancel Flight
+                </HoldToConfirmButton>
+              </div>
+
+              <div className="rounded-lg bg-muted/60 p-4 text-sm" aria-live="polite">
+                <span className="text-muted-foreground">Preview result: </span>
+                <span className="font-semibold">{confirmationMessage}</span>
+              </div>
+            </div>
+
+            <div className="space-y-5">
+              <div>
+                <h4 className="font-semibold">Quiet status dots</h4>
+                <p className="mb-3 text-sm text-muted-foreground">
+                  Fixed 6px indicators with no pulsing or animation.
+                </p>
+                <div className="flex flex-wrap items-center gap-5">
+                  <span className="inline-flex items-center gap-2 text-sm"><StatusDot status="airborne" /> Airborne</span>
+                  <span className="inline-flex items-center gap-2 text-sm"><StatusDot status="radar" /> Radar</span>
+                  <span className="inline-flex items-center gap-2 text-sm"><StatusDot status="tod" /> TOD Advisory</span>
+                  <span className="inline-flex items-center gap-2 text-sm"><StatusDot status="stopped" /> Stopped</span>
+                  <span className="inline-flex items-center gap-2 text-sm"><StatusDot status="parked" /> Parked</span>
+                </div>
+              </div>
+
+              <div>
+                <h4 className="font-semibold">Status pills</h4>
+                <p className="mb-3 text-sm text-muted-foreground">
+                  Compact uppercase codes using the existing light and dark theme colours.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <StatusPill status="airborne" />
+                  <StatusPill status="radar" />
+                  <StatusPill status="tod" />
+                  <StatusPill status="stopped" />
+                  <StatusPill status="parked" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* INTERACTIVE FLIGHT PHASE RAIL */}
+        <section className="rounded-xl border border-border bg-card p-6">
+          <div className="mb-8">
+            <h3 className="text-xl font-bold">Flight Phase Progress Rail</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Animated flight progress indicator with interactive phase selection.
+            </p>
+          </div>
+
+          <div className="rounded-xl border border-border bg-muted/30 p-5 sm:p-6">
+            <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  Current flight phase
+                </p>
+                <p className="mt-1 text-lg font-bold text-brand">
+                  {currentPhase}
+                </p>
+              </div>
+              <Badge variant="burgundy">
+                Phase {FLIGHT_PHASES.indexOf(currentPhase) + 1} of 7
+              </Badge>
+            </div>
+
+            <PhaseRail
+              currentPhase={currentPhase}
+              onPhaseChange={setCurrentPhase}
+            />
+
+            <p className="mt-3 text-center text-xs text-muted-foreground">
+              Select any phase above to preview the progress state.
+            </p>
+          </div>
+        </section>
         {/* BRAND COLORS */}
         <section className="rounded-xl border border-border bg-card p-6">
           <h3 className="text-xl font-bold">Brand Colors</h3>

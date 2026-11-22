@@ -105,9 +105,9 @@ flowchart TD
 1. **Interactive Action List (`ActionList`):**
    - Renders a selectable list of available Boeing 777-300ER and Airbus A350-1000 airframes.
    - Shows active highlight bar, registration badge, and instant click selection.
-2. **Glow Border Card (`GlowCard`):**
-   - Animated Al-Annabi and champagne gold border glow.
-   - Displays a high-priority advisory: `TOD ADVISORY: 18 NM to Top of Descent into OTHH`.
+2. **Glow Wash Card (`GlowCard`):**
+   - Three compact callout banners stacked in a single-column alert feed (`gap-3`), each containing only a title and one short description line under a soft top-edge aurora crown. No badges, buttons, kickers, or telemetry panels inside the cards.
+   - Card 1 is the interactive playground bound to the section-header controls (`Variant`, `Intensity`, `Glow`, `Entrance`); toggling `Entrance` remounts the card to replay the mount animation. Cards 2 and 3 are static `tod` (calm) and `escalation` (`entrance`, strong) examples (e.g. `TOD advisory` / `QR843 begins descent in 02:45.`).
 3. **Shimmer Search Input (`ShimmerInput`):**
    - Sleek search input with animated border shimmer.
    - Placeholder: `Search pilot, callsign, or airframe registration (e.g. A7-APC)...`
