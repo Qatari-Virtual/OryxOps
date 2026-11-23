@@ -393,8 +393,24 @@ flowchart TD
 
 1. **Action List (`action-list.tsx`):**
    - Interactive list component with keyboard navigation, active highlight bar, and slot metadata. Ideal for selecting available aircraft or schedules.
-2. **Glow Border Card (`glow-card.tsx`):**
-   - Dynamic animated gradient border reflecting Al-Annabi burgundy and champagne gold. Used for high-priority alerts (e.g. TOD approaching, stopped flight escalation).
+2. **Glow Wash Card (`glow-card.tsx`):**
+   - Quiet, compact callout banner: a single opaque `bg-card` panel with a hairline `--border` and `rounded-xl`, crowned by a soft aurora wash of Al-Annabi burgundy (`#6A0C2C` / `#A8244E`) and champagne gold (`#C5A059` / `#E5C378`) that bleeds in from the top edge and fades out within a fixed `3.5rem` crown. No spinning conic border, no badge slot, no dense telemetry blocks.
+   - **Layout:** Compact single-column content (`flex flex-col gap-0.5`, `px-5 py-4`, no minimum height) so cards stack densely in alert feeds and HUD banner slots. Intended content is a single title plus one short description line; widget actions may compose below as children.
+   - **Component API (`GlowCardProps`):**
+     - `variant?: "default" | "tod" | "escalation"` — selects the two wash hues:
+       - `"default"`: Burgundy (`--brand`) left, champagne gold (`--brand-gold`) right.
+       - `"tod"`: Champagne gold (`--brand-gold`) left, burgundy-light (`--brand-light`) right.
+       - `"escalation"`: Alert rose (`--destructive`) left, burgundy (`--brand`) right.
+     - `intensity?: "subtle" | "normal" | "strong"` (default: `"subtle"`): Sets `--glow-wash-opacity` to `0.35` / `0.55` / `0.80` (dark mode adds `+0.15`, capped at `1`).
+     - `glow?: boolean` (default: `true`): Enables the slow wash drift; `false` renders the identical wash fully static.
+     - `entrance?: boolean` (default: `false`): Mount animation — card rises 10px and fades/scales in over 520ms (`glowCardEnter`, `cubic-bezier(0.16, 1, 0.3, 1)`). For callouts arriving live in an alert feed.
+     - `as?: React.ElementType`: Container element tag (defaults to `"div"`).
+   - **Hardware-Accelerated Architecture:**
+     - Wash = two blurred radial blobs (`.glow-card-blob-a/b`, fixed rem sizes anchored to the top edge) inside a masked container (`.glow-card-wash`, vertical `mask-image` fade to transparent at `3.5rem`). Blur is painted once; motion is compositor-only `translate3d`/`scale` drift (`glowCardDriftA` 10s, `glowCardDriftB` 13s, ease-in-out) with `will-change: transform`.
+     - Fully respects `@media (prefers-reduced-motion: reduce)` by disabling drift and entrance, keeping the static wash.
+   - **Accessibility & Contrast:**
+     - Supports `role="alert"` / `aria-live` passthrough; wash is `aria-hidden` and `pointer-events-none`.
+     - Copy sits on the fully opaque card surface below the wash fade, preserving WCAG AA contrast in light (`#FDF8F9`) and dark (`#0D0E12`) modes.
 3. **Shimmer Input (`shimmer-input.tsx`):**
    - Search bar with a subtle animated light sweep along the border. Used for global flight and pilot lookup.
 4. **Flight Phase Rail (`phase-rail.tsx`):**

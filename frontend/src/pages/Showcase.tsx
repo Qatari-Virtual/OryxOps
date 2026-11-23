@@ -1,6 +1,8 @@
 import * as React from "react";
+import { cn } from "@/lib/utils";
 import { ActionList } from "@/components/kokonut/action-list";
 import { BentoGrid, BentoCard } from "@/components/kokonut/bento-grid";
+import { ShimmerInput } from "@/components/kokonut/shimmer-input";
 import { PhaseRail, FLIGHT_PHASES, type FlightPhase } from "@/components/kokonut/phase-rail";
 import { HoldToConfirmButton } from "@/components/kokonut/hold-to-confirm";
 import { StatusDot, StatusPill } from "@/components/ui/status-pill";
@@ -39,6 +41,18 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import {
+  GlowCard,
+  type GlowCardVariant,
+  type GlowCardIntensity,
+} from "@/components/kokonut/glow-card";
+import {
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
+import {
   RiAddLine,
   RiAlertLine,
   RiArrowRightLine,
@@ -48,7 +62,6 @@ import {
   RiRefreshLine,
   RiPlaneLine,
   RiRouteLine,
-  RiTimeLine,
   RiFilter3Line,
   RiSpeedUpLine,
   RiCheckLine,
@@ -64,6 +77,7 @@ import {
   RiFlashlightLine,
   RiCalendarLine,
   RiAwardLine,
+  RiUserLine,
 } from "@remixicon/react";
 
 // =============================================================================
@@ -339,6 +353,8 @@ const COMPLEX_DISPATCH_DATA = [
 export default function Showcase() {
   const [selectedAction, setSelectedAction] = useState("Airbus A350-900");
   const [bentoLayoutMode, setBentoLayoutMode] = useState<"standard" | "spans">("standard");
+  const [shimmerSearchQuery, setShimmerSearchQuery] = useState("QTR843");
+  const [pilotSearchQuery, setPilotSearchQuery] = useState("");
   const [currentPhase, setCurrentPhase] = useState<FlightPhase>("Cruise");
   const [confirmationMessage, setConfirmationMessage] = useState("No demo action confirmed yet.");
   // All 5,379 routes loaded once
@@ -527,6 +543,12 @@ export default function Showcase() {
       setSelectedRowIds(all);
     }
   };
+
+  // GlowCard Showcase State
+  const [glowCardVariant, setGlowCardVariant] = useState<GlowCardVariant>("default");
+  const [glowCardIntensity, setGlowCardIntensity] = useState<GlowCardIntensity>("subtle");
+  const [glowCardActive, setGlowCardActive] = useState<boolean>(true);
+  const [glowCardEntrance, setGlowCardEntrance] = useState<boolean>(false);
 
   return (
     <main className="min-h-screen bg-background text-foreground">
@@ -1256,6 +1278,113 @@ export default function Showcase() {
         </Tabs>
 
         {/* ========================================================================= */}
+        {/* KOKONUT UI: GLOW CARD (TASK-3.2) */}
+        {/* ========================================================================= */}
+        <section className="rounded-2xl border border-border bg-card p-6 md:p-8 space-y-6">
+          <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between border-b border-border pb-4">
+            <div>
+              <div className="flex items-center gap-2">
+                <Badge variant="burgundy">Kokonut UI</Badge>
+                <Badge variant="gold">TASK-3.2</Badge>
+              </div>
+              <h3 className="mt-2 text-2xl font-bold tracking-tight">
+                Glow Card (<code className="text-brand dark:text-brand-light">GlowCard</code>)
+              </h3>
+              <p className="mt-1 text-sm text-muted-foreground max-w-2xl">
+                A quiet Al-Annabi and champagne gold wash for high-priority callouts.
+              </p>
+            </div>
+
+            {/* Controls */}
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="flex items-center gap-1.5">
+                <span className="text-xs font-semibold text-muted-foreground">Variant:</span>
+                <div className="flex gap-1">
+                  {(["default", "tod", "escalation"]).map((v) => (
+                    <Button
+                      key={v}
+                      size="sm"
+                      variant={glowCardVariant === v ? "default" : "outline"}
+                      onClick={() => setGlowCardVariant(v as GlowCardVariant)}
+                      className="capitalize text-xs"
+                    >
+                      {v}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex items-center gap-1.5">
+                <span className="text-xs font-semibold text-muted-foreground">Intensity:</span>
+                <div className="flex gap-1">
+                  {(["subtle", "normal", "strong"]).map((i) => (
+                    <Button
+                      key={i}
+                      size="sm"
+                      variant={glowCardIntensity === i ? "gold" : "outline"}
+                      onClick={() => setGlowCardIntensity(i as GlowCardIntensity)}
+                      className="capitalize text-xs"
+                    >
+                      {i}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+
+              <Button
+                size="sm"
+                variant={glowCardActive ? "default" : "outline"}
+                onClick={() => setGlowCardActive((prev) => !prev)}
+                className="text-xs"
+              >
+                Glow: {glowCardActive ? "Active" : "Disabled"}
+              </Button>
+
+              <Button
+                size="sm"
+                variant={glowCardEntrance ? "default" : "outline"}
+                onClick={() => setGlowCardEntrance((prev) => !prev)}
+                className="text-xs"
+              >
+                Entrance: {glowCardEntrance ? "On" : "Off"}
+              </Button>
+            </div>
+          </div>
+
+          {/* Compact Alert Feed */}
+          <div className="grid grid-cols-1 gap-3">
+            <GlowCard
+              key={glowCardEntrance ? "entrance-on" : "entrance-off"}
+              variant={glowCardVariant}
+              intensity={glowCardIntensity}
+              glow={glowCardActive}
+              entrance={glowCardEntrance}
+            >
+              <CardTitle>
+                {glowCardVariant === "default" && "Dispatch board"}
+                {glowCardVariant === "tod" && "Descent window"}
+                {glowCardVariant === "escalation" && "Fleet guard"}
+              </CardTitle>
+              <CardDescription>
+                {glowCardVariant === "default" && "Live assignments and schedule waves."}
+                {glowCardVariant === "tod" && "Step climb complete. TOD armed."}
+                {glowCardVariant === "escalation" && "Stopped-airframe threshold reached."}
+              </CardDescription>
+            </GlowCard>
+
+            <GlowCard variant="tod" intensity="normal" role="alert" aria-live="polite">
+              <CardTitle>TOD advisory</CardTitle>
+              <CardDescription>QR843 begins descent in 02:45.</CardDescription>
+            </GlowCard>
+
+            <GlowCard variant="escalation" intensity="strong" entrance role="alert" aria-live="assertive">
+              <CardTitle>Guard escalation</CardTitle>
+              <CardDescription>A7-BAB stationary for 18 min at FL380.</CardDescription>
+            </GlowCard>
+          </div>
+        </section>
+
+        {/* ========================================================================= */}
         {/* EXISTING SHOWCASE PRIMITIVES (BUTTONS, BADGES, COLORS) */}
         {/* ========================================================================= */}
         <section className="rounded-xl border border-border bg-card p-6">
@@ -1395,6 +1524,91 @@ export default function Showcase() {
         </section>
 
 
+        {/* ========================================================================= */}
+        {/* KOKONUT UI: SHIMMER INPUT (CALLSIGN & AIRPORT LOOKUP) */}
+        {/* ========================================================================= */}
+        <section className="rounded-xl border border-border bg-card p-6">
+          <div className="mb-8 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <div className="flex items-center gap-2">
+                <Badge variant="gold">TASK-3.3</Badge>
+                <Badge variant="outline">Kokonut UI</Badge>
+              </div>
+              <h3 className="mt-2 text-xl font-bold tracking-tight">
+                ShimmerInput
+              </h3>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Clean search input with autocomplete dropdown. Supports filtering, keyboard navigation, and clear button.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid gap-8 lg:grid-cols-2">
+            {/* DEMO 1: Callsign Lookup with Autocomplete */}
+            <div className="space-y-4 rounded-xl border border-border/80 bg-muted/20 p-5">
+              <div>
+                <h4 className="font-semibold text-sm">Callsign & Airport Lookup</h4>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  Type to filter. Arrow keys to navigate, Enter to select.
+                </p>
+              </div>
+
+              <ShimmerInput
+                mono
+                value={shimmerSearchQuery}
+                onChange={(e) => setShimmerSearchQuery(e.target.value)}
+                onClear={() => setShimmerSearchQuery("")}
+                placeholder="Search callsign, ICAO, or airframe..."
+                options={[
+                  "QTR843", "QTR844", "QTR001", "QTR002",
+                  "A7-APC", "A7-BAB", "A7-BCU",
+                  "OTHH", "EGLL", "OMDB", "KJFK", "LTFM",
+                  "OTHH2", "EGLL2",
+                ]}
+                onPick={(v) => setShimmerSearchQuery(v)}
+              />
+            </div>
+
+            {/* DEMO 2: Variants */}
+            <div className="space-y-4 rounded-xl border border-border/80 bg-muted/20 p-5">
+              <div>
+                <h4 className="font-semibold text-sm">Size Variants</h4>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  Large, default, and compact sizing with custom icons.
+                </p>
+              </div>
+
+              <div className="space-y-3">
+                <ShimmerInput
+                  sizeVariant="lg"
+                  placeholder="Search pilot roster..."
+                  icon={<RiUserLine className="h-5 w-5 text-muted-foreground" />}
+                  value={pilotSearchQuery}
+                  onChange={(e) => setPilotSearchQuery(e.target.value)}
+                  onClear={() => setPilotSearchQuery("")}
+                  options={["P001 - Capt. Ahmed", "P002 - F/O Sarah", "P003 - Capt. Omar", "P004 - F/O Fatima"]}
+                  onPick={(v) => setPilotSearchQuery(v)}
+                />
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <ShimmerInput
+                    sizeVariant="sm"
+                    mono
+                    placeholder="Quick ICAO..."
+                    defaultValue="OTHH"
+                  />
+
+                  <ShimmerInput
+                    disabled
+                    placeholder="Airframe locked..."
+                    defaultValue="A7-BAB"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* HOLD TO CONFIRM AND QUIET STATUS INDICATORS */}
         <section className="rounded-xl border border-border bg-card p-6">
           <div className="mb-8">
@@ -1473,6 +1687,7 @@ export default function Showcase() {
             </div>
           </div>
         </section>
+
         {/* INTERACTIVE FLIGHT PHASE RAIL */}
         <section className="rounded-xl border border-border bg-card p-6">
           <div className="mb-8">
