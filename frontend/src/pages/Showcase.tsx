@@ -78,6 +78,7 @@ import {
   RiCalendarLine,
   RiAwardLine,
   RiUserLine,
+  RiTimeLine,
 } from "@remixicon/react";
 
 // =============================================================================
