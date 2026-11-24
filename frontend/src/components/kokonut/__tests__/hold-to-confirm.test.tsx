@@ -57,9 +57,11 @@ describe("HoldToConfirmButton", () => {
 
     const button = screen.getByRole("button");
     fireEvent.pointerDown(button);
+
     act(() => {
       vi.advanceTimersByTime(700);
     });
+
     fireEvent.pointerUp(button);
 
     act(() => {
@@ -108,5 +110,55 @@ describe("HoldToConfirmButton", () => {
     });
 
     expect(onConfirm).toHaveBeenCalledTimes(1);
+  });
+
+  it("cancels an active hold when the button becomes disabled", () => {
+    vi.useFakeTimers();
+    const onConfirm = vi.fn();
+
+    const { rerender } = render(
+      <HoldToConfirmButton onConfirm={onConfirm}>
+        Hold to confirm
+      </HoldToConfirmButton>,
+    );
+
+    const button = screen.getByRole("button");
+    fireEvent.pointerDown(button);
+
+    act(() => {
+      vi.advanceTimersByTime(700);
+    });
+
+    rerender(
+      <HoldToConfirmButton onConfirm={onConfirm} disabled>
+        Hold to confirm
+      </HoldToConfirmButton>,
+    );
+
+    act(() => {
+      vi.advanceTimersByTime(1500);
+    });
+
+    expect(onConfirm).not.toHaveBeenCalled();
+    expect(screen.getByRole("button")).toBeDisabled();
+  });
+
+  it("does not start a hold when already disabled", () => {
+    vi.useFakeTimers();
+    const onConfirm = vi.fn();
+
+    render(
+      <HoldToConfirmButton onConfirm={onConfirm} disabled>
+        Hold to confirm
+      </HoldToConfirmButton>,
+    );
+
+    fireEvent.pointerDown(screen.getByRole("button"));
+
+    act(() => {
+      vi.advanceTimersByTime(1500);
+    });
+
+    expect(onConfirm).not.toHaveBeenCalled();
   });
 });
