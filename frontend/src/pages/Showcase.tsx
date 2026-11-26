@@ -164,7 +164,7 @@ const DESTINATIONS = [
   { icao: "LSGG", city: "Geneva (Cointrin)", hours: 5, mins: 35 },
   { icao: "VABB", city: "Mumbai (Chhatrapati Shivaji)", hours: 3, mins: 40 },
   { icao: "FAOR", city: "Johannesburg (O.R. Tambo)", hours: 8, mins: 15 },
-  { icao: "SBGR", city: "SÃ£o Paulo (Guarulhos)", hours: 15, mins: 30 },
+  { icao: "SBGR", city: "São Paulo (Guarulhos)", hours: 15, mins: 30 },
   { icao: "KLAX", city: "Los Angeles (Int'l)", hours: 16, mins: 10 },
   { icao: "OERK", city: "Riyadh (King Khalid)", hours: 1, mins: 25 },
   { icao: "VIDP", city: "Delhi (Indira Gandhi)", hours: 3, mins: 50 },
@@ -340,7 +340,7 @@ const COMPLEX_DISPATCH_DATA = [
   {
     id: "DSP-001",
     callsign: "QTR843",
-    route: "OTHH â†’ EGLL",
+    route: "OTHH → EGLL",
     acft: "A350-900 (A7-APC)",
     altitude: "FL380",
     speed: "485 kts",
@@ -355,7 +355,7 @@ const COMPLEX_DISPATCH_DATA = [
   {
     id: "DSP-002",
     callsign: "QTR001",
-    route: "OTHH â†’ KJFK",
+    route: "OTHH → KJFK",
     acft: "B777-300ER (A7-BAN)",
     altitude: "FL340",
     speed: "472 kts",
@@ -370,7 +370,7 @@ const COMPLEX_DISPATCH_DATA = [
   {
     id: "DSP-003",
     callsign: "QTR1002",
-    route: "OTHH â†’ OMDB",
+    route: "OTHH → OMDB",
     acft: "A350-1000 (A7-ANA)",
     altitude: "FL140",
     speed: "290 kts",
@@ -385,7 +385,7 @@ const COMPLEX_DISPATCH_DATA = [
   {
     id: "DSP-004",
     callsign: "QTR8818",
-    route: "OTHH â†’ EDDF",
+    route: "OTHH → EDDF",
     acft: "B777F Cargo (A7-BFG)",
     altitude: "FL000",
     speed: "0 kts",
@@ -616,7 +616,7 @@ export default function Showcase() {
             </div>
             <div className="ml-auto flex items-center gap-2">
               <Badge variant="outline">React 19 + Tailwind v4</Badge>
-              <Badge variant="burgundy">Sprint 2 Â· High-Density Tables</Badge>
+              <Badge variant="burgundy">Sprint 2 · High-Density Tables</Badge>
             </div>
           </div>
 
@@ -1254,7 +1254,7 @@ export default function Showcase() {
                                   <div className="flex items-center justify-between border-b border-border pb-2">
                                     <div className="flex items-center gap-2">
                                       <RiPlaneLine className="h-4 w-4 text-brand" />
-                                      <span className="font-bold text-sm">Operational Flight Plan Remarks Â· {flight.callsign}</span>
+                                      <span className="font-bold text-sm">Operational Flight Plan Remarks · {flight.callsign}</span>
                                     </div>
                                     <span className="text-xs text-muted-foreground font-mono">Pax Onboard: {flight.pax}</span>
                                   </div>
@@ -2069,7 +2069,7 @@ export default function Showcase() {
         )}
 
         <footer className="border-t border-border py-6 text-center text-sm text-muted-foreground">
-          OryxOps Design System Â· Component Showcase Â· Task 2.5
+          OryxOps Design System · Component Showcase · Task 2.5
         </footer>
       </div>
     </main>
