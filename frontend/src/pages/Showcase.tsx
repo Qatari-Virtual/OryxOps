@@ -1,6 +1,7 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 import { ActionList } from "@/components/kokonut/action-list";
+import { SelfAssignmentCard } from "@/components/ops/SelfAssignmentCard";
 import { BentoGrid, BentoCard } from "@/components/kokonut/bento-grid";
 import { ShimmerInput } from "@/components/kokonut/shimmer-input";
 import { PhaseRail, FLIGHT_PHASES, type FlightPhase } from "@/components/kokonut/phase-rail";
@@ -81,6 +82,53 @@ import {
   RiTimeLine,
 } from "@remixicon/react";
 
+
+// =============================================================================
+// TASK 4.1: PILOT SELF-ASSIGNMENT CARD PREVIEW
+// =============================================================================
+
+function SelfAssignmentCardPreview() {
+  const [hasAssignment, setHasAssignment] = React.useState(true);
+
+  return (
+    <section className="rounded-xl border border-border bg-card p-6">
+      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <div className="flex flex-wrap items-center gap-2">
+            <Badge variant="gold">TASK-4.1</Badge>
+            <Badge variant="outline">Pilot Operations</Badge>
+          </div>
+          <h3 className="mt-2 text-xl font-bold tracking-tight">
+            Pilot Self-Assignment Card
+          </h3>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Review a selected flight, confirm an assignment, book another schedule, or safely release an airframe.
+          </p>
+        </div>
+
+        <Button
+          size="sm"
+          variant="outline"
+          onClick={() => setHasAssignment((current) => !current)}
+          aria-pressed={!hasAssignment}
+        >
+          {hasAssignment ? "Preview Empty State" : "Preview Active Assignment"}
+        </Button>
+      </div>
+
+      <div className="mx-auto w-full max-w-3xl">
+        <SelfAssignmentCard
+          assignment={hasAssignment ? undefined : null}
+          onRelease={() => setHasAssignment(false)}
+        />
+      </div>
+
+      <p className="mt-4 text-xs text-muted-foreground">
+        Preview mode: switch assignment states, confirm the selected flight, open schedule booking, or test the hold-to-confirm release.
+      </p>
+    </section>
+  );
+}
 // =============================================================================
 // ROUTE DATA GENERATOR (5,379 REALISTIC QATAR AIRWAYS ROUTES)
 // =============================================================================
@@ -1912,6 +1960,9 @@ export default function Showcase() {
             </BentoGrid>
           )}
         </section>
+
+        {/* TASK 4.1: PILOT SELF-ASSIGNMENT CARD */}
+        <SelfAssignmentCardPreview />
 
         {/* BRAND COLORS */}
         <section className="rounded-xl border border-border bg-card p-6">
