@@ -1,3 +1,4 @@
+
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { SelfAssignmentCard } from "../SelfAssignmentCard";
@@ -22,6 +23,24 @@ describe("SelfAssignmentCard", () => {
     expect(screen.getAllByTitle("United Kingdom")).toHaveLength(1);
     expect(screen.getByText("02:15 UTC")).toBeInTheDocument();
     expect(screen.getByText("07:25 UTC")).toBeInTheDocument();
+  });
+
+  it("uses theme-aware classes for card panels and text", () => {
+    const { container } = render(<SelfAssignmentCard />);
+
+    const card = container.querySelector(".bg-background");
+    expect(card).toBeInTheDocument();
+    expect(card).toHaveClass("text-foreground");
+
+    const panels = container.querySelectorAll(".bg-card");
+    expect(panels.length).toBeGreaterThanOrEqual(2);
+
+    for (const panel of panels) {
+      expect(panel).toHaveClass("border-border");
+    }
+
+    expect(container.querySelector(".text-muted-foreground")).toBeInTheDocument();
+    expect(container.querySelector(".bg-muted")).toBeInTheDocument();
   });
 
   it("shows an empty state when no airframe is assigned", () => {

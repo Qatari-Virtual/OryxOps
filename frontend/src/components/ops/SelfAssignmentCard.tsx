@@ -1,4 +1,5 @@
-﻿import * as React from "react";
+﻿
+import * as React from "react";
 import {
   RiArrowRightLine,
   RiCalendarLine,
@@ -122,13 +123,13 @@ function Airport({
         }`}
       >
         {align === "left" && <AirportFlag code={code} />}
-        <span className="text-2xl font-bold tracking-tight text-[#321C27] sm:text-3xl">
+        <span className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
           {code}
         </span>
         {align === "right" && <AirportFlag code={code} />}
       </div>
-      <p className="mt-1 text-xs text-[#856F79]">{label}</p>
-      <p className="mt-2 text-sm font-semibold text-[#4C303C]">{time}</p>
+      <p className="mt-1 text-xs text-muted-foreground">{label}</p>
+      <p className="mt-2 text-sm font-semibold text-foreground">{time}</p>
     </div>
   );
 }
@@ -168,20 +169,20 @@ export function SelfAssignmentCard({
   return (
     <>
       <Card
-        className={`w-full overflow-hidden rounded-2xl border border-[#E8DCE1] bg-[#FDF8F9] text-[#321C27] shadow-sm ${className ?? ""}`}
+        className={`w-full overflow-hidden rounded-2xl border border-border bg-background text-foreground shadow-sm ${className ?? ""}`}
       >
-        <CardHeader className="space-y-4 border-b border-[#EDE3E7] pb-5">
+        <CardHeader className="space-y-4 border-b border-border pb-5">
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div className="flex min-w-0 items-center gap-3">
-              <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-[#6A0C2C]/[0.08] text-[#6A0C2C]">
+              <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand/10 text-brand">
                 <RiUserLine className="size-5" aria-hidden="true" />
               </div>
 
               <div className="min-w-0">
-                <CardDescription className="text-[10px] font-semibold uppercase tracking-[0.15em] text-[#967F89]">
+                <CardDescription className="text-[10px] font-semibold uppercase tracking-[0.15em] text-muted-foreground">
                   Pilot self-assignment
                 </CardDescription>
-                <CardTitle className="mt-1 text-xl font-bold tracking-tight text-[#321C27]">
+                <CardTitle className="mt-1 text-xl font-bold tracking-tight text-foreground">
                   {pilotDetails.callsign}
                 </CardTitle>
               </div>
@@ -193,10 +194,10 @@ export function SelfAssignmentCard({
           </div>
 
           <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
-            <div className="flex items-center gap-2 text-xs text-[#856F79]">
+            <div className="flex items-center gap-2 text-xs text-muted-foreground">
               <RiTimeLine className="size-4" aria-hidden="true" />
               <span>
-                <span className="font-semibold text-[#4C303C]">
+                <span className="font-semibold text-foreground">
                   {pilotDetails.totalFlightHours}
                 </span>{" "}
                 total flight time
@@ -215,38 +216,34 @@ export function SelfAssignmentCard({
             <div className="mb-3 flex items-center justify-between gap-2">
               <h3
                 id="assigned-airframe-heading"
-                className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.12em] text-[#806A75]"
+                className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.12em] text-muted-foreground"
               >
-                <RiPlaneLine className="size-4 text-[#6A0C2C]" aria-hidden="true" />
+                <RiPlaneLine className="size-4 text-brand" aria-hidden="true" />
                 Assigned airframe
               </h3>
 
-              {assignment && (
-                <Badge variant="burgundy">
-                  Assigned
-                </Badge>
-              )}
+              {assignment && <Badge variant="burgundy">Assigned</Badge>}
             </div>
 
             {assignment ? (
-              <div className="rounded-xl border border-[#EDE2E6] bg-white/80 p-4">
+              <div className="rounded-xl border border-border bg-card p-4">
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div className="min-w-0">
-                    <p className="text-2xl font-bold tracking-tight text-[#321C27]">
+                    <p className="text-2xl font-bold tracking-tight text-card-foreground">
                       {assignment.registration}
                     </p>
-                    <p className="mt-1 text-sm font-medium text-[#806A75]">
+                    <p className="mt-1 text-sm font-medium text-muted-foreground">
                       {assignment.aircraft}
                     </p>
                   </div>
 
-                  <div className="rounded-lg bg-[#F7EDF1] px-3 py-2">
-                    <p className="text-[10px] font-semibold uppercase tracking-wider text-[#967F89]">
+                  <div className="rounded-lg bg-muted px-3 py-2">
+                    <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
                       Home base
                     </p>
                     <div className="mt-1 flex items-center gap-2">
                       <AirportFlag code={assignment.homeBase} />
-                      <p className="text-sm font-bold text-[#4C303C]">
+                      <p className="text-sm font-bold text-foreground">
                         {assignment.homeBase}
                       </p>
                     </div>
@@ -254,15 +251,15 @@ export function SelfAssignmentCard({
                 </div>
               </div>
             ) : (
-              <div className="rounded-xl border border-dashed border-[#E4D5DC] bg-white/60 px-4 py-6 text-center">
+              <div className="rounded-xl border border-dashed border-border bg-card/60 px-4 py-6 text-center">
                 <RiPlaneLine
-                  className="mx-auto mb-2 size-6 text-[#967F89]"
+                  className="mx-auto mb-2 size-6 text-muted-foreground"
                   aria-hidden="true"
                 />
-                <p className="text-sm font-semibold text-[#4C303C]">
+                <p className="text-sm font-semibold text-foreground">
                   No active airframe assigned
                 </p>
-                <p className="mt-1 text-xs text-[#967F89]">
+                <p className="mt-1 text-xs text-muted-foreground">
                   Book a schedule to get started with an assignment.
                 </p>
               </div>
@@ -273,27 +270,27 @@ export function SelfAssignmentCard({
             <div className="mb-3 flex items-center justify-between gap-2">
               <h3
                 id="booked-schedule-heading"
-                className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.12em] text-[#806A75]"
+                className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.12em] text-muted-foreground"
               >
-                <RiCalendarLine className="size-4 text-[#6A0C2C]" aria-hidden="true" />
+                <RiCalendarLine className="size-4 text-brand" aria-hidden="true" />
                 Selected schedule
               </h3>
 
               {assignment && (
-                <span className="text-[10px] font-semibold uppercase tracking-wider text-[#967F89]">
+                <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
                   All times UTC
                 </span>
               )}
             </div>
 
             {assignment ? (
-              <div className="rounded-xl border border-[#EDE2E6] bg-white/80 p-4">
+              <div className="rounded-xl border border-border bg-card p-4">
                 <div className="mb-5 flex flex-wrap items-center justify-between gap-2">
                   <div>
-                    <p className="text-[10px] font-semibold uppercase tracking-wider text-[#967F89]">
+                    <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
                       Flight number
                     </p>
-                    <p className="mt-1 text-lg font-bold text-[#321C27]">
+                    <p className="mt-1 text-lg font-bold text-card-foreground">
                       {assignment.flightNumber}
                     </p>
                   </div>
@@ -304,7 +301,7 @@ export function SelfAssignmentCard({
                       Confirmed
                     </Badge>
                   ) : (
-                    <Badge variant="outline" className="border-[#E4D5DC] text-[#806A75]">
+                    <Badge variant="outline" className="border-border text-muted-foreground">
                       Selected
                     </Badge>
                   )}
@@ -317,9 +314,9 @@ export function SelfAssignmentCard({
                     time={assignment.std}
                   />
 
-                  <div className="flex flex-col items-center gap-1 text-[#A78B97]">
-                    <div className="flex size-9 items-center justify-center rounded-full bg-[#F7EDF1]">
-                      <RiArrowRightLine className="size-5 text-[#6A0C2C]" aria-hidden="true" />
+                  <div className="flex flex-col items-center gap-1 text-muted-foreground">
+                    <div className="flex size-9 items-center justify-center rounded-full bg-muted">
+                      <RiArrowRightLine className="size-5 text-brand" aria-hidden="true" />
                     </div>
                     <span className="text-[9px] font-semibold uppercase tracking-wider">
                       Route
@@ -335,8 +332,8 @@ export function SelfAssignmentCard({
                 </div>
               </div>
             ) : (
-              <div className="rounded-xl border border-dashed border-[#E4D5DC] bg-white/60 px-4 py-5 text-center">
-                <p className="text-sm text-[#967F89]">
+              <div className="rounded-xl border border-dashed border-border bg-card/60 px-4 py-5 text-center">
+                <p className="text-sm text-muted-foreground">
                   No booked schedule available.
                 </p>
               </div>
@@ -344,7 +341,7 @@ export function SelfAssignmentCard({
           </section>
         </CardContent>
 
-        <CardFooter className="flex flex-col gap-2 border-t border-[#EDE3E7] bg-[#FBF3F6] pt-4 sm:flex-row sm:flex-wrap">
+        <CardFooter className="flex flex-col gap-2 border-t border-border bg-muted/40 pt-4 sm:flex-row sm:flex-wrap">
           {assignment && (
             <Button
               variant="default"
@@ -358,7 +355,7 @@ export function SelfAssignmentCard({
 
           <Button
             variant="outline"
-            className="w-full border-[#DCC9D1] bg-white text-[#6A0C2C] hover:bg-[#F7EDF1] sm:flex-1"
+            className="w-full border-border bg-background text-brand hover:bg-muted sm:flex-1"
             onClick={() => setBookingOpen(true)}
           >
             <RiCalendarLine className="mr-2 size-4" aria-hidden="true" />
@@ -368,7 +365,7 @@ export function SelfAssignmentCard({
           {assignment && (
             <Button
               variant="ghost"
-              className="w-full text-[#806A75] hover:bg-[#F5E9EE] hover:text-[#6A0C2C] sm:w-auto"
+              className="w-full text-muted-foreground hover:bg-muted hover:text-brand sm:w-auto"
               onClick={() => setReleaseOpen(true)}
             >
               <RiShieldCheckLine className="mr-2 size-4" aria-hidden="true" />
@@ -388,20 +385,20 @@ export function SelfAssignmentCard({
           </DialogHeader>
 
           {assignment && (
-            <div className="space-y-3 rounded-xl border border-[#E8DCE1] bg-[#FDF8F9] p-4">
+            <div className="space-y-3 rounded-xl border border-border bg-card p-4">
               <div className="flex items-center justify-between gap-3">
-                <span className="text-sm font-semibold text-[#321C27]">
+                <span className="text-sm font-semibold text-card-foreground">
                   {assignment.flightNumber}
                 </span>
                 <Badge variant="gold">{assignment.registration}</Badge>
               </div>
               <div className="flex items-center justify-between gap-3 text-sm">
-                <span className="font-semibold text-[#321C27]">
+                <span className="font-semibold text-foreground">
                   {assignment.departure} → {assignment.arrival}
                 </span>
-                <span className="text-xs text-[#806A75]">UTC</span>
+                <span className="text-xs text-muted-foreground">UTC</span>
               </div>
-              <p className="text-xs text-[#806A75]">
+              <p className="text-xs text-muted-foreground">
                 {assignment.std} departure · {assignment.sta} arrival
               </p>
             </div>
