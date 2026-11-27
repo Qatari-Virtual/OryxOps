@@ -2,6 +2,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 import { ActionList } from "@/components/kokonut/action-list";
 import { SelfAssignmentCard } from "@/components/ops/SelfAssignmentCard";
+import { FlightTrackerHUD } from "@/components/ops/FlightTrackerHUD";
 import { BentoGrid, BentoCard } from "@/components/kokonut/bento-grid";
 import { ShimmerInput } from "@/components/kokonut/shimmer-input";
 import { PhaseRail, FLIGHT_PHASES, type FlightPhase } from "@/components/kokonut/phase-rail";
@@ -405,6 +406,8 @@ export default function Showcase() {
   const [shimmerSearchQuery, setShimmerSearchQuery] = useState("QTR843");
   const [pilotSearchQuery, setPilotSearchQuery] = useState("");
   const [currentPhase, setCurrentPhase] = useState<FlightPhase>("Cruise");
+  const [hudTodDistance, setHudTodDistance] = useState(124);
+  const [hudPhase, setHudPhase] = useState<FlightPhase>("Cruise");
   const [confirmationMessage, setConfirmationMessage] = useState("No demo action confirmed yet.");
   // All 5,379 routes loaded once
   const allRoutes = useMemo(() => generateRouteDatabase(), []);
@@ -1961,6 +1964,75 @@ export default function Showcase() {
           )}
         </section>
 
+        {/* TASK 4.3: REAL-TIME FLIGHT TRACKER HUD */}
+        <section className="space-y-5 rounded-xl border border-[#6A0C2C]/30 bg-card p-6">
+          <div className="flex flex-wrap items-center gap-2">
+            <Badge variant="gold">TASK-4.3</Badge>
+            <Badge variant="outline">Flight Operations</Badge>
+          </div>
+
+          <div>
+            <h3 className="text-xl font-bold">Flight Tracker HUD</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Interactive OTHH to EGLL telemetry preview. Adjust the TOD distance
+              to test the approaching-descent warning.
+            </p>
+          </div>
+
+          <div className="rounded-lg border border-border bg-background p-4">
+            <div className="mb-3 flex items-center justify-between gap-3">
+              <label
+                htmlFor="hud-tod-distance"
+                className="text-sm font-semibold"
+              >
+                Distance to Top of Descent
+              </label>
+              <output
+                htmlFor="hud-tod-distance"
+                className="font-mono text-sm font-bold tabular-nums text-brand"
+              >
+                {hudTodDistance} NM
+              </output>
+            </div>
+
+            <input
+              id="hud-tod-distance"
+              type="range"
+              min="0"
+              max="300"
+              step="1"
+              value={hudTodDistance}
+              onChange={(event) => setHudTodDistance(Number(event.target.value))}
+              className="h-2 w-full cursor-pointer accent-[#6A0C2C]"
+            />
+
+            <div className="mt-2 flex justify-between text-xs text-muted-foreground">
+              <span>0 NM</span>
+              <span>150 NM · TOD warning threshold</span>
+              <span>300 NM</span>
+            </div>
+          </div>
+
+          <FlightTrackerHUD
+            origin="OTHH"
+            destination="EGLL"
+            progressPercent={64}
+            elapsedTime="05:10"
+            remainingTime="03:05"
+            currentAltitude={360}
+            targetAltitude={380}
+            stepClimbInMinutes={42}
+            distanceToTod={hudTodDistance}
+            groundSpeed={488}
+            trueAirspeed="M0.85"
+            windDirection={270}
+            windSpeed={34}
+            windType="HEADWIND"
+            todEta="15:42Z"
+            currentPhase={hudPhase}
+            onPhaseChange={setHudPhase}
+          />
+        </section>
         {/* TASK 4.1: PILOT SELF-ASSIGNMENT CARD */}
         <SelfAssignmentCardPreview />
 
