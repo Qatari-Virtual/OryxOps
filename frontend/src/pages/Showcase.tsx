@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { ActionList } from "@/components/kokonut/action-list";
 import { SelfAssignmentCard } from "@/components/ops/SelfAssignmentCard";
 import { FlightTrackerHUD } from "@/components/ops/FlightTrackerHUD";
+import { UnassignedAircraftList } from "@/components/ops/UnassignedAircraftList";
 import { BentoGrid, BentoCard } from "@/components/kokonut/bento-grid";
 import { ShimmerInput } from "@/components/kokonut/shimmer-input";
 import { PhaseRail, FLIGHT_PHASES, type FlightPhase } from "@/components/kokonut/phase-rail";
@@ -645,20 +646,20 @@ export default function Showcase() {
         {/* ========================================================================= */}
         <Tabs defaultValue="route-db" className="w-full">
           <div className="flex flex-col gap-4 border-b border-border pb-4 lg:flex-row lg:items-center lg:justify-between">
-            <TabsList variant="pill" aria-label="Table showcase examples">
-              <TabsTrigger value="route-db" className="flex items-center gap-2">
+            <TabsList variant="pill" aria-label="Table showcase examples" className="flex h-auto w-full flex-wrap justify-start gap-1 lg:inline-flex lg:h-10 lg:w-auto lg:flex-nowrap lg:justify-center">
+              <TabsTrigger value="route-db" className="flex items-center gap-2 whitespace-normal text-left lg:whitespace-nowrap lg:text-center">
                 <RiRouteLine className="h-4 w-4" />
                 Route Database (5,379 Virtualized)
               </TabsTrigger>
-              <TabsTrigger value="simple" className="flex items-center gap-2">
+              <TabsTrigger value="simple" className="flex items-center gap-2 whitespace-normal text-left lg:whitespace-nowrap lg:text-center">
                 <RiPlaneLine className="h-4 w-4" />
                 Example 1: Simple & Clean Table
               </TabsTrigger>
-              <TabsTrigger value="complex" className="flex items-center gap-2">
+              <TabsTrigger value="complex" className="flex items-center gap-2 whitespace-normal text-left lg:whitespace-nowrap lg:text-center">
                 <RiDashboardLine className="h-4 w-4" />
                 Example 3: Complex Cockpit Ops
               </TabsTrigger>
-              <TabsTrigger value="underline-tabs" className="flex items-center gap-2">
+              <TabsTrigger value="underline-tabs" className="flex items-center gap-2 whitespace-normal text-left lg:whitespace-nowrap lg:text-center">
                 <RiSettings3Line className="h-4 w-4" />
                 Underline Tab Variant
               </TabsTrigger>
@@ -1964,6 +1965,7 @@ export default function Showcase() {
           )}
         </section>
 
+
         {/* TASK 4.3: REAL-TIME FLIGHT TRACKER HUD */}
         <section className="space-y-5 rounded-xl border border-[#6A0C2C]/30 bg-card p-6">
           <div className="flex flex-wrap items-center gap-2">
@@ -1981,10 +1983,7 @@ export default function Showcase() {
 
           <div className="rounded-lg border border-border bg-background p-4">
             <div className="mb-3 flex items-center justify-between gap-3">
-              <label
-                htmlFor="hud-tod-distance"
-                className="text-sm font-semibold"
-              >
+              <label htmlFor="hud-tod-distance" className="text-sm font-semibold">
                 Distance to Top of Descent
               </label>
               <output
@@ -2033,6 +2032,16 @@ export default function Showcase() {
             onPhaseChange={setHudPhase}
           />
         </section>
+
+        {/* TASK 4.2: CATEGORIZED UNASSIGNED AIRCRAFT ROSTER */}
+        <section className="rounded-xl border border-border bg-card p-6">
+          <UnassignedAircraftList
+            onClaim={(registration) =>
+              setConfirmationMessage(`Claim requested for ${registration}.`)
+            }
+          />
+        </section>
+
         {/* TASK 4.1: PILOT SELF-ASSIGNMENT CARD */}
         <SelfAssignmentCardPreview />
 
