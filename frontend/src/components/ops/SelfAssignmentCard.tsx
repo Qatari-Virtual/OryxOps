@@ -1,4 +1,4 @@
-﻿
+
 import * as React from "react";
 import {
   RiArrowRightLine,
@@ -116,20 +116,20 @@ function Airport({
   align?: "left" | "right";
 }) {
   return (
-    <div className={align === "right" ? "text-right" : "text-left"}>
+    <div className={`min-w-0 ${align === "right" ? "text-right" : "text-left"}`}>
       <div
-        className={`flex items-center gap-2 ${
+        className={`flex min-w-0 items-center gap-1 sm:gap-2 ${
           align === "right" ? "justify-end" : "justify-start"
         }`}
       >
         {align === "left" && <AirportFlag code={code} />}
-        <span className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+        <span className="text-xl font-bold tracking-tight text-foreground sm:text-3xl">
           {code}
         </span>
         {align === "right" && <AirportFlag code={code} />}
       </div>
-      <p className="mt-1 text-xs text-muted-foreground">{label}</p>
-      <p className="mt-2 text-sm font-semibold text-foreground">{time}</p>
+      <p className="mt-1 break-words text-[10px] text-muted-foreground sm:text-xs">{label}</p>
+      <p className="mt-2 whitespace-nowrap text-xs font-semibold text-foreground sm:text-sm">{time}</p>
     </div>
   );
 }
@@ -259,7 +259,7 @@ export function SelfAssignmentCard({
                 <p className="text-sm font-semibold text-foreground">
                   No active airframe assigned
                 </p>
-                <p className="mt-1 text-xs text-muted-foreground">
+                <p className="mt-1 break-words text-[10px] text-muted-foreground sm:text-xs">
                   Book a schedule to get started with an assignment.
                 </p>
               </div>
@@ -307,7 +307,7 @@ export function SelfAssignmentCard({
                   )}
                 </div>
 
-                <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2 sm:gap-4">
+                <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-1 sm:gap-4">
                   <Airport
                     code={assignment.departure}
                     label="Departure"
@@ -430,7 +430,7 @@ export function SelfAssignmentCard({
             <p className="text-sm font-semibold text-foreground">
               Schedule booking
             </p>
-            <p className="mt-1 text-xs text-muted-foreground">
+            <p className="mt-1 break-words text-[10px] text-muted-foreground sm:text-xs">
               Booking workflow preview for {pilotDetails.callsign}.
             </p>
           </div>

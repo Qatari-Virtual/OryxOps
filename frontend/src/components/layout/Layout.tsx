@@ -318,7 +318,7 @@ export default function Layout() {
       {/* Sidebar */}
       <aside
         className={`fixed lg:sticky top-0 left-0 z-40 h-screen bg-white border-r border-brand-border flex flex-col transition-all duration-300 ${
-          sidebarCollapsed ? "w-20" : "w-64"
+          sidebarCollapsed ? "w-64 lg:w-20" : "w-64"
         } ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         }`}
@@ -607,7 +607,7 @@ export default function Layout() {
       {/* Main area */}
       <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
         {/* Top bar */}
-        <header className="h-14 border-b border-brand-border bg-white flex items-center px-4 gap-4 flex-shrink-0 sticky top-0 z-20">
+        <header className="h-14 border-b border-brand-border bg-white flex items-center px-3 sm:px-4 gap-2 sm:gap-4 flex-shrink-0 sticky top-0 z-20">
           <button className="lg:hidden" onClick={() => setSidebarOpen(true)} aria-label="Open navigation">
             <RiMenuFill size={24} className="text-gray-600" aria-hidden="true" />
           </button>
@@ -622,7 +622,7 @@ export default function Layout() {
           </button>
 
           <div className="flex-1" />
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1.5 sm:gap-3">
             {pendingProposals > 0 && (
               <button
                 onClick={handleNotifyStaff}
@@ -631,7 +631,7 @@ export default function Layout() {
                 title="Click to notify Staff on Discord about your submitted proposals"
               >
                 <RiRocket2Fill size={14} aria-hidden="true" />
-                <span>{notifyingStaff ? "Sending..." : `Notify Staff (${pendingProposals})`}</span>
+                <span className="hidden lg:inline">{notifyingStaff ? "Sending..." : `Notify Staff (${pendingProposals})`}</span>
               </button>
             )}
 
@@ -643,7 +643,7 @@ export default function Layout() {
                 title="Click to notify Pilots on Discord about approved schedules"
               >
                 <RiRocket2Fill size={14} aria-hidden="true" />
-                <span>{notifyingPilots ? "Sending..." : `Notify Pilots (${pendingApprovals} Approved)`}</span>
+                <span className="hidden lg:inline">{notifyingPilots ? "Sending..." : `Notify Pilots (${pendingApprovals} Approved)`}</span>
               </button>
             )}
 
@@ -676,10 +676,11 @@ export default function Layout() {
         </header>
 
         {/* Page content */}
-        <main className="flex-1">
+        <main className="flex-1 min-w-0 w-full">
           <Outlet />
         </main>
       </div>
     </div>
   );
 }
+

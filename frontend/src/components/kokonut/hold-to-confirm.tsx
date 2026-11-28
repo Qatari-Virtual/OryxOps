@@ -1,4 +1,4 @@
-﻿
+
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
@@ -91,7 +91,7 @@ export const HoldToConfirmButton = React.forwardRef<
       type={props.type ?? "button"}
       disabled={disabled}
       className={cn(
-        "relative isolate inline-flex min-h-11 items-center justify-center overflow-hidden rounded-lg border border-border bg-card px-4 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+        "relative isolate inline-flex min-h-11 select-none items-center justify-center overflow-hidden rounded-lg border border-border bg-card px-4 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [-webkit-touch-callout:none]",
         holding && "border-brand",
         className,
       )}
@@ -148,7 +148,7 @@ export const HoldToConfirmButton = React.forwardRef<
       />
 
       {/* Button label stays above the progress fill */}
-      <span className="relative z-10">{children}</span>
+      <span className="relative z-10 select-none">{children}</span>
     </button>
   );
 });
