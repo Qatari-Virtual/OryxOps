@@ -120,7 +120,7 @@ export function ActionList({
               y: { duration: 0.18 },
               scale: { duration: 0.12 },
             }}
-            className={`relative flex cursor-pointer items-stretch gap-5 overflow-hidden rounded-xl border ${
+            className={`relative flex cursor-pointer items-stretch gap-3 overflow-hidden sm:gap-5 rounded-xl border ${
               isDisabled
                 ? "cursor-not-allowed opacity-40"
                 : isActive
@@ -149,28 +149,28 @@ export function ActionList({
                 draggable={false}
                 loading="lazy"
                 initial={false}
-                className="w-32 shrink-0 self-stretch object-cover"
+                className="w-20 shrink-0 self-stretch object-cover sm:w-32"
                 whileHover={{ scale: 1.04 }}
                 transition={{ duration: 0.2 }}
               />
             )}
 
             <div
-              className={`relative z-10 flex min-w-0 flex-1 justify-between gap-4 ${
+              className={`relative z-10 flex min-w-0 flex-1 justify-between gap-2 sm:gap-4 ${
                 hasImage
-                  ? "items-start px-5 py-5"
-                  : "items-center p-4"
+                  ? "items-start px-3 py-3 sm:px-5 sm:py-5"
+                  : "items-center p-3 sm:p-4"
               }`}
             >
               <div
                 className={`flex min-w-0 flex-1 flex-col items-start text-left ${
                   hasImage
-                    ? "justify-start gap-2 pt-1"
+                    ? "justify-start gap-1.5 pt-1 sm:gap-2"
                     : "justify-center gap-1"
                 }`}
               >
                 {!hasImage && item.icon && (
-                  <span className="flex h-12 w-8 shrink-0 items-center justify-center text-brand [&>svg]:h-6 [&>svg]:w-6">
+                  <span className="flex h-9 w-7 shrink-0 items-center justify-center text-brand [&>svg]:h-5 [&>svg]:w-5 sm:h-12 sm:w-8 sm:[&>svg]:h-6 sm:[&>svg]:w-6">
                     {item.icon}
                   </span>
                 )}
@@ -178,7 +178,7 @@ export function ActionList({
                 <span
                   className={`block leading-tight tracking-tight text-foreground ${
                     hasImage
-                      ? "text-lg font-bold"
+                      ? "text-base font-bold sm:text-lg"
                       : "text-sm font-bold"
                   }`}
                 >
@@ -186,7 +186,7 @@ export function ActionList({
                 </span>
 
                 {item.description && (
-                  <span className="block text-sm leading-relaxed text-muted-foreground">
+                  <span className="block text-xs leading-relaxed text-muted-foreground sm:text-sm">
                     {item.description}
                   </span>
                 )}
